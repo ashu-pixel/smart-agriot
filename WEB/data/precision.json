@@ -1,0 +1,59 @@
+{
+    "Apple": {
+        "Apple scab": "https://www.independenttree.com/apple-scab-identification-prevention-treatment-2/#:~:text=Remember%3A%20Apple%20scab%20is%20treated,spray%20is%20all%20you%20need.",
+        "Apple Black Rot": "https://gardenerspath.com/how-to/disease-and-pests/apple-black-rot-frogeye-leaf-spot/",
+        "Apple Cedar Rust": "https://gardenerspath.com/how-to/disease-and-pests/cedar-apple-rust-control/"
+    },
+
+    "cherry": {
+        "Cherry Powdery Mildew": "http://treefruit.wsu.edu/crop-protection/disease-management/cherry-powdery-mildew/"
+    },
+
+    "Corn": {
+        "Corn Gray Leaf Spot": "https://www.pioneer.com/us/agronomy/gray_leaf_spot_cropfocus.html",
+        "Corn Common Rust": "https://www.gardeningknowhow.com/edible/vegetables/corn/corn-rust-fungus-control.htm#:~:text=To%20reduce%20the%20incidence%20of,immediately%20spray%20with%20a%20fungicide.",
+        "Corn Northern Leaf Blight": "https://www.gardeningknowhow.com/edible/vegetables/corn/northern-corn-leaf-blight-control.htm#:~:text=Treating%20northern%20corn%20leaf%20blight%20involves%20using%20fungicides.,the%20fungicide%20should%20be%20applied."
+    },
+
+    "grapes": {
+        "Grape Black Rot": "https://extension.psu.edu/black-rot-on-grapes-in-home-gardens",
+        "Grape Black Measles": "https://grapes.extension.org/grapevine-measles/"
+    },
+
+    "orange": {
+        "Orange Huanglongbing": "https://www.floridacitrus.org/newsroom/citrus-411/citrus-greening/potential-citrus-greening-solutions/"
+    },
+
+    "peach": {
+        "Peach Bacterial Spot": "https://www.lawnstarter.com/blog/tree-care/peach-tree-diseases-how-to-treat-them/"
+    },
+
+    "Bell_Pepper": {
+        "Bell Pepper Bacterial Spot": "https://extension.wvu.edu/lawn-gardening-pests/plant-disease/fruit-vegetable-diseases/bacterial-leaf-spot-of-pepper#:~:text=Seed%20treatment%20with%20hot%20water,relatively%20low%20with%20bleach%20treatment."
+    },
+
+    "potato": {
+        "Potato Early Blight": "https://www2.ipm.ucanr.edu/agriculture/potato/Early-Blight/",
+        "Potato Late Blight": "https://www2.ipm.ucanr.edu/agriculture/potato/late-blight/#:~:text=Late%20blight%20is%20controlled%20by,foliage%20each%20day%20is%20important."
+    },
+
+    "squash": {
+        "Squash Powdery Mildew": "https://pinchofseeds.com/powdery-mildew-on-plants/#:~:text=A%20better%20treatment%20solution%20for,oil%20and%20some%20dish%20soap."
+    },
+
+    "strawberry": {
+        "Strawberry Leaf Scorch": "https://content.ces.ncsu.edu/leaf-scorch-of-strawberry"
+    },
+
+    "tomato": {
+        "Tomato Bacterial Spot": "https://hort.extension.wisc.edu/articles/bacterial-spot-of-tomato/#:~:text=A%20plant%20with%20bacterial%20spot,DO%20NOT%20eat%20symptomatic%20fruit.",
+        "Tomato Early Blight": "https://www.planetnatural.com/pest-problem-solver/plant-disease/early-blight/",
+        "Tomato Late Blight": "https://www2.ipm.ucanr.edu/agriculture/tomato/Late-Blight/",
+        "Tomato Leaf Mold": "https://plantix.net/en/library/plant-diseases/100257/leaf-mold-of-tomato",
+        "Tomato Septoria Leaf Spot": "https://www.thespruce.com/identifying-and-controlling-septoria-leaf-spot-of-tomato-1402974",
+        "Tomato Two Spotted Spider Mite": "https://www.growingproduce.com/crop-protection/insect-control/managing-mites-on-tomato-crops/",
+        "Tomato Target Spot": "https://www.gardeningknowhow.com/edible/vegetables/tomato/target-spot-on-tomatoes.htm#:~:text=The%20following%20tips%20for%20treating,thus%20beginning%20the%20disease%20anew.",
+        "Tomato Mosaic Virus": "https://www.planetnatural.com/pest-problem-solver/plant-disease/mosaic-virus/",
+        "Tomato Yellow Leaf Curl Virus": "https://www.farmprogress.com/controlling-tomato-yellow-leaf-curl-virus"
+    }
+}

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Doctor</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Lato&family=Merriweather+Sans&family=Source+Serif+Pro:ital@1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<style>
+    .fonts {
+        font-family: 'Merriweather Sans', sans-serif;
+    }
+</style>
+
+<body style="background-color: rgb(219, 255, 237);">
+    <div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top p-0">
+            <img src='https://i.postimg.cc/QMTNkywr/logo.jpg' alt='logo' />
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav d-flex mx-auto ">
+
+                    <div class="nav-item py-2 ">
+                        <li class="active mx-4 fonts">
+                            <a class="nav-link" href="https://smart-agriot-web.herokuapp.com/">
+                            Home <span class="sr-only"></span></a>
+                        </li>
+                    </div>
+
+                    <div class="nav-item py-2 ">
+                        <li class="active mx-4 fonts">
+                            <a class="nav-link" href="https://smart-agriot-web.herokuapp.com/qgisPage">
+                            Tracking <span class="sr-only"></span></a>
+                        </li>
+                    </div>
+
+                    <div class="nav-item py-2 ">
+                        <li class="active mx-4 fonts">
+                            <a class="nav-link" href="https://smart-agriot-web.herokuapp.com/CropPrediction">
+                            Crop Prediction <span class="sr-only"></span></a>
+                        </li>
+                    </div>
+
+                    <div class="nav-item py-2 ">
+                        <li class="active mx-4 fonts">
+                            <a class="nav-link" href="https://smart-agriot-web.herokuapp.com/PrecisionAgriculture">
+                            Precision Agriculture <span class="sr-only"></span></a>
+                        </li>
+                    </div>
+
+                    <div class="nav-item py-2 ">
+                        <li class="active mx-4 fonts">
+                            <a class="nav-link" href="https://smart-agriot-web.herokuapp.com/Weather">
+                            Weather <span class="sr-only"></span></a>
+                        </li>
+                    </div>
+
+                    <div class="nav-item py-2 ">
+                        <li class="active mx-4 fonts">
+                            <a class="nav-link" href="https://smart-agriot-web.herokuapp.com/SmartFarming">
+                            Smart Farming <span class="sr-only"></span></a>
+                        </li>
+                    </div>
+
+                    <div class="nav-item py-2  current ">
+                        <li class="active mx-4 fonts">
+                            <a class="nav-link" href="https://smart-plant-doc.herokuapp.com/">
+                            Plant Doctor <span class="sr-only"></span></a>
+                        </li>
+                    </div>
+
+                    <div class="nav-item py-2 ">
+                        <li class="active mx-4 fonts">
+                            <a class="nav-link" href="https://smart-agriot-web.herokuapp.com/abt">
+                            About &amp; Contact <span class="sr-only"></span></a>
+                        </li>
+                    </div>
+
+                </ul>
+            </div>
+            <div id="google_translate_element"></div>
+
+            <script type="text/javascript">
+                function googleTranslateElementInit() {
+                    new google.translate.TranslateElement({
+                        pageLanguage: 'en',
+                        includedLanguages: 'sa,pa,gu,ta,te,hi,kn,kok,mr'
+                    }, 'google_translate_element');
+                }
+            </script>
+
+            <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+
+    </div>
+    </nav>
+
+
+
+
+    <div class="container precision-title">
+        <h1>
+            <b>
+            Disease Detection
+           </b>
+        </h1>
+
+        <p>
+            GET ACCURATE DISEASE AND ITS CURE
+        </p>
+
+    </div>
+
+    <div class="container precision-instru">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item list-group-item-danger w-50 mx-auto my-1">Please upload .jpg or .jpeg file format image.</li>
+            <li class="list-group-item list-group-item-danger w-50 mx-auto my-1">Please upload image of single leaf only.</li>
+            <li class="list-group-item list-group-item-danger w-50 mx-auto my-1">Image should not be blurred and should be clearly visible for accurate report.</li>
+        </ul>
+    </div>
+
+    <p class="text-center alert alert-primary h3 w-50 m-auto">
+
+        Browse the file and hit the upload button
+
+    </p>
+
+    <div>
+        <div class="container mt-2 d-flex flex-column">
+            <form method=post enctype=multipart/form-data>
+                <div class="upload-form">
+                    <input type="file" name="file" class="w-25" id="inputfile" onchange="preview_image(event)">
+                    <button class="btn btn-warning smt-btn w-25" type="submit">Submit</button>
+                </div>
+            </form>
+            <div class="upload-form">
+                <img id="output-image" class="m-3" />
+            </div>
+            <!-- <div class="row">
+                <div class="col-sm-4 align-self-center"><img src="/static/pt.png" alt="" width="60"></div>
+                <div class="col-sm-4 align-self-center"><img src="/static/flask.png" alt="" width="90"></div>
+                <div class="col-sm-4 align-self-center"><img src="/static/bs.png" alt="" width="50"></div>
+            </div> -->
+        </div>
+
+    </div>
+
+    <script type="text/javascript">
+        function preview_image(event) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                var output = document.getElementById('output-image')
+                output.src = reader.result;
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    </div>
+</body>
+
+</html>

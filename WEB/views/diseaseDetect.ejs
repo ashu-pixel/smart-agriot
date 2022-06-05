@@ -1,0 +1,34 @@
+<%- include('header', {current:"diseaseDetection"}); %>
+
+    <div class="container precision-title">
+        <h1>
+            <b>
+            Disease Detection
+           </b>
+        </h1>
+
+        <p>
+            GET ACCURATE DISEASE AND ITS CURE
+        </p>
+
+    </div>
+
+    <div class="container precision-instru">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item list-group-item-danger w-50 mx-auto my-1">Please upload .jpg or .jpeg file format image.</li>
+            <li class="list-group-item list-group-item-danger w-50 mx-auto my-1">Please upload image of single leaf only.</li>
+            <li class="list-group-item list-group-item-danger w-50 mx-auto my-1">Image should not be blurred and should be clearly visible for accurate report.</li>
+        </ul>
+    </div>
+
+    <div class="upload-img mt-4 mx-auto w-50">
+        <p class=" text-center alert alert-primary h3">
+            Browse the file and hit the upload button
+        </p>
+        <form method="POST" action="/upload" enctype="multipart/form-data" class="mx-auto upload-form">
+            <input type="file" name="myFile" class="browse-btn" />
+            <button type="submit" class="smt-btn btn btn-warning"> <img src="images/upload.jpg" alt=""> upload</button>
+        </form>
+    </div>
+
+    <%- include('footer'); %>

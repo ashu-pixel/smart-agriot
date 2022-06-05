@@ -1,0 +1,369 @@
+<%- include('header' , {current:"SmartFarming"}); %>
+
+    <script src="js/wow.min.js"></script>
+
+
+    <script src="js/jquery-1.12.0.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script>
+        function save_data1() {
+            var input = document.getElementById("plant1").value;
+            console.log(input);
+            localStorage.setItem("Plant1", input);
+            document.getElementById("m1").innerHTML = localStorage.getItem('Plant1');
+            //var ip = document.getElementById("plant1").value = localStorage.setItem("plant1");
+        }
+
+        function save_data2() {
+            var input = document.getElementById("plant2").value;
+            console.log(input);
+            localStorage.setItem("Plant2", input);
+            document.getElementById("m2").innerHTML = localStorage.getItem('Plant2');
+            //var ip = document.getElementById("plant1").value = localStorage.setItem("plant1");
+        }
+
+        function save_data3() {
+            var input = document.getElementById("plant3").value;
+            console.log(input);
+            localStorage.setItem("Plant3", input);
+            document.getElementById("m3").innerHTML = localStorage.getItem('Plant3');
+            //var ip = document.getElementById("plant1").value = localStorage.setItem("plant1");
+        }
+    </script>
+
+    <div class="d-flex  align-items-center justify-content-around">
+        <h1 class="mx-auto">
+            <B> SMART FARMING IN AGRICULTURE ! </B>
+        </h1>
+        <a href="/logout" class="btn btn-danger">LOGOUT</a>
+    </div>
+
+    <BR>
+    <div class="w-75 m-auto text-center">
+        Smart farming is a management concept focused on providing the agricultural industry with the infrastructure to leverage advanced technology – including big data, the cloud and the internet of things (IoT) – for tracking, monitoring, automating and analyzing
+        operations. Also known as precision agriculture, smart farming is software-managed and sensor-monitored. Smart farming is growing in importance due to the combination of the expanding global population, the increasing demand for higher crop yield,
+        the need to use natural resources efficiently, the rising use and sophistication of information and communication technology and the increasing need for climate-smart agriculture.
+    </div>
+    <br>
+    <div class="text-center w-75 m-auto">
+        <h2 class="bg-warning ">
+            <B><U> Smart farming technologies :-</B>
+            </U>
+        </h2>
+    </div>
+    <BR>
+    <div class="w-75 m-auto text-center">
+        <p class="mb-0">
+            As the innovators of smart agriot it is our responsibility to ensure that all our clients find the product easy to understand and access.
+        </p>
+        <p>
+            Thus we are providing you the detailed description of our system through which you can monitor safety of your garden as well as manage water supply provided to your plants.
+        </p>
+    </div>
+
+
+
+    <BR>
+
+    <ul>
+        <li><span style="color: red;">Inadequate water level</span>: Plant needs more water. Please switch on the the motor to continue the water supply until the blinking red message on the screen turns green to show adequate water level is reached.</li>
+        <li><span style="color: green;">Adequate water level</span>: Now you can switch OFF the motor as adequate water level has been reached.</li>
+        <li>Mode: Here you can decide the mode depending on whether you manually want to supply water(Turn <span style="color: green;">ON Manual mode</span>) or let the system do the work for you(Turn <span style="color:red">ON Automatic mode</span>).</li>
+        <li>Water supply of plant 1: In manual mode you can turn the motor <span style="color: green;">ON</span>/<span style="color: red;">OFF</span> for Plant 1 as per the need.</li>
+        <li>Water supply of plant 2: In manual mode you can turn the motor <span style="color: green;">ON</span>/<span style="color: red;">OFF</span> for Plant 2 as per the need.</li>
+        <li>Water supply of plant 3: In manual mode you can turn the motor <span style="color: green;">ON</span>/<span style="color: red;">OFF</span> for Plant 3 as per the need. </li>
+    </ul>
+    </B>
+
+    </p>
+    <br>
+    <h1 style="text-align: center;color: brown;">
+        <U>Ensuring the Security and Health through the Smart Water Management System </U>
+    </h1>
+
+    <div class="panel">
+
+        <div class="left-half  ">
+            <div>
+
+                <div class="plant-name-input m-2">
+                    <div class="input-div">
+                        <input type="text" style=" font-size: x-large;" id="plant1" placeholder="NAME YOUR PLANT"></input>
+                        <button onclick="save_data1()" id="btn1" class="btn btn-dark">save</button>
+                    </div>
+                    <div class=" ips">
+                        <p id="valve1" class="water-level h3 font-weight-bold d-flex"> ADEQUATE WATER</p>
+                    </div>
+                </div>
+
+
+                <div class="plant-name-input m-2">
+                    <div class=" input-div">
+                        <input type="text" style=" font-size: x-large;" id="plant2" placeholder="NAME YOUR PLANT"></input>
+                        <button onclick="save_data2()" id="btn2" class="btn btn-dark">save</button>
+                    </div>
+                    <div class="ips">
+                        <p id="valve2" class="water-level h3 font-weight-bold d-flex"> ADEQUATE WATER</p>
+                    </div>
+                </div>
+
+
+                <div class="plant-name-input m-2">
+                    <div class=" input-div">
+                        <input type="text" style=" font-size: x-large;" id="plant3" placeholder="NAME YOUR PLANT"></input>
+                        <button onclick="save_data3()" id="btn3" class="btn btn-dark">save</button>
+                    </div>
+                    <div class="ips">
+                        <p id="valve3" class="water-level h3 font-weight-bold d-flex"> ADEQUATE WATER</p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="mode-switch mt-3">
+                <div>
+                    <h3>Automatic Mode</h3>
+                </div>
+                <div>
+                    <label class="switch mx-2">
+                        <input type="checkbox" id="checkbox1"  >
+                        <span class="slider round "></span>
+                    </label>
+                </div>
+                <div>
+                    <h3>Manual Mode</h3>
+                </div>
+            </div>
+            <div>
+
+                <% const ids = ["m1" , "m2" , "m3"] %>
+                    <% const ids2 = ["checkbox2" , "checkbox3" , "checkbox4"] %>
+
+
+
+                        <% for(i=0;i<ids2.length;i+=1){ %>
+
+                            <div class=" motor-control d-flex ">
+                                <h3 class="">Motor of &#160; <span id="<%= ids[i]%>">plant</span> </h3>
+                                <label class="switch">
+                            <input type="checkbox" id="<%= ids2[i]%>">
+                            <span class="slider round"></span>
+                        </label>
+                            </div>
+
+                            <% } %>
+            </div>
+
+        </div>
+
+        <% const nutri = ["Nitrogen" , "Phosphorus" , 'Potassium'] %>
+            <div class="right-half text-center">
+                <div class=" h-25 displays ">
+                    <% for(i=0;i<3;i+=1){ %>
+                        <div class="w-100 nutri-box">
+                            <p class="content-name" style="background-color: #c879ff;">
+                                <%= nutri[i] %>
+                            </p>
+                            <p style="background-color: #ffb7ff;">
+                                <span class="content-value"></span>%
+                            </p>
+                        </div>
+                        <% } %>
+
+                </div>
+                <p class="bg-info  m-0 py-1 h-3">
+                    Multiply by 10,000 to convert into mg/Kg
+                </p>
+
+                <div class=" mt-2 pt-3">
+
+                    <div>
+                        <label for="Fruit">Choose your Crop</label>
+                        <select name="Fruit" id="Fruit" class="custom-select w-25 my-2">
+                            <option selected>SELECT</option>
+                            <% for(fruit in nutriThresholds){ %> 
+                                <option value="<%= fruit%> " ><%= fruit %> </option>
+                            <% } %> 
+                        </select>
+                    </div>
+
+                    <div class="d-flex flex-column">
+                        <a href="" class="btn btn-primary tips w-25 mx-auto mb-2">TIPS</a>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">NUTRIENT</th>
+                                        <th scope="col">OPTIMUM RANGE</th>
+                                        <th scope="col">INCREASE</th>
+                                        <th scope="col">DECREASE</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% for(i=0;i<3;i+=1){ %>
+                                        <tr>
+                                            <th scope="row">
+                                                <%= nutri[i]%>
+                                            </th>
+                                            <td>
+                                                <span class="range"></span>
+                                            </td>
+                                            <td>
+                                                <a href="" class="inc btn btn-primary">LINKS</a>
+                                            </td>
+                                            <td>
+                                                <a href="" class="dec btn btn-primary">LINKS</a>
+                                            </td>
+                                        </tr>
+                                        <% } %>
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+    <script>
+        const chk1 = document.getElementById(`checkbox1`)
+        const chk2 = document.getElementById(`checkbox2`)
+        const chk3 = document.getElementById(`checkbox3`)
+        const chk4 = document.getElementById(`checkbox4`)
+
+
+        function changeClass(idx, water) {
+            para = document.getElementById(`valve${idx}`)
+            if (water) {
+                para.classList.add("no-blink")
+                para.classList.remove("blink")
+                para.innerText = "ADEQUATE WATER"
+            } else {
+                para.classList.remove("no-blink")
+                para.classList.add("blink")
+                para.innerText = "INADEQUATE WATER"
+            }
+
+        }
+
+
+        document.addEventListener('DOMContentLoaded', async function() {
+
+            const response = await fetch('/firebase');
+            const data = await response.json(); //extract JSON from the http response
+
+            for (i = 1; i < 5; i += 1) {
+                document.getElementById(`checkbox${i}`).checked = false
+            }
+
+            if (parseInt(data.mode)) {
+                chk1.checked = true
+                if (parseInt(data["p1"])) {
+                    chk2.checked = true
+                }
+                if (parseInt(data["p2"])) {
+                    chk3.checked = true
+                }
+                if (parseInt(data["p3"])) {
+                    chk4.checked = true
+                }
+            } else {
+                chk2.disabled = true
+                chk3.disabled = true
+                chk4.disabled = true
+            }
+
+            for (i = 1; i <= 3; i += 1) {
+                changeClass(i, data[`Valve ${i}`])
+            }
+
+            const vals = ["n", "p", "k"].map(para => data[para])
+            contentVals = document.querySelectorAll(".content-value")
+            for (i = 0; i < 3; i += 1) {
+                // console.log(vals[i])
+                contentVals[i].innerText = vals[i]
+            }
+
+        });
+
+
+        chk1.addEventListener("change", async(event) => {
+            if (event.currentTarget.checked) {
+                chk2.disabled = false
+                chk3.disabled = false
+                chk4.disabled = false
+                mode = 1
+            } else {
+                chk2.disabled = true
+                chk3.disabled = true
+                chk4.disabled = true
+                chk2.checked = false
+                chk3.checked = false
+                chk4.checked = false
+                mode = 0
+            }
+
+            const resp = await fetch(`/firebase/mode/${mode}`)
+        })
+
+        chk2.addEventListener("change", async(event) => {
+            if (event.currentTarget.checked) {
+                state = 1
+            } else {
+                state = 0
+            }
+            const resp = await fetch(`/firebase/${1}/${state}`)
+        })
+
+        chk3.addEventListener("change", async(event) => {
+            if (event.currentTarget.checked) {
+                state = 1
+            } else {
+                state = 0
+            }
+            const resp = await fetch(`/firebase/${2}/${state}`)
+        })
+
+
+
+        chk4.addEventListener("change", async(event) => {
+            if (event.currentTarget.checked) {
+                state = 1
+            } else {
+                state = 0
+            }
+            const resp = await fetch(`/firebase/${3}/${state}`)
+        })
+
+        // {"AQI":50,"Humidity":62,"Pressure":32,"Temperature":100,"Valve 1":1,"Valve 2":1,"Valve 3":1,"mode":"0","p1":"0","p2":"0","p3":"0"}
+
+
+        const Fruit = document.getElementById("Fruit")
+        Fruit.addEventListener("change", async function(event) {
+
+            type = Fruit.value
+                // console.log(type)
+            const response = await fetch(`/soil/${type}`)
+            const data = await response.json(); //extract JSON from the http response
+            // console.log(data.enrich)
+            // console.log(data.deficient)
+            // console.log(data.fertilizer)
+            // console.log(data.Thresholds)
+
+            document.querySelector(".tips").href = data.fertilizer
+
+            const cell = document.querySelectorAll(".range")
+            const cell1 = document.querySelectorAll(".inc")
+            const cell2 = document.querySelectorAll(".dec")
+            const arr = ["N", "P", "K"]
+            for (i = 0; i < 3; i += 1) {
+                cell[i].innerText = data.Thresholds[arr[i]]
+                cell1[i].href = data.enrich[arr[i]]
+                cell[i].href = data.deficient[arr[i]]
+            }
+        })
+    </script>
+
+
+
+    <%- include('footer'); %>

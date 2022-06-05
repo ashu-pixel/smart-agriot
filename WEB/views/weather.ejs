@@ -1,0 +1,100 @@
+<%- include('header' , {current: "Weather"}); %>
+    <h1 class="text-center mb-0"><b>Weather Wizard</b></h1><br>
+    <p class="h2 bg-danger w-50 m-auto p-2 text-white d-none text-center" id="errMsg"></p>
+    <% if(info){%>
+        <div class="container text-center d-flex" id="infoMain">
+            <p class="h2 bg-info w-50 m-auto p-2 text-white">
+                <%= info  %>
+            </p>
+            <img src="<%= url %>" alt="" id="weather_icons">
+        </div>
+        <% } %>
+
+
+            <form action="/weatherPred" method="post">
+                <div class="mainform m-auto">
+                    <form class="well form-horizontal" action="/weatherPred" method="post" id="contact_form">
+                        <div class="group">
+                            <label class="col-md-4 control-label">City</label>
+                            <div class="input-group ">
+                                <input id="city" placeholder="City Name" class="form-control " type="text">
+                                <button type="button" id="citySearch" class="btn btn-primary ml-2">Search</button>
+                            </div>
+                        </div>
+
+                        <% const para = ["Temperature" , "Humidity" , "Pressure" , "Visibility" , "Wind Speed" , "Wind Degree"] %>
+                            <% const name = ["temp", "humi", "press" , "visibility","windS",    "windD"] %>
+                                <% const placeH = ["Degree C" , "%" , "mb" , "Km" , "Km/hr" , "Degrees"] %>
+                                    <% for(i=0;i<6;i+=1){ %>
+                                        <div class="group">
+                                            <label class="col-md-4 control-label"><%= para[i]%> </label>
+                                            <div class="input-group  ">
+                                                <input name="<%= name[i]%>" placeholder="<%= placeH[i] %> " class="form-control" type="number" required>
+                                            </div>
+                                        </div>
+
+                                        <% } %>
+
+                                            <input type="text" name="url" class="d-none" id="none">
+
+                                            <!-- Button -->
+                                            <div class="group">
+
+                                                <div class="col-md-4">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                                    <button type="submit" class="btn btn-warning submitbtn">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspSUBMIT <span class="glyphicon glyphicon-send"></span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</button>
+                                                </div>
+                                            </div>
+
+                    </form>
+                </div>
+            </form>
+
+            <script>
+                citySearch = document.getElementById("citySearch")
+                let ips = document.querySelectorAll(".form-control")
+                citySearch.addEventListener("click", async function() {
+
+                    let val = document.getElementById("city").value
+                    console.log(val)
+                    const rawResponse = await fetch(`/currConditions/${val}`);
+                    const data = await rawResponse.json();
+
+                    let blueMess = document.getElementById("infoMain")
+                    let redMess = document.getElementById("errMsg")
+                    if (data.error) {
+
+                        redMess.classList.remove("d-none")
+                        redMess.innerText = data.error.message
+                        if (blueMess) {
+                            blueMess.classList.add("d-none")
+                        }
+
+                        return
+                    } else {
+                        document.getElementById("errMsg").classList.add("d-none")
+                        if (blueMess) {
+                            blueMess.classList.remove("d-none")
+                        }
+                    }
+
+                    document.getElementById("none").value = data.current.condition.icon
+                    ips[3].value = Math.ceil(data.current.pressure_mb)
+                    ips[4].value = Math.ceil(data.current.vis_km)
+                    ips[5].value = Math.ceil(data.current.wind_kph)
+                    ips[6].value = Math.ceil(data.current.wind_degree)
+
+                    document.getElementById("submitbtn").disabled = false
+                })
+
+                document.addEventListener('DOMContentLoaded', async function() {
+
+                    const resp = await fetch('/firebase');
+                    const fData = await resp.json(); //extract JSON from the http response
+
+                    ips[1].value = fData.Temperature
+                    ips[2].value = fData.Humidity
+                    document.getElementById("submitbtn").disabled = true
+                });
+            </script>
+
+            <%- include('footer'); %>
