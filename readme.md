@@ -2,16 +2,14 @@
 # Team name: Smartagriot
 
 ## Team members
-* Member-1 Omkar Dhatingan - dhatinganomkar@gmail.com
-* Member-2 Sameena Attari - sameenaattari7860@gmail.com
-* Member-3 Ashutosh Gupta - ashutoshgupta1704@gmail.com
+* Member-1 Ashutosh Gupta - ashutoshgupta1704@gmail.com
+* Member-2 Omkar Dhatingan - dhatinganomkar@gmail.com
+* Member-3 Sameena Attari - sameenaattari7860@gmail.com
 * Member-4 Yashrajsingh Bais - yashrajsinghbais1234@gmail.com
+* Member-5 Atharva Alshi - atharva2001alshigmail.com
 
 ## Description
 Our solution consisted of Smart agriculture farming system using IOT and Machine Learning. From crop prediction and tracking features of our system, results of the crop prediction will be made available to the farmer. Moreover this project help farmers in actual farming process by automatic watering system, providing security and local environmental conditions. It also helps farmers by website based plant disease detection system.Our main aim was to build a complete agriculture system which includes crop prediction and plant disease detection using machine learning , weather forecast prediction system and smart watering system using IoT.
-
-
-
 
 * <ins>TRACKING FARMING USING QGIS: </ins> 
 We aim to track agricultural production using QGIS , a geospatial software to track Rainfall , Temperature , Humidity , Location and other Crop parameters. We can also get location data which would help farmers to know what crops can be grown and in which area.
