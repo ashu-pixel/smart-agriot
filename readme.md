@@ -41,6 +41,11 @@ We aim to detect the plant disease detection and give recommendations for curing
 It is user friendly feature which is added on user demand giving information about Ideal geographical conditions, water requirements, government schemes, etc.related to crop asked. By automating conversations it works as a conversational partner .
 
 
+
+## Architecture
+![model.jpg](IMAGES/SMART%20AGRI-oT%20Model.png)
+
+
 ## Links
 *  [YOUTUBE VID TO BE OUT SOON](#)
 *  [Website](https://smart-agriot-web.herokuapp.com/)
@@ -88,10 +93,9 @@ Once you go on the website link that is given you can use multiple features of o
 3. To make project scalable
 
 ## Screenshots
-[![1.jpg](https://i.postimg.cc/HLXLD8T6/1.jpg)](https://postimg.cc/QBNDct97)
-[![2.jpg](https://i.postimg.cc/Y97Cp29M/2.jpg)](https://postimg.cc/Z9fSHSpM)
-[![3.jpg](https://i.postimg.cc/9Q4MbNK5/3.jpg)](https://postimg.cc/k2mqXw7f)
-
-[![4.jpg](https://i.postimg.cc/pTBXyNh8/4.jpg)](https://postimg.cc/hzfq350P)
-[![5.jpg](https://i.postimg.cc/sgt2N4CB/5.jpg)](https://postimg.cc/hX1gJxjg)
-[![6.jpg](https://i.postimg.cc/bNwdDvRv/6.jpg)](https://postimg.cc/0rh9hPFg)
+![1.jpg](IMAGES/1.jpg)
+![2.jpg](IMAGES/2.jpg)
+![3.jpg](IMAGES/3.jpg)
+![4.jpg](IMAGES/4.jpg)
+![5.jpg](IMAGES/5.jpg)
+![6.jpg](IMAGES/6.jpg)
