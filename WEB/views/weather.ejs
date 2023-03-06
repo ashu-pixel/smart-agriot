@@ -1,4 +1,4 @@
-<%- include('header' , {current: "Weather"}); %>
+<%- include('header' , {current: "Weather", role:"farmer"}); %>
     <h1 class="text-center mb-0"><b>Weather Wizard</b></h1><br>
     <p class="h2 bg-danger w-50 m-auto p-2 text-white d-none text-center" id="errMsg"></p>
     <% if(info){%>
@@ -29,7 +29,7 @@
                                         <div class="group">
                                             <label class="col-md-4 control-label"><%= para[i]%> </label>
                                             <div class="input-group  ">
-                                                <input name="<%= name[i]%>" placeholder="<%= placeH[i] %> " class="form-control" type="number" required>
+                                                <input name="<%= name[i]%>" placeholder="<%= placeH[i] %> " class="form-control" type="number" step="0.01" required>
                                             </div>
                                         </div>
 

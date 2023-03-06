@@ -1,18 +1,25 @@
-<%- include('header' , {current:"/"}); %>
+<%- include('header' , {current:"/" , role  }); %>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital@1&display=swap" rel="stylesheet">
     <div class="p-1">
         <div class="chatbox">
             <div class="welcome-msg text-center ">
-                Welcome "FarmUser", We are here to help you in farming smartly &#128526
+                Welcome ,We are here to help you in farming smartly &#128526
             </div>
+            <div class="text-center">
 
+                <% if(!isLoggedIn) { %>
+                    <a href="/login" class="btn btn-primary text-light px-2 my-2  ">Login</a>
+                    <% }else { %>
+                        <a href="/logout" class="btn btn-primary text-light px-2 my-2  ">Logout</a>
+                        <% } %>
+            </div>
             <div>
                 <img src="images/home.jpg" alt="" class="w-100">
             </div>
 
-            <div style="line-height: 10px; color:beige  ; border : 1px solid green;" class="mt-3"></div>
+            <!-- <div style="line-height: 10px; color:beige  ; border : 1px solid green;" class="mt-3"></div>
             <div class="skip-chat">
                 <div class="mt-4 chat-border">
                     <span class="h4 font-weight-bold">
@@ -21,7 +28,7 @@
                     <a href="https://smartagribot.herokuapp.com/" class="btn">CHATBOT</a>
                 </div>
             </div>
-            <div style="line-height: 10px; color:beige  ; border : 1px solid green;" class="mt-3"></div>
+            <div style="line-height: 10px; color:beige  ; border : 1px solid green;" class="mt-3"></div> -->
         </div>
 
         <div class="features ">

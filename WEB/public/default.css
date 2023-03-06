@@ -55,13 +55,15 @@ nav img {
     align-items: center;
 }
 
+
+/* 
 .chatbox a {
     background-color: #ffff66;
     font-size: 1.5em;
     padding: 15px;
     border-radius: 10px;
     color: red;
-}
+} */
 
 .welcome-msg {
     font-size: 3em;

@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Lato&family=Source+Serif+Pro:ital@1&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="default.css">
+    <link rel="stylesheet" href="../default.css">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,22 +27,60 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top p-0">
-        <img src="images/logo.jpg" alt="">
+        <img src="../images/logo.jpg" alt="">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"></span>
         </button>
 
-        <% const contents = {Home : "/" , "Tracking" : "qgisPage", "Crop Prediction" : "CropPrediction" , "Precision Agriculture" : "PrecisionAgriculture", "Weather" : "Weather" , "Smart Farming" : "SmartFarming" , "Plant Doctor" : "https://smart-plant-doc.herokuapp.com/" ,   "About & Contact" : "abt"} %>
+        <% const contents={ "Tracking" : "qgisPage" , "Crop Prediction" : "CropPrediction" , "Precision Agriculture"
+            : "PrecisionAgriculture" , "Weather" : "Weather" , "Smart Farming" : "SmartFarming" , "Plant Doctor"
+            : "plantDoctor" } %>
+
+
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav d-flex mx-auto ">
-                    <% for(item in contents){ %>
-                        <div class="nav-item py-2 <% if (current===contents[item]) { %> current <% } %>">
-                            <li class="active mx-4 fonts">
-                                <a class="nav-link" href=<%=contents[item] %>>
-                                    <%=item %> <span class="sr-only">(current)</span></a>
-                            </li>
-                        </div>
-                        <%} %>
+
+
+                    <div class="nav-item py-2 <% if (current===" / ") { %> current <% } %>">
+                        <li class="active mx-4 fonts">
+                            <a class="nav-link" href="/">
+                                Home <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                    </div>
+
+
+
+
+                    <% if(role=='farmer' ){ %>
+                        <% for(item in contents){ %>
+                            <div class="nav-item py-2 <% if (current===contents[item]) { %> current <% } %>">
+                                <li class="active mx-4 fonts">
+                                    <a class="nav-link" href=<%=contents[item] %>>
+                                        <%=item %> <span class="sr-only">(current)</span>
+                                    </a>
+                                </li>
+                            </div>
+                            <%} %>
+                                <%}else if(role=='expert' ){ %>
+
+                                    <div class="nav-item py-2 <% if (current==='appointment') { %> current <% } %>">
+                                        <li class="active mx-4 fonts">
+                                            <a class="nav-link" href="/appointment">
+                                                Appointment <span class="sr-only">(current)</span>
+                                            </a>
+                                        </li>
+                                    </div>
+                                    <%} %>
+
+
+                                        <div class="nav-item py-2 <% if (current===" abt ") { %> current <% } %>">
+                                            <li class="active mx-4 fonts">
+                                                <a class="nav-link" href="/abt">
+                                                    About & Contact <span class="sr-only">(current)</span>
+                                                </a>
+                                            </li>
+                                        </div>
                 </ul>
             </div>
             <div id="google_translate_element"></div>

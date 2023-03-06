@@ -1,4 +1,4 @@
-<%- include('header', {current:"CropPrediction"})  %>
+<%- include('header', {current:"CropPrediction" , role:"farmer"}) %>
 
     <h1 class="text-center mb-0"><b>Crop Prediction</b></h1><br>
     <div class="form-container ">
@@ -7,70 +7,74 @@
             <form class="well form-horizontal" action=" " method="post" id="contact_form">
 
 
-                <div class="group">
-                    <label class="col-md-4 control-label">Season</label>
-                    <div class="input-group">
-                        <select name="season" class="form-control selectpicker" required>
-                                 <option value="">Select your Season</option>
-                                 <option value="0">Autumn</option>
-                                 <option value="1">Kharif</option>
-                                 <option value="2" >Rabi</option>
-                                 <option value="3" >Summmer</option>
-                                 <option value="4" >Winter</option>
-                                 <option value="5" >Whole Year</option>
-                            </select>
-                    </div>
-                </div>
 
                 <div class="group">
                     <label class="col-md-4 control-label">Temperature</label>
                     <div class="input-group">
-                        <input name="temp" placeholder="Temperature in Kelvin" class="form-control" type="number" required>
+                        <input name="temp" placeholder="Temperature in Kelvin" class="form-control" step="0.01" type="number" required>
                     </div>
                 </div>
 
                 <div class="group">
                     <label class="col-md-4 control-label">Humidity</label>
                     <div class="input-group">
-                        <input name="humi" placeholder="Percentage Humidity" class="form-control" type="number" min="0" max="100" required>
+                        <input name="humi" placeholder="Percentage Humidity" class="form-control" step="0.01" type="number" min="0" max="100" required>
+                    </div>
+                </div>
+
+                <div class="group">
+                    <label class="col-md-4 control-label">Rainfall</label>
+                    <div class="input-group">
+                        <input name="rainfall" placeholder="Rainfall in mm" class="form-control" step="0.01" type="number" min="0" required>
                     </div>
                 </div>
 
 
                 <div class="group">
-                    <label class="col-md-4 control-label">Rainfall</label>
+                    <label class="col-md-4 control-label">Nitrogen Content</label>
                     <div class="input-group">
-                        <input name="rainfall" placeholder="Rainfall in mm" class="form-control" type="number" min="0" required>
+                        <input name="nitrogen" placeholder="N" class="form-control" type="number" step="0.01" min="0" required>
                     </div>
                 </div>
 
-                <% const soilType = ["Alluvial Soil" ,"Black Cotton" ,"Black Soil","Clay Soil","Coarse Shallow soil", "Laterite Soil","Loamy Soil","Red Loamy Soil","Red Sandy Soil","Red Soil", "Red and Yellow Soil", "Sandy Loam Soil","Sandy Soil","Slit Soil" ] %>
-
-                    <div class="group">
-                        <label class="col-md-4 control-label">Soil Type</label>
-                        <div class="input-group">
-
-                            <select name="soil" class="form-control selectpicker" required>
-          <option value="">Select your Soil Type</option>
-          <% for(idx in soilType){ %> 
-          <option value="<%= idx  %> " ><%= soilType[idx] %> </option>
-          <%}  %> 
-        </select>
-                        </div>
+                <div class="group">
+                    <label class="col-md-4 control-label">Phosphorus Content</label>
+                    <div class="input-group">
+                        <input name="phosphorus" placeholder="P" class="form-control" type="number" step="0.01" min="0" required>
                     </div>
+                </div>
 
-                    <!-- Button -->
-                    <div class="group">
-
-                        <div class="col-md-4">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                            <button type="submit" class="btn btn-warning">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspSUBMIT <span class="glyphicon glyphicon-send"></span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</button>
-                        </div>
+                <div class="group">
+                    <label class="col-md-4 control-label">Potassium Content</label>
+                    <div class="input-group">
+                        <input name="potassium" placeholder="K" class="form-control" type="number" step="0.01" min="0" required>
                     </div>
+                </div>
+
+                <div class="group">
+                    <label class="col-md-4 control-label">pH VALUE</label>
+                    <div class="input-group">
+                        <input name="pH" placeholder="pH" class="form-control" type="number" min="0" step="0.01" max="14" required>
+                    </div>
+                </div>
 
 
-                    <!-- Success message -->
-                    <div class="alert alert-success group" role="alert" id="success_message">
-                        <%= info %> <i class="glyphicon glyphicon-thumbs-up"></i></div>
+
+                <!-- Button -->
+                <div class="group">
+
+                    <div class="col-md-4">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                        <button type="submit" class="btn btn-warning">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspSUBMIT
+                            <span
+                                class="glyphicon glyphicon-send"></span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</button>
+                    </div>
+                </div>
+
+
+                <!-- Success message -->
+                <div class="alert alert-success group" role="alert" id="success_message">
+                    <%= info %> <i class="glyphicon glyphicon-thumbs-up"></i>
+                </div>
 
 
             </form>
