@@ -210,7 +210,7 @@ app.post("/weatherPred", sessionCheckerFarmer, async function (req, res) {
     res.render("weather", { weather: "Weather", info: content.val, url: url, api: process.env.WEATHERAPI })
 })
 
-app.get("/currConditions/:cty", async function (req, res) {
+app.get("/currCityConditions/:cty", async function (req, res) {
     const val = req.params.cty
     const resp = await fetch(`https://api.weatherapi.com/v1/current.json?key=${process.env.WEATHERAPI}&q=${val}&aqi=no`)
     const data = await resp.json(); 
@@ -228,7 +228,7 @@ app.get("/soil/:frt", function (req, res) {
     })
 })
 
-app.get("/firebase", sessionCheckerFarmer , async function (req, res) {
+app.get("/dhtSensorVals", sessionCheckerFarmer , async function (req, res) {
 
     session = req.session;
      

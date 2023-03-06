@@ -56,7 +56,7 @@
 
                     let val = document.getElementById("city").value
                     console.log(val)
-                    const rawResponse = await fetch(`/currConditions/${val}`);
+                    const rawResponse = await fetch(`/currCityConditions/${val}`);
                     const data = await rawResponse.json();
 
                     let blueMess = document.getElementById("infoMain")
@@ -88,8 +88,8 @@
 
                 document.addEventListener('DOMContentLoaded', async function() {
 
-                    const resp = await fetch('/firebase');
-                    const fData = await resp.json(); //extract JSON from the http response
+                    const resp = await fetch('/dhtSensorVals');
+                    const fData = await resp.json();
 
                     ips[1].value = fData.Temperature
                     ips[2].value = fData.Humidity
