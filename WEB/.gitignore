@@ -131,3 +131,4 @@ dist
 
 config.json
 todo.txt
+./views/smartFarm.ejs

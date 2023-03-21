@@ -4,6 +4,159 @@ body {
     background-color: rgb(219, 255, 237);
 }
 
+#cropSelection {
+    margin-top: 1%;
+}
+
+#mode-switch mt-2 {
+    margin-left: 5%;
+}
+
+.sliderbtn {
+    display: flex;
+}
+
+#checkboxsecure {
+    margin-left: 5%;
+}
+
+#modeslider {
+    margin-right: 10%;
+}
+
+#watering {
+    margin-left: 5%;
+    animation: blinker 1.5s linear infinite;
+    color: red;
+    font-family: sans-serif;
+}
+
+#security {
+    margin-left: 5%;
+    animation: blinker 1.5s linear infinite;
+    color: red;
+    font-family: sans-serif;
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}
+
+#P0 {
+    display: flex;
+    margin-top: 2%;
+}
+
+#P1 {
+    display: flex;
+    margin-top: 2%;
+}
+
+#P2 {
+    display: flex;
+    margin-top: 2%;
+}
+
+#P3 {
+    display: flex;
+    margin-top: 4%;
+}
+
+#P4 {
+    display: flex;
+    margin-top: 4%;
+}
+
+#P5 {
+    display: flex;
+    margin-top: 4%;
+}
+
+#P6 {
+    display: flex;
+    margin-top: 4%;
+}
+
+#P7 {
+    display: flex;
+    margin-top: 4%;
+}
+
+#P8 {
+    display: flex;
+    margin-top: 4%;
+}
+
+#P9 {
+    display: flex;
+    margin-top: 4%;
+}
+
+#P10 {
+    display: flex;
+    margin-top: 4%;
+}
+
+#P11 {
+    display: flex;
+    margin-top: 4%;
+}
+
+#P12 {
+    display: flex;
+    margin-top: 4%;
+}
+
+#P13 {
+    display: flex;
+    margin-top: 4%;
+}
+
+#P14 {
+    display: flex;
+    margin-top: 4%;
+}
+
+#P15 {
+    display: flex;
+    margin-top: 4%;
+}
+
+#moist {
+    margin-left: 5%;
+}
+
+#age {
+    margin-left: 5%;
+}
+
+#mode {
+    margin-left: 5%;
+}
+
+#totalage {
+    display: flex;
+    margin-left: 5%;
+}
+
+#mode-switch {
+    display: flex;
+}
+
+#N {
+    margin-left: 5%;
+}
+
+#P {
+    margin-left: 5%;
+}
+
+#K {
+    margin-left: 5%;
+}
+
 nav {
     margin-bottom: 20px;
 }
@@ -55,15 +208,13 @@ nav img {
     align-items: center;
 }
 
-
-/* 
 .chatbox a {
     background-color: #ffff66;
     font-size: 1.5em;
     padding: 15px;
     border-radius: 10px;
     color: red;
-} */
+}
 
 .welcome-msg {
     font-size: 3em;

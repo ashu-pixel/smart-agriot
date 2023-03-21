@@ -1,36 +1,18 @@
 <%- include('header' , {current:"SmartFarming", role:"farmer"}); %>
 
-    <script src="js/wow.min.js"></script>
+    
+    
+    <!-- 'chickpea', 'mothbeans', 'lentil', 'pigeonpeas', 'rice', 'mango', 'grapes', 'orange', 'coconut', 'pomegranate', 'jute', 'banana', 'kidneybeans', 'maize', 'mungbean', 'apple', 'coffee', 'cotton', 'blackgram', 'watermelon', 'muskmelon', 'papaya' -->
 
 
-    <script src="js/jquery-1.12.0.min.js"></script>
-    <script src="js/bootstrap.js"></script>
-    <script>
-        function save_data1() {
-            var input = document.getElementById("plant1").value;
-            console.log(input);
-            localStorage.setItem("Plant1", input);
-            document.getElementById("m1").innerHTML = localStorage.getItem('Plant1');
-            //var ip = document.getElementById("plant1").value = localStorage.setItem("plant1");
+    <!-- <script>
+        function save(){
+            var crop = document.getElementById("crops").value;
+            console.log(crop);
+            var section = document.getElementById("sections").value;
+            console.log(section);
         }
-
-        function save_data2() {
-            var input = document.getElementById("plant2").value;
-            console.log(input);
-            localStorage.setItem("Plant2", input);
-            document.getElementById("m2").innerHTML = localStorage.getItem('Plant2');
-            //var ip = document.getElementById("plant1").value = localStorage.setItem("plant1");
-        }
-
-        function save_data3() {
-            var input = document.getElementById("plant3").value;
-            console.log(input);
-            localStorage.setItem("Plant3", input);
-            document.getElementById("m3").innerHTML = localStorage.getItem('Plant3');
-            //var ip = document.getElementById("plant1").value = localStorage.setItem("plant1");
-        }
-    </script>
-
+    </script> -->
     <div class="d-flex  align-items-center justify-content-around">
         <h1 class="mx-auto">
             <B> SMART FARMING IN AGRICULTURE ! </B>
@@ -69,6 +51,7 @@
         <li><span style="color: red;">Inadequate water level</span>: Plant needs more water. Please switch on the the motor to continue the water supply until the blinking red message on the screen turns green to show adequate water level is reached.</li>
         <li><span style="color: green;">Adequate water level</span>: Now you can switch OFF the motor as adequate water level has been reached.</li>
         <li>Mode: Here you can decide the mode depending on whether you manually want to supply water(Turn <span style="color: green;">ON Manual mode</span>) or let the system do the work for you(Turn <span style="color:red">ON Automatic mode</span>).</li>
+        li>Security: Here you can decide the security mode depending on whether you want to ring buzzer or not on motion detection. manually want to supply water(Turn <span style="color: green;">ON Manual mode</span>) or let the system do the work for you(Turn <span style="color:red">ON Automatic mode</span>).</li>
         <li>Water supply of plant 1: In manual mode you can turn the motor <span style="color: green;">ON</span>/<span style="color: red;">OFF</span> for Plant 1 as per the need.</li>
         <li>Water supply of plant 2: In manual mode you can turn the motor <span style="color: green;">ON</span>/<span style="color: red;">OFF</span> for Plant 2 as per the need.</li>
         <li>Water supply of plant 3: In manual mode you can turn the motor <span style="color: green;">ON</span>/<span style="color: red;">OFF</span> for Plant 3 as per the need. </li>
@@ -80,8 +63,1721 @@
     <h1 style="text-align: center;color: brown;">
         <U>Ensuring the Security and Health through the Smart Water Management System </U>
     </h1>
+ 
 
-    <div class="panel">
+
+<div id="cropSelection" class="text-center">
+    <label for="crops">Choose a crop</label>
+
+    <select name="crops" id="crops">
+    <option value="chickpea">Chickpea</option>
+    <option value="mothbeans">Mothbeans</option>
+    <option value="lentil">Lentil</option>
+    <option value="pigeonpeas">Pigeonpeas</option>
+    <option value="rice">Rice</option>
+    <option value="mango">Mango</option>
+    <option value="grapes">Grapes</option>
+    <option value="orange">Orange</option>
+    <option value="coconut">Coconut</option>
+    <option value="pomegranate">Pomegranate</option>
+    <option value="jute">Jute</option>
+    <option value="banana">Banana</option>
+    <option value="kidneybeans">Kidneybeans</option>
+    <option value="maize">Maize</option>
+    <option value="mungbeans">Mungbean</option>
+    <option value="apple">Apple</option>
+    <option value="coffee">Coffee</option>
+    <option value="cotton">Cotton</option>
+    <option value="blackgram">Blackgram</option>
+    <option value="muskmelon">Muskmelon</option>
+    <option value="watermelon">Watermelon</option>
+    </select>
+
+    <label>Number of sections
+        <input id="sections">
+    </label>
+
+    <button  id="submit">Save</button>
+    
+    <div class="mode-switch mt-1">
+        <div>
+            <h3>Automatic Mode</h3>
+        </div>
+        <div>
+            <label class="switch mx-2">
+                <input type="checkbox" id="modeslider"  >
+                <span class="slider round "></span>
+            </label>
+        </div>
+        <div>
+            <h3>Manual Mode</h3>
+        </div>
+    </div>
+    
+    <div class="mode-switch mt-2">
+        <div>
+            <h3>Secure</h3>
+        </div>
+        <div>
+            <label class="switch mx-2">
+                <input type="checkbox" id="checkboxsecure"  >
+                <span class="slider round "></span>
+            </label>
+        </div>
+        <div>
+            <h3>No Security??</h3>
+        </div>
+    </div>
+   
+    <div>
+    
+</div>
+    <div id="allCrops">
+
+    </div>
+
+   <!-- <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
+    import { getFirestore, doc, getDoc, collection, addDoc, updateDoc, deleteDoc, deleteField, getDocs , onSnapshot, setDoc }
+            from 'https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js'
+
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyCvI8T8nI7rYxJmu-B0aDw5BrjOKVHYhxw",
+            authDomain: "smart-agriot.firebaseapp.com",
+            databaseURL: "https://smart-agriot-default-rtdb.firebaseio.com",
+            projectId: "smart-agriot",
+            storageBucket: "smart-agriot.appspot.com",
+            messagingSenderId: "776397938423",
+            appId: "1:776397938423:web:fe119f8b9eeb1805c87df2",
+            measurementId: "G-BB4HHBH37C"
+        };
+
+        
+        const app = initializeApp(firebaseConfig);
+
+
+        const db = getFirestore(app)
+
+        // function adding() {
+        //     console.log("Adding")
+        //     let ref = collection(db, "Farm");
+        //     const decRef = addDoc(ref, {
+        //         Farmerid: "1001"
+        //     })
+        //         .then(function () { console.log("DONE") })
+        //         .catch(function () { console.log("ERROR") })
+        // }
+
+        
+
+   </script> -->
+
+
+    <script type="module"> 
+
+
+
+        
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
+import { getFirestore, doc, collection, addDoc, onSnapshot, setDoc,getDoc }
+            from 'https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js'
+
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyCvI8T8nI7rYxJmu-B0aDw5BrjOKVHYhxw",
+            authDomain: "smart-agriot.firebaseapp.com",
+            databaseURL: "https://smart-agriot-default-rtdb.firebaseio.com",
+            projectId: "smart-agriot",
+            storageBucket: "smart-agriot.appspot.com",
+            messagingSenderId: "776397938423",
+            appId: "1:776397938423:web:fe119f8b9eeb1805c87df2",
+            measurementId: "G-BB4HHBH37C"
+        };
+
+        
+        const app = initializeApp(firebaseConfig);
+
+
+        const db = getFirestore(app)
+        var totalSection = "0";
+
+
+async function save(){
+
+var crop = document.getElementById("crops").value;
+await setDoc(doc(db, "Farm", "1001"), {
+[crop]: " ",
+}, {merge: true})
+
+// console.log(crop);
+const section = document.getElementById("sections").value;
+// console.log(section);
+
+const allCropsContainer = document.getElementById("allCrops");
+for(var i=Number(totalSection);i<Number(totalSection)+Number(section);i++){
+    const cropElement = document.createElement("div");
+    let val = 'P' + `${i}`
+    cropElement.id = val;
+    cropElement.innerText = crop+`${i}`;
+    allCropsContainer.append(cropElement);
+
+    const currentDate = new Date();
+    const date = currentDate.getDate();
+    const month = currentDate.getMonth();
+    const year = currentDate.getFullYear();
+
+// show in specific format
+let dateMonthYear = date + '/' +(month+1) + '/' +  year;
+    var MOIS_STATUS = "MOIS_STATUS"+i;
+    console.log(MOIS_STATUS);
+    // let val = 'X' + `${i}`
+    await setDoc(doc(db, "Farm", "1001"), {
+    [val] : {
+    
+        crop : `${crop}`,
+        dobdate: date,
+        dobmonth:month+1,
+        dobyear:year,
+        n : 25,
+        p : 40,
+        k : 20,
+        [MOIS_STATUS] : 1
+    }
+
+}, {merge: true})
+.then(() => {
+    console.log("Document successfully written!");
+})
+.catch((error) => {
+    console.error("Error writing document: ", error);
+});
+}
+totalSection =  Number(totalSection)+Number(section);
+console.log(totalSection)
+setTimeout(getData,500);
+
+}
+
+async function getData(){
+
+    var crop = document.getElementById("crops").value;
+    console.log(crop)
+
+// console.log(crop);
+const section = document.getElementById("sections").value;
+// console.log(section);
+
+const allCropsContainer = document.getElementById("allCrops");
+
+    const oneDoc = await getDoc(doc(db, "Farm" , "1001")) 
+const key = Object.keys(oneDoc.data());
+
+
+console.log(key);
+
+for(var i=0; i<key.length;i++){
+    if(key[i][0]=='P' && oneDoc.data()[key[i]].crop==`${crop}`){
+        // console.log(key[i])
+        console.log(oneDoc.data());
+        let cropVal = oneDoc.data()[key[i]].crop;
+        console.log(cropVal)
+
+
+        const curr_Date = new Date();
+        const currentDate = curr_Date.getDate();
+        const currentMonth = curr_Date.getMonth()+1;
+        const currentYear = curr_Date.getFullYear();
+
+// show in specific format
+        let dateMonthateYear = currentDate + '/'+(currentMonth) + '/'  + currentYear;
+        console.log("curr",dateMonthateYear)
+        var dobDate=oneDoc.data()[key[i]].dobdate;
+        var dobMonth=oneDoc.data()[key[i]].dobmonth;
+        var dobYear=oneDoc.data()[key[i]].dobyear;
+        let dobdateMonthateYear = dobDate + '/'+(dobMonth) + '/'  + dobYear;
+        console.log(dobdateMonthateYear);
+
+
+        var age = {};  
+    var ageString = "";  
+    
+    //get years  
+    var yearAge = currentYear - dobYear;  
+      
+    //get months  
+    if (currentMonth >= dobMonth)  
+      //get months when current month is greater  
+      var monthAge = currentMonth - dobMonth;  
+    else {  
+      yearAge--;  
+      var monthAge = 12 + currentMonth - dobMonth;  
+    }  
+  
+    //get days  
+    if (currentDate >= dobDate)  
+      //get days when the current date is greater  
+      var dateAge = currentDate - dobDate;  
+    else {  
+      monthAge--;  
+      var dateAge = 31 + currentDate - dobDate;  
+  
+      if (monthAge < 0) {  
+        monthAge = 11;  
+        yearAge--;  
+      }  
+    }  
+    //group the age in a single variable  
+    age = {  
+    years: yearAge,  
+    months: monthAge,  
+    days: dateAge  
+    };  
+
+    console.log(age)
+
+        
+      
+
+
+        const allvaluesContainer = document.getElementById(`${key[i]}`);
+        //moisture val
+        // const moistVal = document.createElement("div");
+        // moistVal.id = "moist";
+        // moistVal.innerHTML = "Moisture";
+        // allvaluesContainer.append(moistVal);
+        // const mVal = document.createElement("h5")
+        // mVal.innerText = oneDoc.data()[key[i]].moist;
+        // moistVal.appendChild(mVal);
+        // var num = key[i].replace('P','');
+        
+
+        const ageVal = document.createElement("div");
+        ageVal.id = "age";
+        ageVal.innerHTML = "Age";
+        allvaluesContainer.append(ageVal);
+
+        const totalAge = document.createElement("div");
+        totalAge.id = "totalage";
+        ageVal.appendChild(totalAge);
+
+        const yearVal = document.createElement("div")
+        yearVal.id = "years";
+        yearVal.innerHTML = "Months";
+        totalAge.append(yearVal);
+        const yVal = document.createElement("h5")
+        yVal.innerText = age.years;
+        yearVal.append(yVal);
+
+        // const monthVal = document.createElement("div");
+        // monthVal.id = "months";
+        // monthVal.innerHTML = "Months";
+        // totalAge.append(monthVal);
+        // const mVal = document.createElement("h5")
+        // mVal.innerText = age.months;
+        // monthVal.append(mVal);
+
+        // const dayVal = document.createElement("h5");
+        // dayVal.id = "days";
+        // dayVal.innerHTML = "Days";
+        // totalAge.appendChild(dayVal);
+        // const dVal = document.createElement("h5")
+        // dVal.innerText = age.days;
+        // dayVal.appendChild(dVal);
+
+        const NVal = document.createElement("div");
+        NVal.id = "N";
+        NVal.innerHTML = "N %";
+        allvaluesContainer.append(NVal);
+        const nVal = document.createElement("h5")
+        nVal.innerText = oneDoc.data()[key[i]].n;
+        NVal.appendChild(nVal);
+
+        const PVal = document.createElement("div");
+        PVal.id = "P";
+        PVal.innerHTML = "P %";
+        allvaluesContainer.append(PVal);
+        const pVal = document.createElement("h5")
+        pVal.innerText = oneDoc.data()[key[i]].p;
+        PVal.appendChild(pVal);
+
+        const KVal = document.createElement("div");
+        KVal.id = "K";
+        KVal.innerHTML = "K %";
+        allvaluesContainer.append(KVal);
+        const kVal = document.createElement("h5")
+        console.log(oneDoc.data()[key[i]])
+        kVal.innerText = oneDoc.data()[key[i]].k;
+        KVal.appendChild(kVal);
+
+       
+
+
+        //console.log(key[i].replace(/[a-zA-Z](.*)/g, ''))
+        let ret = key[i].charAt(1);
+        console.log(key[i])
+        console.log(ret)
+         
+
+        const moistStatus = document.createElement("div");
+        moistStatus.id = "moist";
+        moistStatus.innerHTML = "Watering Status";
+        allvaluesContainer.append(moistStatus);
+        const mVal = document.createElement("h5")
+        const checkbox_number=ret;
+        ret= "MOIS_STATUS" + `${ret}`;
+        console.log(ret)
+        console.log(oneDoc.data()[key[i]]);
+
+        var key1 = key[i].charAt(1)==0
+        var key2 = key[i].charAt(1)==1
+        var key3 = key[i].charAt(1)==2
+        var key4 = key[i].charAt(1)==3
+        var key5 = key[i].charAt(1)==4
+        var key6 = key[i].charAt(1)==5
+        var key7 = key[i].charAt(1)==6
+        var key8 = key[i].charAt(1)==7
+        var key9 = key[i].charAt(1)==8
+        var key10 = key[i].charAt(1)==9
+        var key11 = key[i].charAt(1)+key[i].charAt(2)==10
+        var key12 = key[i].charAt(1)+key[i].charAt(2)==11
+        var key13 = key[i].charAt(1)+key[i].charAt(2)==12
+        var key14 = key[i].charAt(1)+key[i].charAt(2)==13
+        var key15 = key[i].charAt(1)+key[i].charAt(2)==14
+        var key16 = key[i].charAt(1)+key[i].charAt(2)==15
+
+        
+        
+        // console.log(key1)
+        if(key1==true){
+            console.log(key[i]);
+            console.log(oneDoc.data()[key[i]].MOIS_STATUS0);
+            const colRef = doc(db, 'Farm','1001')
+
+// realtime collection data
+const decRef = await onSnapshot(colRef, (snapshot) => {
+    
+    console.log(snapshot.data())
+    if(snapshot.data().P0.MOIS_STATUS0 == 0){
+        mVal.innerText = "Inadequate water";
+        mVal.style.color = "red"
+    }
+    else if(snapshot.data().P0.MOIS_STATUS0 == 1){
+        mVal.innerText = "Adequate water";
+        mVal.style.color = "green"
+    }
+})
+        // if(oneDoc.data()[key[i]].MOIS_STATUS0 == 0){
+        
+        
+        const mode = document.createElement("div");
+        mode.id = "mode";
+        mode.innerHTML = "Mode";
+
+        const water_status = document.createElement("div");
+        water_status.id = "mode-switch";
+        mode.append(water_status);
+        const water_status_auto = document.createElement("div");
+        water_status.append(water_status_auto);
+        const water_status_auto_mode = document.createElement("h5")
+        water_status_auto_mode.innerHTML="OFF"
+        water_status_auto.append(water_status_auto_mode)
+        const check = document.createElement("div");
+        const checkbox = document.createElement("label")
+        checkbox.className="switch"
+        check.append(checkbox)
+        const check_ip = document.createElement("input")
+        check_ip.type="checkbox"
+        check_ip.id="checkbox"+ checkbox_number
+        checkbox.append(check_ip)
+
+        const slider_round=document.createElement("span")
+        slider_round.className="slider round"
+        checkbox.append(slider_round);
+
+        water_status.append(checkbox)
+
+        const water_status_man = document.createElement("div");
+        water_status.append(water_status_man);
+        const water_status_man_mode = document.createElement("h5")
+        water_status_man_mode.innerHTML="ON"
+        water_status_man.append(water_status_man_mode)
+
+        allvaluesContainer.append(mode)
+        document.querySelector("#checkbox0").addEventListener("click",handleChange)
+        // }
+        // else{
+        //     mVal.innerText = "Adequate water";
+        //     mVal.style.color = "green"
+        // }
+        }
+        moistStatus.appendChild(mVal);
+
+        if(key2==true){
+            console.log(oneDoc.data()[key[i]].MOIS_STATUS1);
+            const colRef = doc(db, 'Farm','1001')
+
+// realtime collection data
+const decRef = await onSnapshot(colRef, (snapshot) => {
+    
+    console.log(snapshot.data())
+    if(snapshot.data().P1.MOIS_STATUS1 == 0){
+        mVal.innerText = "Inadequate water";
+        mVal.style.color = "red"
+    }
+    else if(snapshot.data().P1.MOIS_STATUS1 == 1){
+        mVal.innerText = "Adequate water";
+        mVal.style.color = "green"
+    }
+})
+const mode = document.createElement("div");
+        mode.id = "mode";
+        mode.innerHTML = "Mode";
+
+        const water_status = document.createElement("div");
+        water_status.id = "mode-switch";
+        mode.append(water_status);
+        const water_status_auto = document.createElement("div");
+        water_status.append(water_status_auto);
+        const water_status_auto_mode = document.createElement("h5")
+        water_status_auto_mode.innerHTML="OFF"
+        water_status_auto.append(water_status_auto_mode)
+        const check = document.createElement("div");
+        const checkbox = document.createElement("label")
+        checkbox.className="switch"
+        check.append(checkbox)
+        const check_ip = document.createElement("input")
+        check_ip.type="checkbox"
+        check_ip.id="checkbox"+ checkbox_number
+        checkbox.append(check_ip)
+
+        const slider_round=document.createElement("span")
+        slider_round.className="slider round"
+        checkbox.append(slider_round);
+
+        water_status.append(checkbox)
+
+        const water_status_man = document.createElement("div");
+        water_status.append(water_status_man);
+        const water_status_man_mode = document.createElement("h5")
+        water_status_man_mode.innerHTML="ON"
+        water_status_man.append(water_status_man_mode)
+
+        allvaluesContainer.append(mode)
+        document.querySelector("#checkbox1").addEventListener("click",handleChange)   
+        }
+        moistStatus.appendChild(mVal);
+
+        if(key3==true){
+            console.log(oneDoc.data()[key[i]].MOIS_STATUS2);
+            const colRef = doc(db, 'Farm','1001')
+
+// realtime collection data
+const decRef = await onSnapshot(colRef, (snapshot) => {
+    
+    console.log(snapshot.data())
+    if(snapshot.data().P2.MOIS_STATUS2 == 0){
+        mVal.innerText = "Inadequate water";
+        mVal.style.color = "red"
+    }
+    else if(snapshot.data().P2.MOIS_STATUS2 == 1){
+        mVal.innerText = "Adequate water";
+        mVal.style.color = "green"
+    }
+})
+
+const mode = document.createElement("div");
+        mode.id = "mode";
+        mode.innerHTML = "Mode";
+
+        const water_status = document.createElement("div");
+        water_status.id = "mode-switch";
+        mode.append(water_status);
+        const water_status_auto = document.createElement("div");
+        water_status.append(water_status_auto);
+        const water_status_auto_mode = document.createElement("h5")
+        water_status_auto_mode.innerHTML="OFF"
+        water_status_auto.append(water_status_auto_mode)
+        const check = document.createElement("div");
+        const checkbox = document.createElement("label")
+        checkbox.className="switch"
+        check.append(checkbox)
+        const check_ip = document.createElement("input")
+        check_ip.type="checkbox"
+        check_ip.id="checkbox"+ checkbox_number
+        checkbox.append(check_ip)
+
+        const slider_round=document.createElement("span")
+        slider_round.className="slider round"
+        checkbox.append(slider_round);
+
+        water_status.append(checkbox)
+
+        const water_status_man = document.createElement("div");
+        water_status.append(water_status_man);
+        const water_status_man_mode = document.createElement("h5")
+        water_status_man_mode.innerHTML="ON"
+        water_status_man.append(water_status_man_mode)
+
+        allvaluesContainer.append(mode)
+        document.querySelector("#checkbox2").addEventListener("click",handleChange)
+        
+        moistStatus.appendChild(mVal);
+        }
+
+        if(key4==true){
+            console.log(oneDoc.data()[key[i]].MOIS_STATUS0);
+
+            const colRef = doc(db, 'Farm','1001')
+
+// realtime collection data
+const decRef = await onSnapshot(colRef, (snapshot) => {
+    
+    console.log(snapshot.data())
+    if(snapshot.data().P3.MOIS_STATUS3 == 0){
+        mVal.innerText = "Inadequate water";
+        mVal.style.color = "red"
+    }
+    else if(snapshot.data().P3.MOIS_STATUS3 == 1){
+        mVal.innerText = "Adequate water";
+        mVal.style.color = "green"
+    }
+})
+const mode = document.createElement("div");
+        mode.id = "mode";
+        mode.innerHTML = "Mode";
+
+        const water_status = document.createElement("div");
+        water_status.id = "mode-switch";
+        mode.append(water_status);
+        const water_status_auto = document.createElement("div");
+        water_status.append(water_status_auto);
+        const water_status_auto_mode = document.createElement("h5")
+        water_status_auto_mode.innerHTML="OFF"
+        water_status_auto.append(water_status_auto_mode)
+        const check = document.createElement("div");
+        const checkbox = document.createElement("label")
+        checkbox.className="switch"
+        check.append(checkbox)
+        const check_ip = document.createElement("input")
+        check_ip.type="checkbox"
+        check_ip.id="checkbox"+ checkbox_number
+        checkbox.append(check_ip)
+
+        const slider_round=document.createElement("span")
+        slider_round.className="slider round"
+        checkbox.append(slider_round);
+
+        water_status.append(checkbox)
+
+        const water_status_man = document.createElement("div");
+        water_status.append(water_status_man);
+        const water_status_man_mode = document.createElement("h5")
+        water_status_man_mode.innerHTML="ON"
+        water_status_man.append(water_status_man_mode)
+
+        allvaluesContainer.append(mode)
+        document.querySelector("#checkbox3").addEventListener("click",handleChange)
+}
+        
+        moistStatus.appendChild(mVal);
+
+        if(key5==true){
+            console.log(oneDoc.data()[key[i]].MOIS_STATUS0);
+            const colRef = doc(db, 'Farm','1001')
+
+// realtime collection data
+const decRef = await onSnapshot(colRef, (snapshot) => {
+    
+    console.log(snapshot.data())
+    if(snapshot.data().P4.MOIS_STATUS4 == 0){
+        mVal.innerText = "Inadequate water";
+        mVal.style.color = "red"
+    }
+    else if(snapshot.data().P4.MOIS_STATUS4 == 1){
+        mVal.innerText = "Adequate water";
+        mVal.style.color = "green"
+    }
+})
+
+const mode = document.createElement("div");
+        mode.id = "mode";
+        mode.innerHTML = "Mode";
+
+        const water_status = document.createElement("div");
+        water_status.id = "mode-switch";
+        mode.append(water_status);
+        const water_status_auto = document.createElement("div");
+        water_status.append(water_status_auto);
+        const water_status_auto_mode = document.createElement("h5")
+        water_status_auto_mode.innerHTML="OFF"
+        water_status_auto.append(water_status_auto_mode)
+        const check = document.createElement("div");
+        const checkbox = document.createElement("label")
+        checkbox.className="switch"
+        check.append(checkbox)
+        const check_ip = document.createElement("input")
+        check_ip.type="checkbox"
+        check_ip.id="checkbox"+ checkbox_number
+        checkbox.append(check_ip)
+
+        const slider_round=document.createElement("span")
+        slider_round.className="slider round"
+        checkbox.append(slider_round);
+
+        water_status.append(checkbox)
+
+        const water_status_man = document.createElement("div");
+        water_status.append(water_status_man);
+        const water_status_man_mode = document.createElement("h5")
+        water_status_man_mode.innerHTML="ON"
+        water_status_man.append(water_status_man_mode)
+
+        allvaluesContainer.append(mode)
+        document.querySelector("#checkbox4").addEventListener("click",handleChange)
+        
+        }
+        
+        moistStatus.appendChild(mVal);
+
+
+        if(key6==true){
+            console.log(oneDoc.data()[key[i]].MOIS_STATUS0);
+            const colRef = doc(db, 'Farm','1001')
+
+// realtime collection data
+const decRef = await onSnapshot(colRef, (snapshot) => {
+    
+    console.log(snapshot.data())
+    if(snapshot.data().P5.MOIS_STATUS5 == 0){
+        mVal.innerText = "Inadequate water";
+        mVal.style.color = "red"
+    }
+    else if(snapshot.data().P5.MOIS_STATUS5 == 1){
+        mVal.innerText = "Adequate water";
+        mVal.style.color = "green"
+    }
+})
+
+const mode = document.createElement("div");
+        mode.id = "mode";
+        mode.innerHTML = "Mode";
+
+        const water_status = document.createElement("div");
+        water_status.id = "mode-switch";
+        mode.append(water_status);
+        const water_status_auto = document.createElement("div");
+        water_status.append(water_status_auto);
+        const water_status_auto_mode = document.createElement("h5")
+        water_status_auto_mode.innerHTML="OFF"
+        water_status_auto.append(water_status_auto_mode)
+        const check = document.createElement("div");
+        const checkbox = document.createElement("label")
+        checkbox.className="switch"
+        check.append(checkbox)
+        const check_ip = document.createElement("input")
+        check_ip.type="checkbox"
+        check_ip.id="checkbox"+ checkbox_number
+        checkbox.append(check_ip)
+
+        const slider_round=document.createElement("span")
+        slider_round.className="slider round"
+        checkbox.append(slider_round);
+
+        water_status.append(checkbox)
+
+        const water_status_man = document.createElement("div");
+        water_status.append(water_status_man);
+        const water_status_man_mode = document.createElement("h5")
+        water_status_man_mode.innerHTML="ON"
+        water_status_man.append(water_status_man_mode)
+
+        allvaluesContainer.append(mode)
+        document.querySelector("#checkbox5").addEventListener("click",handleChange)
+        
+        }
+        
+        moistStatus.appendChild(mVal);
+
+        if(key7==true){
+            console.log(oneDoc.data()[key[i]].MOIS_STATUS0);
+            const colRef = doc(db, 'Farm','1001')
+
+// realtime collection data
+const decRef = await onSnapshot(colRef, (snapshot) => {
+    
+    console.log(snapshot.data())
+    if(snapshot.data().P6.MOIS_STATUS6 == 0){
+        mVal.innerText = "Inadequate water";
+        mVal.style.color = "red"
+    }
+    else if(snapshot.data().P6.MOIS_STATUS6 == 1){
+        mVal.innerText = "Adequate water";
+        mVal.style.color = "green"
+    }
+})
+
+const mode = document.createElement("div");
+        mode.id = "mode";
+        mode.innerHTML = "Mode";
+
+        const water_status = document.createElement("div");
+        water_status.id = "mode-switch";
+        mode.append(water_status);
+        const water_status_auto = document.createElement("div");
+        water_status.append(water_status_auto);
+        const water_status_auto_mode = document.createElement("h5")
+        water_status_auto_mode.innerHTML="OFF"
+        water_status_auto.append(water_status_auto_mode)
+        const check = document.createElement("div");
+        const checkbox = document.createElement("label")
+        checkbox.className="switch"
+        check.append(checkbox)
+        const check_ip = document.createElement("input")
+        check_ip.type="checkbox"
+        check_ip.id="checkbox"+ checkbox_number
+        checkbox.append(check_ip)
+
+        const slider_round=document.createElement("span")
+        slider_round.className="slider round"
+        checkbox.append(slider_round);
+
+        water_status.append(checkbox)
+
+        const water_status_man = document.createElement("div");
+        water_status.append(water_status_man);
+        const water_status_man_mode = document.createElement("h5")
+        water_status_man_mode.innerHTML="ON"
+        water_status_man.append(water_status_man_mode)
+
+        allvaluesContainer.append(mode)
+        document.querySelector("#checkbox6").addEventListener("click",handleChange)
+        
+        }
+        
+        moistStatus.appendChild(mVal);
+
+        if(key8==true){
+            console.log(oneDoc.data()[key[i]].MOIS_STATUS0);
+            const colRef = doc(db, 'Farm','1001')
+
+// realtime collection data
+const decRef = await onSnapshot(colRef, (snapshot) => {
+    
+    console.log(snapshot.data())
+    if(snapshot.data().P7.MOIS_STATUS7 == 0){
+        mVal.innerText = "Inadequate water";
+        mVal.style.color = "red"
+    }
+    else if(snapshot.data().P7.MOIS_STATUS7 == 1){
+        mVal.innerText = "Adequate water";
+        mVal.style.color = "green"
+    }
+})
+const mode = document.createElement("div");
+        mode.id = "mode";
+        mode.innerHTML = "Mode";
+
+        const water_status = document.createElement("div");
+        water_status.id = "mode-switch";
+        mode.append(water_status);
+        const water_status_auto = document.createElement("div");
+        water_status.append(water_status_auto);
+        const water_status_auto_mode = document.createElement("h5")
+        water_status_auto_mode.innerHTML="OFF"
+        water_status_auto.append(water_status_auto_mode)
+        const check = document.createElement("div");
+        const checkbox = document.createElement("label")
+        checkbox.className="switch"
+        check.append(checkbox)
+        const check_ip = document.createElement("input")
+        check_ip.type="checkbox"
+        check_ip.id="checkbox"+ checkbox_number
+        checkbox.append(check_ip)
+
+        const slider_round=document.createElement("span")
+        slider_round.className="slider round"
+        checkbox.append(slider_round);
+
+        water_status.append(checkbox)
+
+        const water_status_man = document.createElement("div");
+        water_status.append(water_status_man);
+        const water_status_man_mode = document.createElement("h5")
+        water_status_man_mode.innerHTML="ON"
+        water_status_man.append(water_status_man_mode)
+
+        allvaluesContainer.append(mode)
+        document.querySelector("#checkbox7").addEventListener("click",handleChange)   
+        
+        }
+        
+        moistStatus.appendChild(mVal);
+
+        if(key9==true){
+            console.log(oneDoc.data()[key[i]].MOIS_STATUS0);
+            const colRef = doc(db, 'Farm','1001')
+
+// realtime collection data
+const decRef = await onSnapshot(colRef, (snapshot) => {
+    
+    console.log(snapshot.data())
+    if(snapshot.data().P8.MOIS_STATUS8 == 0){
+        mVal.innerText = "Inadequate water";
+        mVal.style.color = "red"
+    }
+    else if(snapshot.data().P8.MOIS_STATUS8 == 1){
+        mVal.innerText = "Adequate water";
+        mVal.style.color = "green"
+    }
+})
+
+const mode = document.createElement("div");
+        mode.id = "mode";
+        mode.innerHTML = "Mode";
+
+        const water_status = document.createElement("div");
+        water_status.id = "mode-switch";
+        mode.append(water_status);
+        const water_status_auto = document.createElement("div");
+        water_status.append(water_status_auto);
+        const water_status_auto_mode = document.createElement("h5")
+        water_status_auto_mode.innerHTML="OFF"
+        water_status_auto.append(water_status_auto_mode)
+        const check = document.createElement("div");
+        const checkbox = document.createElement("label")
+        checkbox.className="switch"
+        check.append(checkbox)
+        const check_ip = document.createElement("input")
+        check_ip.type="checkbox"
+        check_ip.id="checkbox"+ checkbox_number
+        checkbox.append(check_ip)
+
+        const slider_round=document.createElement("span")
+        slider_round.className="slider round"
+        checkbox.append(slider_round);
+
+        water_status.append(checkbox)
+
+        const water_status_man = document.createElement("div");
+        water_status.append(water_status_man);
+        const water_status_man_mode = document.createElement("h5")
+        water_status_man_mode.innerHTML="ON"
+        water_status_man.append(water_status_man_mode)
+
+        allvaluesContainer.append(mode)
+        document.querySelector("#checkbox8").addEventListener("click",handleChange)
+        
+        }
+        
+        moistStatus.appendChild(mVal);
+        
+        if(key10==true){
+            console.log(oneDoc.data()[key[i]].MOIS_STATUS0);
+            const colRef = doc(db, 'Farm','1001')
+
+// realtime collection data
+const decRef = await onSnapshot(colRef, (snapshot) => {
+    
+    console.log(snapshot.data())
+    if(snapshot.data().P9.MOIS_STATUS9 == 0){
+        mVal.innerText = "Inadequate water";
+        mVal.style.color = "red"
+    }
+    else if(snapshot.data().P9.MOIS_STATUS9 == 1){
+        mVal.innerText = "Adequate water";
+        mVal.style.color = "green"
+    }
+})
+const mode = document.createElement("div");
+        mode.id = "mode";
+        mode.innerHTML = "Mode";
+
+        const water_status = document.createElement("div");
+        water_status.id = "mode-switch";
+        mode.append(water_status);
+        const water_status_auto = document.createElement("div");
+        water_status.append(water_status_auto);
+        const water_status_auto_mode = document.createElement("h5")
+        water_status_auto_mode.innerHTML="OFF"
+        water_status_auto.append(water_status_auto_mode)
+        const check = document.createElement("div");
+        const checkbox = document.createElement("label")
+        checkbox.className="switch"
+        check.append(checkbox)
+        const check_ip = document.createElement("input")
+        check_ip.type="checkbox"
+        check_ip.id="checkbox"+ checkbox_number
+        checkbox.append(check_ip)
+
+        const slider_round=document.createElement("span")
+        slider_round.className="slider round"
+        checkbox.append(slider_round);
+
+        water_status.append(checkbox)
+
+        const water_status_man = document.createElement("div");
+        water_status.append(water_status_man);
+        const water_status_man_mode = document.createElement("h5")
+        water_status_man_mode.innerHTML="ON"
+        water_status_man.append(water_status_man_mode)
+
+        allvaluesContainer.append(mode)
+        document.querySelector("#checkbox9").addEventListener("click",handleChange)
+        }
+        
+        moistStatus.appendChild(mVal);
+        
+        if(key11==true){
+            console.log(key[i].replace('P',''));
+            console.log(oneDoc.data()[key[i]].MOIS_STATUS0);
+            const colRef = doc(db, 'Farm','1001')
+
+// realtime collection data
+const decRef = await onSnapshot(colRef, (snapshot) => {
+    
+    console.log(snapshot.data())
+    if(snapshot.data().P10.MOIS_STATUS10 == 0){
+        mVal.innerText = "Inadequate water";
+        mVal.style.color = "red"
+    }
+    else if(snapshot.data().P10.MOIS_STATUS10 == 1){
+        mVal.innerText = "Adequate water";
+        mVal.style.color = "green"
+    }
+})
+
+const mode = document.createElement("div");
+        mode.id = "mode";
+        mode.innerHTML = "Mode";
+
+        const water_status = document.createElement("div");
+        water_status.id = "mode-switch";
+        mode.append(water_status);
+        const water_status_auto = document.createElement("div");
+        water_status.append(water_status_auto);
+        const water_status_auto_mode = document.createElement("h5")
+        water_status_auto_mode.innerHTML="OFF"
+        water_status_auto.append(water_status_auto_mode)
+        const check = document.createElement("div");
+        const checkbox = document.createElement("label")
+        checkbox.className="switch"
+        check.append(checkbox)
+        const check_ip = document.createElement("input")
+        check_ip.type="checkbox"
+        check_ip.id="checkbox"+ checkbox_number
+        checkbox.append(check_ip)
+
+        const slider_round=document.createElement("span")
+        slider_round.className="slider round"
+        checkbox.append(slider_round);
+
+        water_status.append(checkbox)
+
+        const water_status_man = document.createElement("div");
+        water_status.append(water_status_man);
+        const water_status_man_mode = document.createElement("h5")
+        water_status_man_mode.innerHTML="ON"
+        water_status_man.append(water_status_man_mode)
+
+        allvaluesContainer.append(mode)
+        document.querySelector("#checkbox10").addEventListener("click",handleChange)
+        
+        }
+        
+        moistStatus.appendChild(mVal);
+
+        if(key12==true){
+            console.log(oneDoc.data()[key[i]].MOIS_STATUS0);
+            const colRef = doc(db, 'Farm','1001')
+
+// realtime collection data
+const decRef = await onSnapshot(colRef, (snapshot) => {
+    
+    console.log(snapshot.data())
+    if(snapshot.data().P11.MOIS_STATUS11 == 0){
+        mVal.innerText = "Inadequate water";
+        mVal.style.color = "red"
+    }
+    else if(snapshot.data().P11.MOIS_STATUS11 == 1){
+        mVal.innerText = "Adequate water";
+        mVal.style.color = "green"
+    }
+})
+
+const mode = document.createElement("div");
+        mode.id = "mode";
+        mode.innerHTML = "Mode";
+
+        const water_status = document.createElement("div");
+        water_status.id = "mode-switch";
+        mode.append(water_status);
+        const water_status_auto = document.createElement("div");
+        water_status.append(water_status_auto);
+        const water_status_auto_mode = document.createElement("h5")
+        water_status_auto_mode.innerHTML="OFF"
+        water_status_auto.append(water_status_auto_mode)
+        const check = document.createElement("div");
+        const checkbox = document.createElement("label")
+        checkbox.className="switch"
+        check.append(checkbox)
+        const check_ip = document.createElement("input")
+        check_ip.type="checkbox"
+        check_ip.id="checkbox"+ checkbox_number
+        checkbox.append(check_ip)
+
+        const slider_round=document.createElement("span")
+        slider_round.className="slider round"
+        checkbox.append(slider_round);
+
+        water_status.append(checkbox)
+
+        const water_status_man = document.createElement("div");
+        water_status.append(water_status_man);
+        const water_status_man_mode = document.createElement("h5")
+        water_status_man_mode.innerHTML="ON"
+        water_status_man.append(water_status_man_mode)
+
+        allvaluesContainer.append(mode)
+        document.querySelector("#checkbox11").addEventListener("click",handleChange)
+        
+        }
+        
+        moistStatus.appendChild(mVal);
+
+        if(key13==true){
+            console.log(oneDoc.data()[key[i]].MOIS_STATUS0);
+            const colRef = doc(db, 'Farm','1001')
+
+// realtime collection data
+const decRef = await onSnapshot(colRef, (snapshot) => {
+    
+    console.log(snapshot.data())
+    if(snapshot.data().P12.MOIS_STATUS12 == 0){
+        mVal.innerText = "Inadequate water";
+        mVal.style.color = "red"
+    }
+    else if(snapshot.data().P12.MOIS_STATUS12 == 1){
+        mVal.innerText = "Adequate water";
+        mVal.style.color = "green"
+    }
+})
+const mode = document.createElement("div");
+        mode.id = "mode";
+        mode.innerHTML = "Mode";
+
+        const water_status = document.createElement("div");
+        water_status.id = "mode-switch";
+        mode.append(water_status);
+        const water_status_auto = document.createElement("div");
+        water_status.append(water_status_auto);
+        const water_status_auto_mode = document.createElement("h5")
+        water_status_auto_mode.innerHTML="OFF"
+        water_status_auto.append(water_status_auto_mode)
+        const check = document.createElement("div");
+        const checkbox = document.createElement("label")
+        checkbox.className="switch"
+        check.append(checkbox)
+        const check_ip = document.createElement("input")
+        check_ip.type="checkbox"
+        check_ip.id="checkbox"+ checkbox_number
+        checkbox.append(check_ip)
+
+        const slider_round=document.createElement("span")
+        slider_round.className="slider round"
+        checkbox.append(slider_round);
+
+        water_status.append(checkbox)
+
+        const water_status_man = document.createElement("div");
+        water_status.append(water_status_man);
+        const water_status_man_mode = document.createElement("h5")
+        water_status_man_mode.innerHTML="ON"
+        water_status_man.append(water_status_man_mode)
+
+        allvaluesContainer.append(mode)
+        document.querySelector("#checkbox12").addEventListener("click",handleChange)  
+        }
+        
+        moistStatus.appendChild(mVal);
+
+        if(key14==true){
+            console.log(oneDoc.data()[key[i]].MOIS_STATUS13);
+            const colRef = doc(db, 'Farm','1001')
+
+// realtime collection data
+const decRef = await onSnapshot(colRef, (snapshot) => {
+    
+    console.log(snapshot.data())
+    if(snapshot.data().P13.MOIS_STATUS13 == 0){
+        mVal.innerText = "Inadequate water";
+        mVal.style.color = "red"
+    }
+    else if(snapshot.data().P13.MOIS_STATUS13 == 1){
+        mVal.innerText = "Adequate water";
+        mVal.style.color = "green"
+    }
+})
+
+const mode = document.createElement("div");
+        mode.id = "mode";
+        mode.innerHTML = "Mode";
+
+        const water_status = document.createElement("div");
+        water_status.id = "mode-switch";
+        mode.append(water_status);
+        const water_status_auto = document.createElement("div");
+        water_status.append(water_status_auto);
+        const water_status_auto_mode = document.createElement("h5")
+        water_status_auto_mode.innerHTML="OFF"
+        water_status_auto.append(water_status_auto_mode)
+        const check = document.createElement("div");
+        const checkbox = document.createElement("label")
+        checkbox.className="switch"
+        check.append(checkbox)
+        const check_ip = document.createElement("input")
+        check_ip.type="checkbox"
+        check_ip.id="checkbox"+ checkbox_number
+        checkbox.append(check_ip)
+
+        const slider_round=document.createElement("span")
+        slider_round.className="slider round"
+        checkbox.append(slider_round);
+
+        water_status.append(checkbox)
+
+        const water_status_man = document.createElement("div");
+        water_status.append(water_status_man);
+        const water_status_man_mode = document.createElement("h5")
+        water_status_man_mode.innerHTML="ON"
+        water_status_man.append(water_status_man_mode)
+
+        allvaluesContainer.append(mode)
+        document.querySelector("#checkbox13").addEventListener("click",handleChange)
+       
+        }
+        
+        moistStatus.appendChild(mVal);
+
+        if(key15==true){
+            console.log(oneDoc.data()[key[i]].MOIS_STATUS0);
+            const colRef = doc(db, 'Farm','1001')
+
+// realtime collection data
+const decRef = await onSnapshot(colRef, (snapshot) => {
+    
+    console.log(snapshot.data())
+    if(snapshot.data().P14.MOIS_STATUS14 == 0){
+        mVal.innerText = "Inadequate water";
+        mVal.style.color = "red"
+    }
+    else if(snapshot.data().P14.MOIS_STATUS14 == 1){
+        mVal.innerText = "Adequate water";
+        mVal.style.color = "green"
+    }
+})
+const mode = document.createElement("div");
+        mode.id = "mode";
+        mode.innerHTML = "Mode";
+
+        const water_status = document.createElement("div");
+        water_status.id = "mode-switch";
+        mode.append(water_status);
+        const water_status_auto = document.createElement("div");
+        water_status.append(water_status_auto);
+        const water_status_auto_mode = document.createElement("h5")
+        water_status_auto_mode.innerHTML="OFF"
+        water_status_auto.append(water_status_auto_mode)
+        const check = document.createElement("div");
+        const checkbox = document.createElement("label")
+        checkbox.className="switch"
+        check.append(checkbox)
+        const check_ip = document.createElement("input")
+        check_ip.type="checkbox"
+        check_ip.id="checkbox"+ checkbox_number
+        checkbox.append(check_ip)
+
+        const slider_round=document.createElement("span")
+        slider_round.className="slider round"
+        checkbox.append(slider_round);
+
+        water_status.append(checkbox)
+
+        const water_status_man = document.createElement("div");
+        water_status.append(water_status_man);
+        const water_status_man_mode = document.createElement("h5")
+        water_status_man_mode.innerHTML="ON"
+        water_status_man.append(water_status_man_mode)
+
+        allvaluesContainer.append(mode)
+        document.querySelector("#checkbox14").addEventListener("click",handleChange)
+        }
+        
+        moistStatus.appendChild(mVal);
+
+        if(key16==true){
+            console.log(oneDoc.data()[key[i]].MOIS_STATUS0);
+            const colRef = doc(db, 'Farm','1001')
+
+// realtime collection data
+const decRef = await onSnapshot(colRef, (snapshot) => {
+    
+    console.log(snapshot.data())
+    if(snapshot.data().P15.MOIS_STATUS15 == 0){
+        mVal.innerText = "Inadequate water";
+        mVal.style.color = "red"
+    }
+    else if(snapshot.data().P15.MOIS_STATUS15 == 1){
+        mVal.innerText = "Adequate water";
+        mVal.style.color = "green"
+    }
+})
+
+const mode = document.createElement("div");
+        mode.id = "mode";
+        mode.innerHTML = "Mode";
+
+        const water_status = document.createElement("div");
+        water_status.id = "mode-switch";
+        mode.append(water_status);
+        const water_status_auto = document.createElement("div");
+        water_status.append(water_status_auto);
+        const water_status_auto_mode = document.createElement("h5")
+        water_status_auto_mode.innerHTML="OFF"
+        water_status_auto.append(water_status_auto_mode)
+        const check = document.createElement("div");
+        const checkbox = document.createElement("label")
+        checkbox.className="switch"
+        check.append(checkbox)
+        const check_ip = document.createElement("input")
+        check_ip.type="checkbox"
+        check_ip.id="checkbox"+ checkbox_number
+        checkbox.append(check_ip)
+
+        const slider_round=document.createElement("span")
+        slider_round.className="slider round"
+        checkbox.append(slider_round);
+
+        water_status.append(checkbox)
+
+        const water_status_man = document.createElement("div");
+        water_status.append(water_status_man);
+        const water_status_man_mode = document.createElement("h5")
+        water_status_man_mode.innerHTML="ON"
+        water_status_man.append(water_status_man_mode)
+
+        allvaluesContainer.append(mode)
+        document.querySelector("#checkbox15").addEventListener("click",handleChange)
+        }
+        
+        moistStatus.appendChild(mVal);
+        let curr_watering = oneDoc.data().CURR_WATER
+        console.log(curr_watering);
+        var num = 'P'+`${curr_watering}`
+        if(`${key[i]}` == num){
+        const watering = document.createElement("h3");
+        watering.id = "watering";
+        watering.innerHTML = "Watering";
+        watering.style.color = "green"
+        allvaluesContainer.append(watering);
+        }
+
+        let secure = oneDoc.data().SECUR_PIN
+        
+        var num = 'P'+`${secure}`
+        if(`${key[i]}` == num){
+        const security = document.createElement("h3");
+        security.id = "security";
+        security.innerHTML = "Movement observerd";
+        security.style.color = "red"
+        allvaluesContainer.append(security);
+        }
+       
+    }
+    
+}
+}
+
+
+// var blink = document.getElementById("watering");
+//             setInterval(function() {
+//                 blink.style.opacity = (blink.style.opacity == 0 ? 1 : 0);
+//             }, 500);
+// var chkmode = document.getElementById("modeslider");
+// var chk0 = document.getElementById("checkbox0")
+// if(chkmode.checked == false){
+//     chk0.disabled = true;
+// }
+document.querySelector("#submit").addEventListener("click",save)
+document.querySelector("#modeslider").addEventListener("click",handleChange)
+document.querySelector("#checkboxsecure").addEventListener("click",handleChange)
+document.querySelector("#checkbox0").addEventListener("click",handleChange);
+document.querySelector("#checkbox1").addEventListener("click",handleChange);
+document.querySelector("#checkbox2").addEventListener("click",handleChange);
+document.querySelector("#checkbox3").addEventListener("click",handleChange);
+document.querySelector("#checkbox4").addEventListener("click",handleChange);
+document.querySelector("#checkbox5").addEventListener("click",handleChange);
+document.querySelector("#checkbox6").addEventListener("click",handleChange);
+document.querySelector("#checkbox7").addEventListener("click",handleChange);
+document.querySelector("#checkbox8").addEventListener("click",handleChange);
+document.querySelector("#checkbox9").addEventListener("click",handleChange);
+document.querySelector("#checkbox10").addEventListener("click",handleChange);
+document.querySelector("#checkbox11").addEventListener("click",handleChange);
+document.querySelector("#checkbox12").addEventListener("click",handleChange);
+document.querySelector("#checkbox13").addEventListener("click",handleChange);
+document.querySelector("#checkbox14").addEventListener("click",handleChange);
+document.querySelector("#checkbox15").addEventListener("click",handleChange);
+async function handleChange(){
+    var chkmode = document.getElementById("modeslider")
+    var chkSecure = document.getElementById("checkboxsecure")
+    var chk0 = document.getElementById("checkbox0")
+    var chk1 = document.getElementById("checkbox1")
+    var chk2 = document.getElementById("checkbox2")
+    var chk3 = document.getElementById("checkbox3")
+    var chk4 = document.getElementById("checkbox4")
+    var chk5 = document.getElementById("checkbox5")
+    var chk6 = document.getElementById("checkbox6")
+    var chk7 = document.getElementById("checkbox7")
+    var chk8 = document.getElementById("checkbox8")
+    var chk9 = document.getElementById("checkbox9")
+    var chk10 = document.getElementById("checkbox10")
+    var chk11 = document.getElementById("checkbox11")
+    var chk12 = document.getElementById("checkbox12")
+    var chk13 = document.getElementById("checkbox13")
+    var chk14 = document.getElementById("checkbox14")
+    var chk15 = document.getElementById("checkbox15")
+  
+
+if(chkmode.checked==true){
+    console.log("manual")
+    chk0.disabled = false;
+    chk1.disabled = false;
+    chk2.disabled = false;
+    chk3.disabled = false;
+    chk4.disabled = false;
+    chk5.disabled = false;
+    chk6.disabled = false;
+    chk7.disabled = false;
+    chk8.disabled = false;
+    chk9.disabled = false;
+    chk10.disabled = false;
+    chk11.disabled = false;
+    chk12.disabled = false;
+    chk13.disabled = false;
+    chk14.disabled = false;
+    chk15.disabled = false;
+    await setDoc(doc(db, "Farm", "1001"), {
+        
+            mode: "1",
+        
+}, {merge: true})
+    
+}else if(chkmode.checked==false){
+    chk0.checked = false;
+    chk1.checked = false;
+    chk2.checked = false;
+    chk3.checked = false;
+    chk4.checked = false;
+    chk5.checked = false;
+    chk6.checked = false;
+    chk7.checked = false;
+    chk8.checked = false;
+    chk9.checked = false;
+    chk10.checked = false;
+    chk11.checked = false;
+    chk12.checked = false;
+    chk13.checked = false;
+    chk14.checked = false;
+    chk15.checked = false;
+
+
+    chk0.disabled = true;
+    chk1.disabled = true;
+    chk2.disabled =true;
+    chk3.disabled = true;
+    chk4.disabled = true;
+    chk5.disabled = true;
+    chk6.disabled = true;
+    chk7.disabled = true;
+    chk8.disabled = true;
+    chk9.disabled = true;
+    chk10.disabled = true;
+    chk11.disabled = true;
+    chk12.disabled = true;
+    chk13.disabled = true;
+    chk14.disabled = true;
+    chk15.disabled = true;
+    console.log("automatic")
+    await setDoc(doc(db, "Farm", "1001"), {
+        
+            mode: "0",
+        
+}, {merge: true})
+}
+
+if(chkSecure.checked==true){
+    console.log("Secure")
+    await setDoc(doc(db, "Farm", "1001"), {
+        
+            NOT_SECUR: "1",
+        
+}, {merge: true})
+    
+}else if(chkSecure.checked==false){
+    console.log("Not Secure")
+    await setDoc(doc(db, "Farm", "1001"), {
+        
+            NOT_SECUR: "0",
+        
+}, {merge: true})
+}
+
+if(chk0.checked==true){
+    
+    await setDoc(doc(db, "Farm", "1001"), {
+        P0: {
+            MAN_WATER0: "1",
+        }
+}, {merge: true})
+    
+}else if(chk0.checked==false){
+   
+    await setDoc(doc(db, "Farm", "1001"), {
+        P0: {
+            MAN_WATER0: "0",
+        }
+}, {merge: true})
+}
+
+if(chk1.checked==true){
+    await setDoc(doc(db, "Farm", "1001"), {
+        P1: {
+            MAN_WATER1: "1",
+        }
+}, {merge: true})
+}else if(chk1.checked==false){
+    await setDoc(doc(db, "Farm", "1001"), {
+        P1: {
+            MAN_WATER1: "0",
+        }
+}, {merge: true})
+}
+if(chk2.checked==true){
+    await setDoc(doc(db, "Farm", "1001"), {
+        P2: {
+            MAN_WATER2: "1",
+        }
+}, {merge: true})
+}else if(chk2.checked==false){
+    await setDoc(doc(db, "Farm", "1001"), {
+        P2: {
+            MAN_WATER2: "0",
+        }
+}, {merge: true})
+}
+if(chk3.checked==true){
+    await setDoc(doc(db, "Farm", "1001"), {
+        P3: {
+            MAN_WATER3: "1",
+        }
+}, {merge: true})
+}else if(chk3.checked==false){
+    await setDoc(doc(db, "Farm", "1001"), {
+        P3: {
+            MAN_WATER3: "0",
+        }
+}, {merge: true})
+}
+if(chk4.checked==true){
+    await setDoc(doc(db, "Farm", "1001"), {
+        P4: {
+            MAN_WATER4: "1",
+        }
+}, {merge: true})
+}else if(chk4.checked==false){
+    await setDoc(doc(db, "Farm", "1001"), {
+        P4: {
+            MAN_WATER4: "0",
+        }
+}, {merge: true})
+}
+if(chk5.checked==true){
+    await setDoc(doc(db, "Farm", "1001"), {
+        P5: {
+            MAN_WATER5: "1",
+        }
+}, {merge: true})
+}else if(chk5.checked==false){
+    await setDoc(doc(db, "Farm", "1001"), {
+        P5: {
+            MAN_WATER5: "0",
+        }
+}, {merge: true})
+}
+if(chk6.checked==true){
+    await setDoc(doc(db, "Farm", "1001"), {
+        P6: {
+            MAN_WATER6: "1",
+        }
+}, {merge: true})
+}else if(chk6.checked==false){
+    await setDoc(doc(db, "Farm", "1001"), {
+        P6: {
+            MAN_WATER6: "0",
+        }
+}, {merge: true})
+}
+if(chk7.checked==true){
+    await setDoc(doc(db, "Farm", "1001"), {
+        P7: {
+            MAN_WATER7: "1",
+        }
+}, {merge: true})
+}else if(chk7.checked==false){
+    await setDoc(doc(db, "Farm", "1001"), {
+        P7: {
+            MAN_WATER7: "0",
+        }
+}, {merge: true})
+}
+if(chk8.checked==true){
+    await setDoc(doc(db, "Farm", "1001"), {
+        P8: {
+            MAN_WATER8: "1",
+        }
+}, {merge: true})
+}else if(chk8.checked==false){
+    await setDoc(doc(db, "Farm", "1001"), {
+        P8: {
+            MAN_WATER8: "0",
+        }
+}, {merge: true})
+}
+if(chk9.checked==true){
+    await setDoc(doc(db, "Farm", "1001"), {
+        P9: {
+            MAN_WATER9: "1",
+        }
+}, {merge: true})
+}else if(chk9.checked==false){
+    await setDoc(doc(db, "Farm", "1001"), {
+        P9: {
+            MAN_WATER9: "0",
+        }
+}, {merge: true})
+}
+if(chk10.checked==true){
+    await setDoc(doc(db, "Farm", "1001"), {
+        P10: {
+            MAN_WATER10: "1",
+        }
+}, {merge: true})
+}else if(chk10.checked==false){
+    await setDoc(doc(db, "Farm", "1001"), {
+        P10: {
+            MAN_WATER10: "0",
+        }
+}, {merge: true})
+}
+if(chk11.checked==true){
+    await setDoc(doc(db, "Farm", "1001"), {
+        P11: {
+            MAN_WATER11: "1",
+        }
+}, {merge: true})
+}else if(chk11.checked==false){
+    await setDoc(doc(db, "Farm", "1001"), {
+        P11: {
+            MAN_WATER11: "0",
+        }
+}, {merge: true})
+}
+if(chk12.checked==true){
+    await setDoc(doc(db, "Farm", "1001"), {
+        P12: {
+            MAN_WATER12: "1",
+        }
+}, {merge: true})
+}else if(chk12.checked==false){
+    await setDoc(doc(db, "Farm", "1001"), {
+        P12: {
+            MAN_WATER12: "0",
+        }
+}, {merge: true})
+}
+if(chk13.checked==true){
+    await setDoc(doc(db, "Farm", "1001"), {
+        P13: {
+            MAN_WATER13: "1",
+        }
+}, {merge: true})
+}else if(chk13.checked==false){
+    await setDoc(doc(db, "Farm", "1001"), {
+        P13: {
+            MAN_WATER13: "0",
+        }
+}, {merge: true})
+}
+if(chk14.checked==true){
+    await setDoc(doc(db, "Farm", "1001"), {
+        P14: {
+            MAN_WATER14: "1",
+        }
+}, {merge: true})
+}else if(chk14.checked==false){
+    await setDoc(doc(db, "Farm", "1001"), {
+        P14: {
+            MAN_WATER14: "0",
+        }
+}, {merge: true})
+}
+if(chk15.checked==true){
+    await setDoc(doc(db, "Farm", "1001"), {
+        P15: {
+            MAN_WATER15: "1",
+        }
+}, {merge: true})
+}else if(chk15.checked==false){
+    await setDoc(doc(db, "Farm", "1001"), {
+        P15: {
+            MAN_WATER15: "0",
+        }
+}, {merge: true})
+}
+
+}
+
+// document.querySelector("#checkbox0").addEventListener("click",handleChange)
+        
+
+        // function save_data1() {
+        //     var input = document.getElementById("plant1").value;
+        //     console.log(input);
+        //     localStorage.setItem("Plant1", input);
+        //     document.getElementById("m1").innerHTML = localStorage.getItem('Plant1');
+        //     //var ip = document.getElementById("plant1").value = localStorage.setItem("plant1");
+        // }
+
+        // function save_data2() {
+        //     var input = document.getElementById("plant2").value;
+        //     console.log(input);
+        //     localStorage.setItem("Plant2", input);
+        //     document.getElementById("m2").innerHTML = localStorage.getItem('Plant2');
+        //     //var ip = document.getElementById("plant1").value = localStorage.setItem("plant1");
+        // }
+
+        // function save_data3() {
+        //     var input = document.getElementById("plant3").value;
+        //     console.log(input);
+        //     localStorage.setItem("Plant3", input);
+        //     document.getElementById("m3").innerHTML = localStorage.getItem('Plant3');
+        //     //var ip = document.getElementById("plant1").value = localStorage.setItem("plant1");
+        // }
+    </script>
+
+    
+
+    <!-- <div class="panel">
 
         <div class="left-half  ">
             <div>
@@ -223,9 +1919,9 @@
                     </div>
                 </div>
             </div>
-    </div>
+    </div> -->
 
-    <script>
+    <!-- <script>
         const chk1 = document.getElementById(`checkbox1`)
         const chk2 = document.getElementById(`checkbox2`)
         const chk3 = document.getElementById(`checkbox3`)

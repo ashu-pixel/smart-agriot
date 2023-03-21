@@ -43,7 +43,7 @@
                 Browse the file and hit the upload button
             </p>
             <form method="POST" action="/upload" enctype="multipart/form-data" class="mx-auto upload-form">
-                <input type="file" name="myFile" class="browse-btn" accept="image/*" />
+                <input type="file" name="myFile" class="browse-btn" accept="image/*" enctype="multipart/form-data" id="fileInput"  />
                 <div class="ImgStatus">Please select image</div>
             </form>
 
@@ -51,13 +51,15 @@
 
         </div>
 
-        <form class='storeForm'>
+        <form class='storeForm text-center my-3'>
             <input type="text" class="d-none" name="URL">
             <button class="raise"> RAISE </button>
         </form>
 
         <% } else{ %>
-            <h1>Already raised a req please wait while we get back to you </h1>
+            <div class="alert alert-danger w-50 text-center m-auto" role="alert">
+                Already raised a req please wait while we get back to you
+            </div>
             <% } %>
 
 
@@ -71,7 +73,7 @@
                             <th scope="col">Raised on</th>
                             <th scope="col">Solved on</th>
                             <th scope="col">Remarks</th>
-                            <th scope="col">Image</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -84,16 +86,14 @@
                                 </td>
                                 <td> - </td>
                                 <td>-</td>
-                                <td>
-                                    <%= alreadyRaised.image !='undefined' ? '-' : 'exist' %>
-                                </td>
+                                
                             </tr>
                             <% }%>
 
                                 <% for(let i=0 ; i < prev.length ; i++){ %>
                                     <tr>
                                         <td scope="row">
-                                            <%= i+2 %>
+                                            <%= i+1 %>
                                         </td>
                                         <td>
                                             <%= prev[i].date_generate %>
@@ -105,9 +105,7 @@
                                             <%= prev[i].remark %>
                                         </td>
 
-                                        <td>
-                                            <%= prev[i].image !='undefined' ? '-' : 'exist' %>
-                                        </td>
+                                         
                                     </tr>
                                     <% } %>
 
@@ -116,8 +114,6 @@
 
                     </tbody>
                 </table>
-
-
 
 
                 <script>
@@ -137,30 +133,30 @@
                 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
                 <script type="module">
 
-                    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
-                    import { getStorage, ref, getDownloadURL, uploadBytesResumable } from 'https://www.gstatic.com/firebasejs/9.17.2/firebase-storage.js'
-                    const firebaseConfig = {
-                        apiKey:
-                            "AIzaSyCvI8T8nI7rYxJmu-B0aDw5BrjOKVHYhxw", authDomain: "smart-agriot.firebaseapp.com", databaseURL: "https://smart-agriot-default-rtdb.firebaseio.com", projectId: "smart-agriot", storageBucket: "smart-agriot.appspot.com", messagingSenderId:
-                            "776397938423", appId: "1:776397938423:web:fe119f8b9eeb1805c87df2", measurementId: "G-BB4HHBH37C"
-                    };
-                    const app = initializeApp(firebaseConfig);
-                    const storage = getStorage()
+                    
                     document.querySelector("input").addEventListener("change",
                         (e) => {
                             const File = e.target.files[0]
-                            const reference = ref(storage, `${File.name}`);
-                            const uploadTask = uploadBytesResumable(reference, File)
-                            uploadTask.on('state_changed', snapshot => {
-                                const progress = (snapshot.bytesTransferred
-                                    / snapshot.totalBytes) * 100; console.log('Upload is ' + progress + '% done'); document.querySelector(".ImgStatus").innerHTML = "SUCCESS"
-                            }, (error) => { console.log("ERROR") }, () => {
-                                getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
-                                    console.log('File available at', downloadURL);
-                                    document.querySelector("input[type='text']").value = downloadURL
-                                    document.querySelector(".raise").disabled = false
-                                })
+
+                            const formData = new FormData()
+                            formData.append('myFile', File)
+                            formData.append('folderName', "userImg")
+                             
+                            fetch('/saveImage', {
+                                method: 'POST',
+                                body: formData
                             })
+                                .then(response => response.json())
+                                .then(data => {
+                                    console.log(data.imageUrl)
+                                    document.querySelector("input[type='text']").value = data.imageUrl
+                                    document.querySelector(".raise").disabled = false
+                                    document.querySelector("#fileInput").disabled = true
+                                })
+                                .catch(error => {
+                                    console.error(error)
+                                })
+
                         })
 
                 </script>
