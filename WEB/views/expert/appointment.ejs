@@ -1,75 +1,84 @@
-<%- include('../header', {current:"appointment", role:"expert"}); %>
+<%- include('expertHeader' ); %>
 
-    <form class="form-inline queryForm">
-        <div class="form-group mb-2">
-            <p>
-                Find a user by specific id
-            </p>
+    <div style="background-image: url('https://i.ibb.co/k65m4V5/secondbgimg.png') ;  background-repeat : no-repeat; background-size: 100% 100%; height: 100vh;">
+
+        <div class="mt-5 pt-5">
+
+
+            <form class="form-inline queryForm justify-content-center">
+                <div class="form-group mb-2">
+                    <h5>
+                        Find a user by specific id
+                    </h5>
+
+                </div>
+                <div class="form-group mx-sm-3 mb-2">
+                    <label for="inputPassword2" class="sr-only">Password</label>
+                    <input type="text" class="form-control" id="inputPassword2" placeholder="Enter user ID" required>
+                </div>
+                <button type="submit" class="btn btn-primary mb-2">Search</button>
+            </form>
+
+
+            <div class="container mt-4">
+                <h3 class="text-center bg-info py-3 rounded text-light">
+                    Active Requests
+                </h3>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Image</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for(let i=0 ; i<query.length ; i++){ %>
+
+                            <tr>
+                                <th scope="row">
+                                    <%= i+1 %>
+                                </th>
+                                <td>
+
+                                    <a href="specific/<%= query[i].farmer_id  %>" class="btn btn-primary text-light">
+                                        <%= query[i].name %>
+                                    </a>
+                                </td>
+                                <td>
+                                    <%= query[i].date_generate %>
+                                </td>
+
+                                <td>
+                                    <% if(query[i].image) { %>
+                                        <a href="<%= query[i].image %>" class="btn btn-primary text-light">VIEW</a>
+                                        <% } else { %>
+                                            NO IMG
+                                            <% } %>
+                                </td>
+
+                            </tr>
+
+                            <% } %>
+
+                    </tbody>
+                </table>
+            </div>
 
         </div>
-        <div class="form-group mx-sm-3 mb-2">
-            <label for="inputPassword2" class="sr-only">Password</label>
-            <input type="text" class="form-control" id="inputPassword2" placeholder="Enter user ID" required>
-        </div>
-        <button type="submit" class="btn btn-primary mb-2">Search</button>
-    </form>
+    </div>
 
+    <%- include('../newFooter'); %>
 
+        <script>
+            document.querySelector(".queryForm").addEventListener("submit", e => {
+                e.preventDefault()
+                const userID = document.querySelector("input[type='text']").value
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col">Date</th>
-                <th scope="col">Image</th>
+                window.location.replace(`specific/${userID}`);
+            })
+        </script>
 
-            </tr>
-        </thead>
-        <tbody>
-            <% for(let i=0 ; i<query.length ; i++){ %>
-
-                <tr>
-                    <th scope="row">
-                        <%= i+1 %>
-                    </th>
-                    <td>
-
-                        <a href="specific/<%= query[i].farmer_id  %>" class="btn btn-primary text-light">
-                            <%= query[i].name %>
-                        </a>
-                    </td>
-                    <td>
-                        <%= query[i].date_generate %>
-                    </td>
-
-                    <td>
-                        <% if(query[i].image) { %>
-                            <a href="<%= query[i].image %>" class="btn btn-primary text-light">VIEW</a>
-                            <% } else { %>
-                                NO IMG
-                                <% } %>
-                    </td>
-
-                </tr>
-
-                <% } %>
-
-        </tbody>
-    </table>
-
-
-    <script>
-        document.querySelector(".queryForm").addEventListener("submit", e => {
-            e.preventDefault()
-            const userID = document.querySelector("input[type='text']").value
-
-            // let userObj = query.filter(obj => {
-            //     return obj.farmer_id == userID
-            // })
-            // console.log(userObj)
-            window.location.replace(`specific/${userID}`);
-        })
-    </script>
-
-    <%- include('../footer'); %>
+        </html>

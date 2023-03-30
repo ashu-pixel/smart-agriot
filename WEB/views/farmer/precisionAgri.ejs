@@ -1,0 +1,68 @@
+<%- include('newHeader' ); %>
+
+
+    <div style="background-image: url('https://i.ibb.co/k65m4V5/secondbgimg.png') ;  background-repeat : no-repeat; background-size: 100% 100%; height: 100vh;">
+
+        <div class="container precision-title mt-5 pt-5 text-center">
+            <h1>
+                Prevention of Common Diseases
+            </h1>
+
+            <p>
+                Under this title we aim you to understand some basic precautions to be taken for your selected crop.
+            </p>
+
+        </div>
+
+        <div class="container precision-instru">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item list-group-item-danger">For selection of crop you can use our cop prediction page. After selecting crop from checkbox click on Search button.</li>
+                <li class="list-group-item list-group-item-danger">Then names of some common diseases regarding select crop will appear.</li>
+                <li class="list-group-item list-group-item-danger">To know more about them click on disease. You will be redirected to a new page where you will get common precautions that needs to be taken so that you can get maximum crop production with minimal wastage.</li>
+            </ul>
+        </div>
+
+        <div class="container">
+            <form action="/PrecisionAgriculture" method="post">
+                <div class="mx-auto w-50">
+                    <label for="crop">Choose a Crop:</label>
+
+                    <select name="crop" class="custom-select w-25 mt-2 ">
+            <% for(fruit in data){ %>
+
+                <option value=<%= fruit %>><%= fruit %> </option>
+                <% } %>
+             
+          </select>
+
+                    <button type="submit" class="btn btn-success">Search</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="container w-75">
+            <% if(Object.keys(links).length != 0) {%>
+                <p class="h3">
+                    Common Diseases
+                </p>
+                <ul>
+                    <% for (disease in links){ %>
+                        <li>
+                            <a href=<%=links[disease] %> ><%= disease %></a>
+                        </li>
+                        <% } %>
+                </ul>
+
+
+                <% } %>
+
+        </div>
+
+    </div>
+
+
+
+    <%- include('../newFooter'); %>
+
+
+        </html>

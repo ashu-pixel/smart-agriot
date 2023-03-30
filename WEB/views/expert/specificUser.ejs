@@ -1,165 +1,176 @@
-<%- include('../header', {current:"" , role:"expert" }); %>
+<%- include('expertHeader' ); %>
 
-    <div class="container">
 
-        <div class="container text-center">
-            <div class="row align-items-center">
-                <div class="col font-weight-bold">
-                    NAME
-                </div>
-                <div class="col font-weight-bold">
-                    PHONE NO.
-                </div>
-                <div class="col font-weight-bold">
-                    Address
-                </div>
-            </div>
+    <div
+        style="background-image: url('https://i.ibb.co/k65m4V5/secondbgimg.png') ;  background-repeat : no-repeat; background-size: 100% 100%;  ">
+
+        <div class="container mt-5 pt-5">
+
+            <table class="table table-bordered text-center">
+                <thead class="thead-dark">
+                    <tr>
+
+                        <th scope="col">Name</th>
+                        <th scope="col">Contact Nos</th>
+                        <th scope="col">Address </th>
+                        <th scope="col">Farm Setup </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+
+                        <td>
+                            <%= user.Name %>
+                        </td>
+                        <td>
+                            <%= user.Phone %>
+                        </td>
+                        <td>
+                            <%= user.Address %>
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" href="/farmSetup/<%= user.userID%>">View</a>
+                        </td>
+                    </tr>
+
+                    </tr>
+                </tbody>
+            </table>
+
+
+
         </div>
+        <% if(currQuery && Object.keys(currQuery).length) { %>
 
-        <div class="container text-center">
-            <div class="row align-items-center">
-                <div class="col">
-                    <%= user.Name %>
-                </div>
-                <div class="col">
-                    <%= user.Phone %>
-                </div>
-                <div class="col">
-                    <%= user.Address %>
-                </div>
+            <div class="mb-3 alert alert-warning container">
+                <form action="" class=" m-auto text-center">
+                    <label class="form-label"><h3>
+                        Enter disease name and upload a image before resolving the query
+                    </h3></label>
+                    <div>
+                        <input type="text" name="" id="diseaseName" placeholder="Enter disease name" required>
+                        <input type="file" name="myFile" class="text-light btn btn-primary" accept="image/*"
+                            enctype="multipart/form-data" id="formFile" required />
+                    </div>
+
+                </form>
             </div>
-        </div>
+
+            <% if(currQuery.image ){ %>
+                <div class="alert alert-warning w-25 m-auto text-center my-3" role="alert">
+                    Click
+                    <a src="<%= currQuery.image %>" class="btn btn-success text-light">HERE</a> to see image
+                </div>
+                <% } %>
+
+                    <div class="card m-auto" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Remarks</h5>
+                            <form action="/resolveQ/<%= currQuery.docID %>" method="post">
+                                <input type="textbox" name="remark" id="remark" required>
+                                <button class="btn btn-primary raise">Submit and resolve</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <% }else { %>
+                        <div class="alert alert-danger w-50 text-center m-auto" role="alert">
+                            No active request
+                        </div>
+                        <% } %>
+
+                            
+
+                        <div class="container my-4">
+                            <h3 class="bg-info text-center p-3 rounded">Resolved Requests</h3>
+                            <table class="table table-striped">
+                                <thead>
+
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Raised on</th>
+                                        <th scope="col">Solved on</th>
+                                        <th scope="col">Remarks</th>
+                                        <!-- <th scope="col">Image</th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <% for(let i=0 ; i < prevQuery.length ; i++){ %>
+                                        <tr>
+                                            <td scope="row">
+                                                <%= i+1 %>
+                                            </td>
+                                            <td>
+                                                <%= prevQuery[i].date_generate %>
+                                            </td>
+                                            <td>
+                                                <%= prevQuery[i].date_solved %>
+                                            </td>
+                                            <td>
+                                                <%= prevQuery[i].remark %>
+                                            </td>
+
+
+                                        </tr>
+                                        <% } %>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+
 
     </div>
-    <% if(currQuery && Object.keys(currQuery).length) { %>
+    <%- include('../newFooter'); %>
 
-        <% if(currQuery.image ){ %>
-            <div class="alert alert-warning w-25 m-auto text-center my-3" role="alert">
-                Click
-                <a src="<%= currQuery.image %>" class="btn btn-success text-light">HERE</a> to see image
-            </div>
-            <% } %>
+        <script>
+            document.querySelector("#formFile").disabled = true
+            document.querySelector(".raise").disabled = true
+            const type = document.querySelector("#diseaseName")
+            type.addEventListener('input', () => {
+                console.log(type.value)
+                if (type.value == "") {
+                    document.querySelector("#formFile").disabled = true
+                } else {
+                    document.querySelector("#formFile").disabled = false
+                }
+            })
+        </script>
 
-                <div class="mb-3">
-                    <form action="" class="w-50 m-auto text-center">
-                        <label class="form-label">Enter disease name and upload a image</label>
-                        <div>
-                            <input type="text" name="" id="diseaseName" placeholder="Enter disease name" required>
-                        </div>
-                        <div>
-                            <input class="form-control" type="file" id="formFile" required>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script type="module">
 
-                        </div>
-                    </form>
-                </div>
+            document.querySelector("#formFile").addEventListener("change",
+                (e) => {
+                    const File = e.target.files[0]
 
+                    const formData = new FormData()
+                    formData.append('myFile', File)
+                    formData.append('folderName', "diseaseImg")
+                    formData.append('diseaseName', `${type.value}`)
 
-                <div class="card m-auto" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">Remarks</h5>
-                        <form action="/resolveQ/<%= currQuery.docID %>" method="post">
-                            <input type="textbox" name="remark" id="remark" required>
-                            <button class="btn btn-primary raise">Submit and resolve</button>
-                        </form>
-                    </div>
-                </div>
-
-                <% }else { %>
-                    <div class="alert alert-danger w-50 text-center m-auto" role="alert">
-                        No active request
-                    </div>
-                    <% } %>
-
-
-                        <table class="table table-striped">
-                            <thead>
-
-
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Raised on</th>
-                                    <th scope="col">Solved on</th>
-                                    <th scope="col">Remarks</th>
-                                    <!-- <th scope="col">Image</th> -->
-                                </tr>
-                            </thead>
-                            <tbody>
-
-
-
-                                <% for(let i=0 ; i < prevQuery.length ; i++){ %>
-                                    <tr>
-                                        <td scope="row">
-                                            <%= i+1 %>
-                                        </td>
-                                        <td>
-                                            <%= prevQuery[i].date_generate %>
-                                        </td>
-                                        <td>
-                                            <%= prevQuery[i].date_solved %>
-                                        </td>
-                                        <td>
-                                            <%= prevQuery[i].remark %>
-                                        </td>
-
-                                        
-                                    </tr>
-                                    <% } %>
-
-
-
-
-                            </tbody>
-                        </table>
-
-
-                        <script>
+                    fetch('/saveImage', {
+                        method: 'POST',
+                        body: formData
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(data.imageUrl)
+                            Swal.fire(
+                                'Image uploaded',
+                                'Thank You!',
+                                'success'
+                            )
+                            document.querySelector(".raise").disabled = false
                             document.querySelector("#formFile").disabled = true
-                            document.querySelector(".raise").disabled = true
-                            const type = document.querySelector("#diseaseName")
-                            type.addEventListener('input', () => {
-                                console.log(type.value)
-                                if (type.value == "") {
-                                    document.querySelector("#formFile").disabled = true
-                                } else {
-                                    document.querySelector("#formFile").disabled = false
-                                }
-                            })
-                        </script>
+                        })
+                        .catch(error => {
+                            console.error(error)
+                        })
 
-                        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-                        <script type="module">
-                            
-                            document.querySelector("#formFile").addEventListener("change",
-                                (e) => {
-                                    const File = e.target.files[0]
-                                     
-                                    const formData = new FormData()
-                                    formData.append('myFile', File)
-                                    formData.append('folderName', "diseaseImg")
-                                    formData.append('diseaseName', `${type.value}`)
+                })
 
-                                    fetch('/saveImage', {
-                                        method: 'POST',
-                                        body: formData
-                                    })
-                                        .then(response => response.json())
-                                        .then(data => {
-                                            console.log(data.imageUrl)
-                                            Swal.fire(
-                                                'Image uploaded',
-                                                'Thank You!',
-                                                'success'
-                                            )
-                                            document.querySelector(".raise").disabled = false
-                                            document.querySelector("#formFile").disabled = true
-                                        })
-                                        .catch(error => {
-                                            console.error(error)
-                                        })
+        </script>
 
-                                })
-
-                        </script>
-
-                        <%- include('../footer'); %>
+        </html>

@@ -1,0 +1,352 @@
+#MLmodelForm {
+    box-sizing: border-box;
+    font-family: "Merriweather Sans", sans-serif;
+    color: white;
+    background-color: #ccfaa0;
+    border-radius: 5px;
+    width: 55%;
+    /* padding: 20px; */
+    -webkit-box-shadow: -1px 3px 18px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: -1px 3px 18px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: -1px 3px 18px 0px rgba(0, 0, 0, 0.75);
+    margin: auto;
+    margin-bottom: 75px;
+    padding: 25px;
+    padding-bottom: 25px;
+    /* background-image: url("https://images.indianexpress.com/2019/04/weather-759-1.jpg?w=600");
+    background-repeat: no-repeat;
+    background-size: 100% 100%; */
+}
+
+#MLmodelForm p {
+    font-size: 1.2em;
+    color: black;
+    text-align: center;
+}
+
+#MLmodelForm .params {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#MLmodelForm button {
+    width: 40%;
+    text-align: center;
+    color: rgb(59, 10, 235);
+    margin-top: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+#MLmodelForm .form-group {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+#MLmodelForm .form-group label {
+    font-weight: bold;
+    font-size: 1em;
+    color: green;
+}
+
+#MLmodelForm .form-group .input-group {
+    border-radius: 5px;
+    -webkit-box-shadow: -1px 3px 18px 0px rgba(0, 0, 0, 0.35);
+    -moz-box-shadow: -1px 3px 18px 0px rgba(0, 0, 0, 0.35);
+    box-shadow: -1px 3px 18px 0px rgba(0, 0, 0, 0.35);
+}
+
+#MLmodelForm .form-group .input-group .input-group-addon {
+    border: none;
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+#MLmodelForm .form-group .input-group input {
+    padding-left: 10px;
+}
+
+#MLmodelForm .form-group .input-group i {
+    color: #009EDF;
+}
+
+#MLmodelForm .form-group input {
+    padding: 3px;
+    width: 100%;
+    border: none;
+    border-radius: 0 5px 5px 0;
+}
+
+
+/* Chrome, Safari, Edge, Opera */
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+/* Firefox */
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.podiumContainer {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.podium__item {
+    width: 200px;
+}
+
+.podium__rank {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 35px;
+    color: #fff;
+}
+
+.podium__city {
+    text-align: center;
+    padding: 0 .5rem;
+    font-size: 2.2em;
+}
+
+.podium__number {
+    width: 27px;
+    height: 75px;
+}
+
+.podium .first {
+    min-height: 300px;
+    background: rgb(241, 150, 2);
+    background: linear-gradient(333deg, rgba(255, 172, 37, 1) 0%, rgba(254, 207, 51, 1) 13%, rgba(254, 224, 51, 1) 53%, rgba(255, 172, 37, 1) 100%);
+}
+
+.podium .second {
+    min-height: 200px;
+    background: blue;
+}
+
+.podium .third {
+    min-height: 100px;
+    background: green;
+}
+
+.current {
+    background-color: #82fc77;
+    border-radius: 10px;
+}
+
+
+/*FOR SMART FARMIGN*/
+
+
+/* SMART FARMING*/
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: red;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked+.slider {
+    background-color: green;
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.blink {
+    animation: blinker 1s step-start infinite;
+    color: red;
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}
+
+.no-blink {
+    color: rgb(0, 124, 6);
+}
+
+.plant-name-input {
+    display: flex;
+    justify-content: center;
+}
+
+.input-div {
+    width: 50%;
+    display: flex;
+    justify-content: end;
+}
+
+.ips {
+    width: 50%;
+}
+
+.water-level {
+    justify-content: start;
+    margin-left: 3px;
+}
+
+.mode-switch {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nutri-box {
+    padding: 5px;
+    /* border: 2px solid red; */
+}
+
+.nutri-box p {
+    height: 50%;
+    margin: 0;
+    font-size: 1.5em;
+    color: #29335c;
+    font-weight: bold;
+}
+
+.nutri-box:nth-child(2) {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+@media screen and (max-width: 1165px) {
+    .plant-name-input {
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+        justify-content: end;
+    }
+    .ips {
+        width: 100%;
+    }
+    .water-level {
+        justify-content: center;
+        margin-top: 3px;
+    }
+    .input-div {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    .panel {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .left-half,
+    .right-half {
+        /* border: 2px solid red; */
+        width: 100%;
+    }
+    .panel {
+        display: flex;
+        flex-direction: column;
+        width: 200%;
+        align-items: s;
+        justify-content: start;
+    }
+    .motor-control {
+        flex-direction: row;
+        border: 2px solid #000;
+        align-items: center;
+    }
+    .motor-control h3 {
+        flex-direction: column;
+    }
+    .displays {
+        flex-direction: column;
+    }
+    .nutri-box:nth-child(2) {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+}
+
+.panel {
+    display: flex;
+}
+
+.displays {
+    display: flex;
+}
+
+.left-half,
+.right-half {
+    /* border: 2px solid red; */
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+.motor-control h3 {
+    display: flex;
+    justify-content: end;
+    width: 50%;
+}
+
+.motor-control label {
+    /* //class="switch d-flex justify-content-end ml-2 */
+    display: flex;
+    justify-content: end;
+    margin-left: 3px;
+}

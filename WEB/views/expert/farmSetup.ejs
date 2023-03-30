@@ -1,0 +1,274 @@
+<%- include('expertHeader', {current:"", role:"expert"}); %>
+
+    <style>
+        input {
+            width: 70%;
+        }
+    </style>
+
+
+    <div style="background-image: url('https://i.ibb.co/k65m4V5/secondbgimg.png') ;  background-repeat : no-repeat; background-size: 100% 100%; height: 100vh;">
+
+        <div class="container text-center mt-5 pt-5">
+
+            <h1>
+                Farm section for user :
+                <%= userID %>
+            </h1>
+
+            <table class="table table-hover text-center table-responsive-lg table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Crop</th>
+                        <th scope="col">Section Name</th>
+                        <th scope="col" colspan="3">Soil</th>
+                        <th scope="col">Age</th>
+                        <th scope="col" colspan="2">Action</th>
+                    </tr>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col">Nitrogen(N)</th>
+                        <th scope="col">Phosphorous(P)</th>
+                        <th scope="col">Potassium(K)</th>
+                        <th scope="col"></th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <% for(let i=0;i<cropsInFarm.length;i++) {%>
+
+                        <% if(cropsInFarm[i]) {%>
+
+                            <tr>
+                                <th scope="row">P
+                                    <%= i%>
+                                </th>
+                                <td id="cropName">
+                                    <%= cropsInFarm[i].crop %>
+                                </td>
+                                <td>
+                                    <input type="text" name="cropName" class="P<%= i %>" value="<%= cropsInFarm[i].name %>" disabled>
+                                </td>
+                                <td>
+                                    <input type="text" name="Nitrogen" class="P<%= i %>" value="<%= cropsInFarm[i].n %>" disabled>
+                                </td>
+                                <td>
+                                    <input type="text" name="Phosphorous" class="P<%= i %>" value="<%= cropsInFarm[i].p %>" disabled>
+                                </td>
+                                <td>
+                                    <input type="text" name="Potassium" class="P<%= i %>" value="<%= cropsInFarm[i].k %>" disabled>
+                                </td>
+                                <td>
+                                    <%= cropsInFarm[i].date %>
+                                </td>
+
+                                <td>
+                                    <Button class="btn btn-primary" id="P<%= i %>" onclick="editHandler(this)">EDIT</Button>
+                                </td>
+                                <td>
+                                    <Button class="btn btn-danger" id="P<%= i %>" onclick="deleteHandler(this)">DELETE</Button>
+                                </td>
+                            </tr>
+
+
+                            <% } %>
+                                <% } %>
+
+                </tbody>
+            </table>
+
+            <div class="d-none" id="addSection">
+                <div class="alert alert-warning font-weight-bold m-0" role="alert">
+                    Fill out details below to add a new section
+                </div>
+                <table class="table table-hover text-center table-responsive-lg table-warning">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Crop</th>
+                            <th scope="col">Section Name</th>
+                            <th scope="col" colspan="3">Soil</th>
+                            <th scope="col">Capacity</th>
+                            <th scope="col">Edit</th>
+                        </tr>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                            <th scope="col">Nitrogen(N)</th>
+                            <th scope="col">Phosphorous(P)</th>
+                            <th scope="col">Potassium(K)</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <form id="submitForm">
+                            <tr>
+                                <th scope="row">*</th>
+                                <td>
+                                    <select class="form-select newSection" aria-label="Default select example" required>
+                                    <option selected>Select type</option>
+                                    <% for(let crop of allCrops ) { %>
+                                        <option value="<%= crop %>">
+                                            <%= crop %>
+                                        </option>
+                                        <% } %>
+                                </select>
+                                </td>
+                                <td>
+                                    <input type="text" name="cropName" class="newSection" required>
+                                </td>
+                                <td>
+                                    <input type="text" name="Nitrogen" class="newSection" required>
+                                </td>
+                                <td>
+                                    <input type="text" name="Phosphorous" class="newSection" required>
+                                </td>
+                                <td>
+                                    <input type="text" name="Potassium" class="newSection" required>
+                                </td>
+                                <td>
+                                    <input type="text" name="Capacity" class="newSection" placeholder="in KG" required>
+                                </td>
+
+                                <td>
+                                    <Button class="btn btn-primary newSection" type="submit">Submit</Button>
+                                </td>
+                            </tr>
+                        </form>
+
+                    </tbody>
+                </table>
+
+            </div>
+
+            <button type="button" class="btn btn-success" onclick="showSectionHandler(this)">Add</button>
+
+
+        </div>
+
+    </div>
+
+
+    <%- include('../newFooter'); %>
+
+        <script>
+            const editHandler = async(btn) => {
+                const selectedCrop = btn.id;
+
+                let allInps = document.querySelectorAll(`input[type=text].${selectedCrop}`)
+
+                if (btn.innerText === "SAVE") {
+                    for (let i = 0; i < allInps.length; i++) allInps[i].disabled = true
+
+                    const newVals = {
+                        name: "",
+                        nitro: 1,
+                        phosp: 2,
+                        potas: 3,
+                        sectionID: ""
+                    }
+                    newVals.name = allInps[0].value
+                    newVals.nitro = allInps[1].value
+                    newVals.phosp = allInps[2].value
+                    newVals.potas = allInps[3].value
+                    newVals.sectionID = selectedCrop
+
+                    const rawResponse = await fetch("/updateFarmNPK/<%= userID %>", {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(newVals)
+                    });
+                    const response = await rawResponse.json();
+
+                    btn.innerText = "EDIT"
+
+                } else {
+                    for (let i = 0; i < allInps.length; i++) allInps[i].disabled = false
+                    btn.innerText = "SAVE"
+
+                }
+            }
+
+            const showSectionHandler = (btn) => {
+                document.getElementById("addSection").classList.toggle("d-none")
+                btn.innerText = btn.innerText === "CANCEL" ? "ADD" : "CANCEL"
+                btn.classList.toggle("btn-danger")
+            }
+
+            document.getElementById("submitForm").addEventListener("submit", async(evt) => {
+                evt.preventDefault()
+
+                const newValInps = document.querySelectorAll(".newSection")
+                const newVals = {
+                    crop: newValInps[0].value,
+                    name: newValInps[1].value,
+                    n: newValInps[2].value,
+                    p: newValInps[3].value,
+                    k: newValInps[4].value,
+                    capacity: newValInps[5].value,
+                }
+
+                newValInps.forEach(ele => {
+                    ele.disabled = true
+                })
+
+                const rawResponse = await fetch("/addFarmSection/<%= userID %>", {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(newVals)
+                });
+                const response = await rawResponse.status
+
+                if (response == 201) {
+                    location.reload();
+                } else {
+                    alert("Insufficient space")
+                }
+
+                newValInps.forEach(ele => {
+                    ele.disabled = false
+                })
+
+            })
+
+            const deleteHandler = async(btn) => {
+
+                btn.disabled = true
+                const rawResponse = await fetch("/deleteFarmSection/<%= userID %>", {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        sectionID: btn.id
+                    })
+                });
+                const response = await rawResponse.status
+
+                if (response == 201) {
+                    alert("SUCCESS")
+                    btn.removeEventListener("click", deleteHandler)
+                    location.reload();
+                } else {
+                    alert("Can not alert")
+                }
+                btn.disabled = false
+            }
+        </script>
+
+        </html>

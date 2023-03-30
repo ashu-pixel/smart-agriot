@@ -1,0 +1,130 @@
+<%- include('newHeader' ); %>
+
+
+
+    <div style="background-image: url('https://i.ibb.co/k65m4V5/secondbgimg.png') ;  background-repeat : no-repeat; background-size: 100% 100%;">
+
+        <div class="mt-5 pt-2  ">
+
+            <h1 class="text-center mb-0"><b>Weather Wizard</b></h1><br>
+
+            <p class="h2 bg-danger w-50 m-auto p-2 text-white d-none text-center" id="errMsg"></p>
+            <% if(info){%>
+                <div class="container text-center d-flex" id="infoMain">
+                    <p class="h2 bg-info w-50 m-auto p-2 text-white">
+                        <%= info %>
+                            <img src="<%= url %>" alt="" id="weather_icons">
+                    </p>
+
+                </div>
+                <% } %>
+
+
+                    <form id="MLmodelForm" method="post" action="/weatherPred">
+                        <p>Get live weather update!</p>
+                        <div class=" d-flex justify-content-around align-item-center flex-wrap mb-4">
+                            <td>
+                                <div>
+                                    <div class="form-group">
+                                        <label for="city">City</label>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group"><input type="text" id="citySearchVal" placeholder="City name" name="city" required /></div>
+                            </td>
+                            <td><button class="btn btn-primary   h-50 text-light mt-0" id="citySearchBtn" type="button">Search</button></td>
+                        </div>
+
+                        <div class="params">
+
+                            <% const para=["Temperature" , "Humidity" , "Pressure" , "Visibility" , "Wind Speed"
+                                , "Wind Degree" ] %>
+                                <% const name=["temp", "humi" , "press" , "visibility" ,"windS", "windD" ] %>
+                                    <% const placeH=["Degree C" , "%" , "mb" , "Km" , "Km/hr" , "Degrees" ] %>
+
+
+                                        <% for(let i=0;i<6;i++){ %>
+
+                                            <div class="form-group">
+                                                <label for="<%= name[i]%>">
+                                                    <%= para[i]%>
+                                                </label>
+
+                                                <div class="input-group">
+                                                    <div class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i> </div>
+                                                    <input type="text" id="<%= name[i]%>" placeholder="<%= placeH[i] %>" name="<%= name[i]%>" class="paramsInp" required />
+                                                </div>
+                                            </div>
+
+
+
+                                            <% } %>
+
+                                                <input type="text" name="url" class="d-none" id="none">
+
+                        </div>
+
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-default text-center" id="submitbtn" disabled>Submit</button>
+                        </div>
+                    </form>
+
+        </div>
+
+
+        <%- include('../newFooter'); %>
+
+
+
+
+            <script>
+                let ips = document.querySelectorAll(".paramsInp")
+                document.getElementById("citySearchBtn").addEventListener("click", async function() {
+
+                    let val = document.getElementById("citySearchVal").value
+                    console.log(val)
+                    console.log(ips)
+                    const rawResponse = await fetch(`/currCityConditions/${val}`);
+                    const data = await rawResponse.json();
+
+                    let blueMess = document.getElementById("infoMain")
+                    let redMess = document.getElementById("errMsg")
+                    if (data.error) {
+
+                        redMess.classList.remove("d-none")
+                        redMess.innerText = data.error.message
+                        if (blueMess) {
+                            blueMess.classList.add("d-none")
+                        }
+
+                        return
+                    } else {
+                        document.getElementById("errMsg").classList.add("d-none")
+                        if (blueMess) {
+                            blueMess.classList.remove("d-none")
+                        }
+                    }
+
+                    document.getElementById("none").value = data.current.condition.icon
+                    ips[3 - 1].value = Math.ceil(data.current.pressure_mb)
+                    ips[4 - 1].value = Math.ceil(data.current.vis_km)
+                    ips[5 - 1].value = Math.ceil(data.current.wind_kph)
+                    ips[6 - 1].value = Math.ceil(data.current.wind_degree)
+
+                    document.getElementById("submitbtn").disabled = false
+                })
+
+                document.addEventListener('DOMContentLoaded', async function() {
+
+                    const resp = await fetch('/dhtSensorVals');
+                    const fData = await resp.json();
+
+                    ips[0].value = fData.Temperature
+                    ips[1].value = fData.Humidity
+                    document.getElementById("submitbtn").disabled = true
+                });
+            </script>
+
+            </html>

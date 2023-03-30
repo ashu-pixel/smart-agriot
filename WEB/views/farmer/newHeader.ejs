@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="newStyles.css">
+    <title>Smart Agr-IoT</title>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <a class="navbar-brand" href="#">
+            <img src=" " width="30" height="30" class="d-inline-block align-top" alt=""> Smart Agr-IoT
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav w-100 d-flex justify-content-around">
+
+
+                <% const contents={ "Home" : "/" , "AgriGIS" : "qgisPage" , "Crop Scope" : "CropPrediction"
+                    , "Crop facts" : "PrecisionAgriculture" , "Sky Track" : "Weather" , "Smart Farming" : "SmartFarming"
+                    , "Talk2Pro" : "plantDoctor" , "About" : "abt" } %>
+
+                    <% for(item in contents){ %>
+                        <li class="nav-item active ">
+                            <a class="nav-link   " href="<%=contents[item]%>">
+                                <%=item%> <span class="sr-only ">(current)</span>
+                            </a>
+                        </li>
+                        <%} %>
+
+                            <li class="nav-item active ">
+
+                                <a class="nav-link " href="/logout">Logout <span class="sr-only ">(current)</span></a>
+
+                            </li>
+
+                            <li class="nav-item active ">
+
+                                <div id="google_translate_element"></div>
+
+                            </li>
+
+
+
+                            <script type="text/javascript">
+                                function googleTranslateElementInit() {
+                                    new google.translate.TranslateElement({
+                                        pageLanguage: 'en',
+                                        includedLanguages: 'sa,pa,gu,ta,te,hi,kn,kok,mr'
+                                    }, 'google_translate_element');
+                                }
+                            </script>
+
+                            <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+
+
+
+
+
+            </ul>
+        </div>
+    </nav>

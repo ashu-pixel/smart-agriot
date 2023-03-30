@@ -1,0 +1,131 @@
+<%- include('newHeader' ) , { currentPage:"Crop Scope" } ;  %>
+
+
+    <div style="background-image: url('https://i.ibb.co/k65m4V5/secondbgimg.png') ;  background-repeat : no-repeat; background-size: 100% 100%;">
+
+        <div class="mt-5 pt-2  ">
+
+            <h1 class="text-center mb-0"><b>Crop Prediction</b></h1><br>
+
+
+            <form id="MLmodelForm" method="post">
+                <p>Find the most demaning crop in market now !</p>
+
+                <div class="params">
+
+                    <div class="form-group">
+                        <label for="nitrogen">Nitrogen Content</label>
+
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i> </div>
+                            <input type="number" id="nitrogen" placeholder="N" name="nitrogen" step="0.01" min="0" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phosphorus">Phosphorus Content</label>
+
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i> </div>
+                            <input type="number" id="phosphorus" placeholder="P" name="phosphorus" step="0.01" min="0" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="potassium">Potassium Content</label>
+
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i> </div>
+                            <input type="number" id="potassium" placeholder="K" name="potassium" step="0.01" min="0" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="temp">Temperature</label>
+
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i> </div>
+                            <input type="number" id="temp" placeholder="in Kelvin" name="temp" step="0.01" min="0" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="humi">Humidity</label>
+
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i> </div>
+                            <input type="number" id="humi" placeholder="Percent " name="humi" step="0.01" min="0" max="100" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="rainfall">Rainfall</label>
+
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i> </div>
+                            <input type="number" id="rainfall" placeholder="in mm" name="rainfall" step="0.01" min="0" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pH">pH VALUE</label>
+
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i> </div>
+                            <input id="pH" placeholder="pH" name="pH" type="number" min="0" step="0.01" max="14" required />
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-default text-center">Predict</button>
+                </div>
+            </form>
+
+        </div>
+
+
+
+        <% if(result.length) { %>
+
+            <div class="podiumContainer podium ">
+                <div class="podium__item">
+                    <p class="podium__city">
+                        <%= result[0] %>
+                    </p>
+                    <div class="podium__rank second">2</div>
+                </div>
+                <div class="podium__item">
+                    <p class="podium__city">
+                        <%= result[1] %>
+                    </p>
+                    <div class="podium__rank first">
+                        <svg class="podium__number" viewBox="0 0 27.476 75.03" xmlns="http://www.w3.org/2000/svg">
+                            <g transform="matrix(1, 0, 0, 1, 214.957736, -43.117417)">
+                                <path class="st8"
+                                    d="M -198.928 43.419 C -200.528 47.919 -203.528 51.819 -207.828 55.219 C -210.528 57.319 -213.028 58.819 -215.428 60.019 L -215.428 72.819 C -210.328 70.619 -205.628 67.819 -201.628 64.119 L -201.628 117.219 L -187.528 117.219 L -187.528 43.419 L -198.928 43.419 L -198.928 43.419 Z"
+                                    style="fill: #000;" />
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+                <div class="podium__item">
+                    <p class="podium__city">
+                        <%= result[2] %>
+                    </p>
+                    <div class="podium__rank third">3</div>
+                </div>
+            </div>
+            <h1 class="text-center mb-4">RESULTS</h1>
+
+            <% } %>
+
+
+
+                <%- include('../newFooter'); %>
+
+
+
+
+                    </html>

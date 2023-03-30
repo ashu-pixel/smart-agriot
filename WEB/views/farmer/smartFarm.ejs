@@ -1,0 +1,262 @@
+<%- include('newHeader' , {current:"SmartFarming", role:"farmer"}); %>
+
+
+
+    <div style="background-image: url('https://i.ibb.co/k65m4V5/secondbgimg.png') ;  background-repeat : no-repeat; background-size: 100% 100%;">
+
+
+        <div class="d-flex  align-items-center justify-content-around mt-5 pt-5">
+            <h1 class="mx-auto">
+                <B> SMART FARMING IN AGRICULTURE ! </B>
+            </h1>
+
+        </div>
+
+
+        <div class="text-center w-75 m-auto">
+            <h2 class="bg-warning ">
+                <B><U> Smart farming technologies :-</B>
+                </U>
+            </h2>
+        </div>
+        <BR>
+        <div class="w-75 m-auto text-center">
+            <p class="mb-0">
+                As the innovators of smart agriot it is our responsibility to ensure that all our clients find the product easy to understand and access.
+            </p>
+            <p>
+                Thus we are providing you the detailed description of our system through which you can monitor safety of your garden as well as manage water supply provided to your plants.
+            </p>
+        </div>
+
+        <BR>
+
+        <div class="container  ">
+            <ul>
+                <li><span style="color: red;">Inadequate water level</span>: Plant needs more water. Please switch on the the motor to continue the water supply until the blinking red message on the screen turns green to show adequate water level is reached.</li>
+                <li><span style="color: green;">Adequate water level</span>: Now you can switch OFF the motor as adequate water level has been reached.</li>
+                <li>Mode: Here you can decide the mode depending on whether you manually want to supply water(Turn <span style="color: green;">ON Manual mode</span>) or let the system do the work for you(Turn <span style="color:red">ON Automatic mode</span>).</li>
+                <li>Water supply of plant 1: In manual mode you can turn the motor <span style="color: green;">ON</span>/<span style="color: red;">OFF</span> for Plant 1 as per the need.</li>
+                <li>Water supply of plant 2: In manual mode you can turn the motor <span style="color: green;">ON</span>/<span style="color: red;">OFF</span> for Plant 2 as per the need.</li>
+                <li>Water supply of plant 3: In manual mode you can turn the motor <span style="color: green;">ON</span>/<span style="color: red;">OFF</span> for Plant 3 as per the need. </li>
+            </ul>
+        </div>
+        </B>
+
+        </p>
+        <br>
+        <h1 style="text-align: center;color: brown;">
+            <U>Ensuring the Security and Health through the Smart Water Management System </U>
+        </h1>
+
+        <div class="mode-switch mt-3">
+            <div>
+                <h3>Automatic Mode</h3>
+            </div>
+            <div>
+                <label class="switch mx-2">
+                <input type="checkbox" id="checkbox" <%=mode==='1' ? "checked" : "unchecked" %> >
+                <span class="slider round "></span>
+            </label>
+            </div>
+            <div>
+                <h3>Manual Mode</h3>
+            </div>
+        </div>
+
+
+        <table class="table table-hover text-center table-responsive-lg table-bordered mb-5">
+            <thead>
+                <tr class="table-light">
+                    <th scope="col" class="table-light">#</th>
+                    <th scope="col" class="table-light">Crop</th>
+                    <th scope="col" class="table-light">Watering</th>
+                    <th scope="col" class="table-light">Section Name</th>
+                    <th scope="col" class="table-light" colspan="3">Soil</th>
+                    <th scope="col" class="table-light">Age</th>
+                    <th scope="col" class="table-light">Moisture</th>
+                    <th scope="col" class="table-light">Motor</th>
+
+                </tr>
+                <tr class="table-light">
+                    <th scope="col" class="table-light"></th>
+                    <th scope="col" class="table-light"></th>
+                    <th scope="col" class="table-light"></th>
+                    <th scope="col" class="table-light"></th>
+                    <th scope="col" class="table-light">Nitrogen(N)</th>
+                    <th scope="col" class="table-light">Phosphorous(P)</th>
+                    <th scope="col" class="table-light">Potassium(K)</th>
+                    <th scope="col" class="table-light"></th>
+                    <th scope="col" class="table-light"></th>
+                    <th scope="col" class="table-light"></th>
+
+
+                </tr>
+            </thead>
+            <tbody>
+
+                <% for(let i=0;i<cropsInFarm.length;i++) {%>
+
+                    <% if(cropsInFarm[i]) {%>
+
+                        <tr class="table-light">
+                            <th class="table-light" scope="row">P
+                                <%= i%>
+                            </th>
+                            <td class="table-light" id="cropName">
+                                <%= cropsInFarm[i].crop %>
+                            </td>
+                            <td class="table-light">
+                                <span class="currentWatering btn btn-success <%= currentPlant !== i && " d-none " %>">Watering</span>
+
+                            </td>
+                            <td class="table-light">
+                                <input type="text" name="cropName" class="P<%= i %>" value="<%= cropsInFarm[i].name %>" disabled>
+                            </td>
+                            <td class="table-light">
+                                <input type="text" name="Nitrogen" class="P<%= i %>" value="<%= cropsInFarm[i].n %>" disabled>
+                            </td>
+                            <td class="table-light">
+                                <input type="text" name="Phosphorous" class="P<%= i %>" value="<%= cropsInFarm[i].p %>" disabled>
+                            </td>
+                            <td class="table-light">
+                                <input type="text" name="Potassium" class="P<%= i %>" value="<%= cropsInFarm[i].k %>" disabled>
+                            </td>
+                            <td class="table-light">
+                                <%= cropsInFarm[i].date %>
+                            </td>
+                            <td class="table-light P<%= i %>">
+
+                                <p class="waterLevel h5 font-weight-bold <%= cropsInFarm[i].MOIS_STATUS ? " no-blink " : " blink "  %>">
+                                    <%= cropsInFarm[i].MOIS_STATUS ? "Adequate" : "Inadequate" %>
+                                </p>
+
+                            </td>
+                            <td class="table-light">
+
+                                <div class="mode-switch mt-3">
+
+                                    <div class="text-danger">
+                                        <h6>OFF</h6>
+                                    </div>
+                                    <div>
+                                        <label class="switch mx-2">
+                                        <input type="checkbox" <%=mode == "0" && "disabled" %> <%= currentPlant == i && "checked" %> id="P<%= i %>"
+                                            onchange="motorHandler(this)">
+                                            <span class="slider round "></span>
+                                    </label>
+                                    </div>
+                                    <div class="text-success">
+                                        <h6>ON</h6>
+                                    </div>
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+
+                        <% } %>
+                            <% } %>
+
+            </tbody>
+        </table>
+
+    </div>
+    <%- include('../newFooter'); %>
+        <script>
+            function updateRealTime({
+                MOIST_STATUS,
+                CURR_WATER
+            }) {
+
+                const curr = document.querySelectorAll(".currentWatering")
+                const moist = document.querySelectorAll(".waterLevel")
+
+                for (let idx = 0; idx < curr.length; idx++) {
+
+                    // updating current watering status
+                    if (idx == CURR_WATER) {
+                        curr[idx].classList.remove("d-none")
+                    } else {
+                        curr[idx].classList.add("d-none")
+                    }
+
+                    // updating soil sensor
+                    if (MOIST_STATUS[idx]) {
+                        moist[idx].classList.remove("blink")
+                        moist[idx].classList.add("no-blink")
+                        moist[idx].innerText = "Adequate"
+                    } else {
+                        moist[idx].classList.remove("no-blink")
+                        moist[idx].classList.add("blink")
+                        moist[idx].innerText = "Inadequate"
+                    }
+                }
+            }
+
+            setInterval(async() => {
+                const rawResponse = await fetch("/listenRealTime", {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                });
+                if (rawResponse.status === 200) {
+                    const response = await rawResponse.json()
+                    updateRealTime(response)
+                }
+
+            }, 1500)
+
+            const allControls = document.querySelectorAll("input[type=checkbox]")
+
+            function setMotors(val) {
+                for (let i = 1; i < allControls.length; i++) {
+                    allControls[i].disabled = val
+                    allControls[i].checked = false
+                }
+            }
+
+            async function updateFirestore(mode, currWater, status) {
+                const rawResponse = await fetch("/changeModeMotor", {
+                    method: 'Post',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        mode,
+                        currWater,
+                        status
+                    })
+                });
+                const response = await rawResponse.json()
+                console.log(response)
+            }
+
+            const modeControl = allControls[0];
+            modeControl.addEventListener("change", () => {
+                if (modeControl.checked) setMotors(false)
+                else {
+                    setMotors(true)
+                    updateFirestore("0", -1, false)
+                }
+
+            })
+
+            const motorHandler = (btn) => {
+                const motorID = btn.id
+
+                for (let i = 1; i < allControls.length; i++) {
+
+                    allControls[i].id !== motorID && (allControls[i].checked = false)
+                }
+                updateFirestore("1", parseInt(motorID[1]), btn.checked)
+            }
+        </script>
+
+
+
+        </html>

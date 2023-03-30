@@ -1,0 +1,227 @@
+<%- include('newHeader', {current:"plantDoctor", role:"farmer"}); %>
+
+
+    <div
+        style="background-image: url('https://i.ibb.co/k65m4V5/secondbgimg.png') ;  background-repeat : no-repeat; background-size: 100% 100%; ">
+        <div class="mt-5 pt-5">
+            <div>
+
+
+                <div class="d-flex justify-content-around flex-wrap">
+                    
+                    <div class="h-100">
+                    <img class="img-thumbnail" src="https://media.istockphoto.com/id/1316735334/photo/young-indian-farmer-with-agronomist-at-banana-field.jpg?b=1&s=170667a&w=0&k=20&c=wyHxjzuVYLwXxq1fu4XLUUc0gnx2tVznDz0Wxuw7_gE=" alt="">
+                    </div>
+                
+
+                 
+                    <div class="bg-light  ">
+                        <% if (!alreadyRaised) { %>
+    
+                            <div class="container text-center precision-title">
+                                <h1>
+                                    <b>
+                                        Consult an expert !
+                                    </b>
+                                </h1>
+        
+                                <p>
+                                    GET ACCURATE DISEASE AND ITS CURE WITH PRODUCTION YIELDS
+                                </p>
+        
+                                <p>
+                                    You can raise request to either to normal consultation or disease detection
+                                </p>
+        
+                            </div>
+        
+                            <div class="container precision-instru text-center">
+                                <label class=" h4 list-group-item list-group-item-danger w-50 mx-auto my-1" for="reqType">Select
+                                    request
+                                    type.</label>
+                                <select name="cars" id="type" class="h5">
+        
+                                    <option value="Normal" selected>Normal</option>
+                                    <option value="Disease">Disease</option>
+        
+                                </select>
+                                <!-- <ul class="list-group list-group-flush">
+                <li class="list-group-item list-group-item-danger w-50 mx-auto my-1">Please upload image of single leaf only.</li>
+                <li class="list-group-item list-group-item-danger w-50 mx-auto my-1">Image should not be blurred and should be clearly visible for accurate report.</li>
+            </ul> -->
+                            </div>
+        
+                            <div class="upload-img mt-4 mx-auto w-50 uploadBox d-none text-center">
+                                <p class=" text-center alert alert-primary h3">
+                                    Browse the file and hit the upload button
+                                </p>
+                                <form method="POST" action="/upload" enctype="multipart/form-data" class="mx-auto upload-form">
+                                    <input type="file" name="myFile" class="btn btn-primary" accept="image/*"
+                                        enctype="multipart/form-data" id="fileInput"   />
+                                </form>
+        
+                                   
+        
+        
+                            </div>
+        
+                            <form class='storeForm text-center my-3'>
+                                <input type="text" class="d-none" name="URL">
+                                <button class="raise btn btn-success"> RAISE </button>
+                            </form>
+        
+                            <% } else{ %>
+                                <div class="alert alert-danger w-50 text-center m-auto " role="alert">
+                                    Already raised a req please wait while we get back to you
+                                </div>
+                                <% } %>
+                    </div>
+    
+                </div>
+
+                <div class="container my-4">
+
+                    <h2 class="text-center bg-info rounded p-3">
+                        Request history
+                    </h2>
+
+                    <table class="table table-striped">
+                        <thead>
+
+
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Raised on</th>
+                                <th scope="col">Solved on</th>
+                                <th scope="col">Remarks</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <% if (alreadyRaised) { %>
+                                <tr>
+                                    <td scope="row">1</td>
+                                    <td>
+                                        <%= alreadyRaised.date_generate %>
+                                    </td>
+                                    <td> - </td>
+                                    <td>-</td>
+
+                                </tr>
+                                <% }%>
+
+                                    <% for(let i=0 ; i < prev.length ; i++){ %>
+                                        <tr>
+                                            <td scope="row">
+                                                <%= i+1 %>
+                                            </td>
+                                            <td>
+                                                <%= prev[i].date_generate %>
+                                            </td>
+                                            <td>
+                                                <%= prev[i].date_solved %>
+                                            </td>
+                                            <td>
+                                                <%= prev[i].remark %>
+                                            </td>
+
+
+                                        </tr>
+                                        <% } %>
+
+
+
+
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+
+
+
+
+
+            <script>
+                const type = document.querySelector("#type")
+                type.addEventListener('change', () => {
+                    if (type.value == "Normal") {
+
+                        document.querySelector(".uploadBox").classList.add("d-none")
+                        document.querySelector(".raise").disabled = false
+                    } else {
+                        document.querySelector(".uploadBox").classList.remove("d-none")
+                        document.querySelector(".raise").disabled = true
+                    }
+                })
+            </script>
+
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <script type="module">
+
+
+                document.querySelector("input").addEventListener("change",
+                    (e) => {
+                        const File = e.target.files[0]
+
+                        const formData = new FormData()
+                        formData.append('myFile', File)
+                        formData.append('folderName', "userImg")
+
+                        fetch('/saveImage', {
+                            method: 'POST',
+                            body: formData
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                console.log(data.imageUrl)
+                                document.querySelector("input[type='text']").value = data.imageUrl
+                                document.querySelector(".raise").disabled = false
+                                document.querySelector("#fileInput").disabled = true
+                            })
+                            .catch(error => {
+                                console.error(error)
+                            })
+
+                    })
+
+            </script>
+
+
+            <script>
+                document.querySelector(".storeForm").addEventListener("submit", async (e) => {
+                    e.preventDefault()
+                    const rawResponse = await fetch('/raiseReq', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            URL: document.querySelector("input[type='text']").value
+                        })
+                    });
+
+                    const content = await rawResponse.json();
+                    if (content.status == 200) {
+                        Swal.fire(
+                            'Request Raised',
+                            'Expert Will call you soon',
+                            'success'
+                        )
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Something went wrong! Please try again',
+                        })
+                    }
+                    window.location.reload();
+
+
+                })
+            </script>
+
+            <%- include('../newFooter'); %>

@@ -47,23 +47,13 @@ admin.initializeApp({
     storageBucket: process.env.BUCKET_URL
 });
 const db = admin.firestore()
-
+const FieldValue = admin.firestore.FieldValue;
 const firebaseStorage = new Storage({
     keyFilename: "config.json",
 });
+  
 
-
-// const favicon = require('serve-favicon');
-// var path = require('path')
-// app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')))
-// app.use('/favicon.ico', express.static('images/favicon.ico'));
-
-const homePage = require('./data/hm.json')
 const precisionPage = require('./data/precision.json')
-const nutriThresholds = require('./data/soil.json')
-const fertilizer = require('./data/fertilizer.json')
-const deficient = require('./data/nutriDefi.json')
-const enrich = require('./data/nutriEnrich.json')
 const teamInfo = require('./data/info.json')
 
 
@@ -102,7 +92,7 @@ app.get("/", function (req, res) {
     const isLoggedIn = session.userid ? true : false
     let role = "farmer"
     if (isLoggedIn) role = session.role
-    res.render("home", { data: homePage, isLoggedIn, role })
+    res.render("home", {   isLoggedIn, role })
 })
 
 app.get("/qgisPage", sessionCheckerFarmer, function (req, res) {
@@ -110,7 +100,7 @@ app.get("/qgisPage", sessionCheckerFarmer, function (req, res) {
 })
 
 app.get("/CropPrediction", sessionCheckerFarmer, function (req, res) {
-    res.render("CropPrediction", { info: "Fill out form" })
+    res.render("farmer/CropPrediction", { result: [] })
 })
 
 app.post("/CropPrediction", sessionCheckerFarmer, async function (req, res) {
@@ -140,30 +130,88 @@ app.post("/CropPrediction", sessionCheckerFarmer, async function (req, res) {
     });
     const content = await rawResponse.json();
     const { res1, res2, res3 } = content
-    const val = `${res1}, ${res2} or ${res3}`
-    res.render("CropPrediction", { info: "Cultivating '" + val + "' would earn you profits!" })
+    result = [res1, res2, res3]
+    res.render("farmer/CropPrediction", { result })
 })
 
 app.get("/PrecisionAgriculture", sessionCheckerFarmer, function (req, res) {
-    res.render("precisionAgri", { data: precisionPage, links: {} })
+    res.render("farmer/precisionAgri", { data: precisionPage, links: {} })
 })
 
 app.post("/PrecisionAgriculture", function (req, res) {
-    res.render("precisionAgri", { data: precisionPage, links: precisionPage[req.body.crop] })
+    res.render("farmer/precisionAgri", { data: precisionPage, links: precisionPage[req.body.crop] })
 })
 
-app.get("/SmartFarming", sessionCheckerFarmer, function (req, res) {
-    session = req.session;
+app.get("/SmartFarming", sessionCheckerFarmer, async function (req, res) {
 
-    if (session.userid) {
-        res.render("smartFarm", { nutriThresholds: nutriThresholds })
-    } else {
-        res.render('login', { invalid: valid })
+    session = req.session;
+    const userID = session.userid
+
+    const farmRef = db.collection('Farm').doc(userID);
+    const farmInfo = await farmRef.get()
+    if (!farmInfo.exists) {
+        res.send("Error 404 : NO USER FOUND")
+        return
     }
+    farm = farmInfo.data()
+
+    allCrops = ['Apple', 'Banana', 'Blackgram', 'Chickpea', 'Coconut', 'Coffee',
+        'Cotton', 'Grapes', 'Jute', 'Kidneybeans', 'Lentil', 'Maize',
+        'Mango', 'Mothbeans', 'Mungbean', 'Muskmelon', 'Orange', 'Papaya',
+        'Pigeonpeas', 'Pomegranate', 'Rice', 'Watermelon']
+
+    const farmSize = farm.nosOf_ESPs * 16
+    let cropsInFarm = new Array(farmSize).fill(0);
+    for (let i = 0; i < farmSize; i++) {
+        if (farm["P" + i]) {
+            cropsInFarm[i] = farm["P" + i]
+        }
+    }
+
+    res.render("farmer/smartFarm", { cropsInFarm, userID, allCrops, mode: farm.mode, currentPlant: farm.CURR_WATER })
+})
+
+app.get("/listenRealTime", sessionCheckerFarmer, async function (req, res) {
+
+    session = req.session;
+    const userID = session.userid
+
+    const farmQuesy = await db.collection('Farm').doc(userID).get()
+    let data = farmQuesy.data()
+    const size = data.nosOf_ESPs * 16
+    let status = []
+    for (let i = 0; i < size; i++) {
+        data[`P${i}`] && status.push(data[`P${i}`].MOIS_STATUS)
+    }
+
+    res.status(200)
+    res.json({ MOIST_STATUS: status, CURR_WATER: data.CURR_WATER })
+
+})
+
+app.post("/changeModeMotor", sessionCheckerFarmer, async function (req, res) {
+
+    session = req.session;
+    const userID = session.userid
+    const { mode: newMode, currWater, status } = req.body
+
+    const farmRef = db.collection('Farm').doc(userID)
+
+    let obj = {}
+    obj.mode = newMode
+    obj.CURR_WATER = newMode == "0" || status == false ? -1 : currWater
+
+    const updateFarm = await farmRef.update(obj, { merge: true });
+
+    res.status(200)
+    res.json({ UPDATED: "GOOD" })
+
 })
 
 app.get("/login", sessionChecker, function (req, res) {
-    // just a route middleware will take care of res
+    session = req.session
+    if (session.role == 'farmer') res.redirect(301, "/qgisPage")
+    else if (session.role == 'expert') res.redirect(301, "/appointment")
 })
 
 app.post("/login", function (req, res) {
@@ -208,7 +256,7 @@ app.get('/logout', (req, res) => {
 });
 
 app.get("/Weather", sessionCheckerFarmer, function (req, res) {
-    res.render("weather", { weather: "Weather", info: "", api: process.env.WEATHERAPI })
+    res.render("farmer/weather", { weather: "Weather", info: "", api: process.env.WEATHERAPI })
 })
 
 app.post("/weatherPred", sessionCheckerFarmer, async function (req, res) {
@@ -233,7 +281,7 @@ app.post("/weatherPred", sessionCheckerFarmer, async function (req, res) {
     });
     const content = await rawResponse.json();
 
-    res.render("weather", { weather: "Weather", info: content.val, url: url, api: process.env.WEATHERAPI })
+    res.render("farmer/weather", { weather: "Weather", info: content.val, url: url, api: process.env.WEATHERAPI })
 })
 
 app.get("/currCityConditions/:cty", async function (req, res) {
@@ -241,17 +289,6 @@ app.get("/currCityConditions/:cty", async function (req, res) {
     const resp = await fetch(`https://api.weatherapi.com/v1/current.json?key=${process.env.WEATHERAPI}&q=${val}&aqi=no`)
     const data = await resp.json();
     res.json(data)
-})
-
-app.get("/soil/:frt", function (req, res) {
-    const frt = req.params.frt
-
-    res.json({
-        Thresholds: nutriThresholds[frt],
-        fertilizer: fertilizer[frt],
-        deficient: deficient,
-        enrich: enrich
-    })
 })
 
 app.get("/dhtSensorVals", sessionCheckerFarmer, async function (req, res) {
@@ -274,36 +311,6 @@ app.get("/dhtSensorVals", sessionCheckerFarmer, async function (req, res) {
         .catch(e => { console.log("ERROR") })
 })
 
-app.get("/firebase/:sValve/:state", async function (req, res) {
-    session = req.session;
-
-    if (!session.userid) {
-        res.redirect("/SmartFarming")
-    }
-
-    obj = {}
-    state = req.params.state
-    if (req.params.sValve === "mode") {
-        obj["mode"] = state
-        obj["p1"] = "0"
-        obj["p2"] = "0"
-        obj["p3"] = "0"
-    } else {
-        valve = parseInt(req.params.sValve)
-        if (valve === 1) { obj["p1"] = state }
-        else if (valve === 2) { obj["p2"] = state }
-        if (valve === 3) { obj["p3"] = state }
-    }
-
-    const resp = await fetch(`https://smart-agriot-default-${process.env.FIREBASECODE}.firebaseio.com/.json`, {
-        method: 'PATCH',
-        body: JSON.stringify(obj)
-    })
-    const data = await resp.json();
-
-    res.json(data)
-})
-
 app.get("/plantDoctor", sessionCheckerFarmer, async function (req, res) {
     session = req.session;
     const queryRef = db.collection('Consultation');
@@ -318,7 +325,7 @@ app.get("/plantDoctor", sessionCheckerFarmer, async function (req, res) {
         else { alreadyRaised = d.data() }
     })
 
-    res.render("diseaseDetect", { alreadyRaised, prev })
+    res.render("farmer/diseaseDetect", { alreadyRaised, prev })
 })
 
 app.post("/raiseReq", sessionCheckerFarmer, function (req, res) {
@@ -375,6 +382,7 @@ app.get("/specific/:userID", sessionCheckerExpert, async function (req, res) {
     const userRef = db.collection('USER');
     const userInfo = await userRef.doc(userID).get();
     user = userInfo.data()
+    user.userID = userID
     const farmData = farmInfo.data()
 
     const queryRef = db.collection('Consultation');
@@ -403,13 +411,13 @@ app.post("/resolveQ/:docID", sessionCheckerExpert, async function (req, res) {
     // delete image uploaded by user
     const query = await queryRef.get()
     if (query.data().image) {
-        const imgURL = query.data().image ; 
+        const imgURL = query.data().image;
         let startIndx = imgURL.indexOf("myFile");
         let endIndx = imgURL.indexOf("?");
         let imgName = imgURL.substring(startIndx, endIndx);
         await firebaseStorage.bucket(process.env.BUCKET_URL).file("userImg/" + imgName).delete();
     }
- 
+
     const data = {
         status: "solved",
         remark: remark ? remark : "None",
@@ -457,6 +465,139 @@ app.post("/saveImage", upload.single('myFile'), async function (req, res) {
     res.json({ imageUrl })
 })
 
+
+app.get("/farmSetup/:userID", sessionCheckerExpert, async function (req, res) {
+
+    const userID = req.params.userID
+
+    const farmRef = db.collection('Farm').doc(userID);
+    const farmInfo = await farmRef.get()
+    if (!farmInfo.exists) {
+        res.send("Error 404 : NO USER FOUND")
+        return
+    }
+    farm = farmInfo.data()
+
+    allCrops = ['Apple', 'Banana', 'Blackgram', 'Chickpea', 'Coconut', 'Coffee',
+        'Cotton', 'Grapes', 'Jute', 'Kidneybeans', 'Lentil', 'Maize',
+        'Mango', 'Mothbeans', 'Mungbean', 'Muskmelon', 'Orange', 'Papaya',
+        'Pigeonpeas', 'Pomegranate', 'Rice', 'Watermelon']
+
+    const farmSize = farm.nosOf_ESPs * 16
+    let cropsInFarm = new Array(farmSize).fill(0);
+    for (let i = 0; i < farmSize; i++) {
+        if (farm["P" + i]) {
+            cropsInFarm[i] = farm["P" + i]
+        }
+    }
+
+    res.render("expert/farmSetup", { cropsInFarm, userID, allCrops })
+})
+
+app.post("/updateFarmNPK/:userID", sessionCheckerExpert, async function (req, res) {
+
+    const { sectionID, name: cropName, nitro, phosp, potas } = req.body
+    const userID = req.params.userID
+
+    var key = sectionID;
+    var obj = {};
+
+    obj[key] = {
+        name: cropName,
+        n: parseInt(nitro),
+        p: parseInt(phosp),
+        k: parseInt(potas)
+    };
+
+    const farmRef = await db.collection('Farm').doc(userID).set(obj, { merge: true });
+
+    res.json({ message: "REQUEST RECEIVED" })
+})
+
+app.post("/addFarmSection/:userID", sessionCheckerExpert, async function (req, res) {
+
+    var { crop, name, n, p, k, capacity } = req.body
+    const userID = req.params.userID
+
+    const farmRef = db.collection('Farm').doc(userID)
+    const farm = await farmRef.get()
+    const farmInfo = farm.data()
+
+    if (farmInfo.availableSection <= 0) {
+        res.status(507);
+        res.json({ message: 'Insufficient Pins' });
+        return
+    }
+
+    const totalArea = farmInfo.nosOf_ESPs * 16
+    let sectionID = "P"
+    for (let i = 0; i < totalArea; i++) {
+        if (!farmInfo[`P${i}`]) {
+            sectionID = `P${i}`
+            break
+        }
+    }
+    var cropType = crop;
+    var key = sectionID;
+    var obj = {};
+    let totalCapacity = farmInfo[cropType] ? (parseInt(farmInfo[cropType].capacity) + parseInt(capacity)) : parseInt(capacity)
+    const d = new Date();
+    obj[key] = {
+        crop: crop,
+        name: name,
+        n: parseInt(n),
+        p: parseInt(p),
+        k: parseInt(k),
+        MOIS_STATUS: 0,
+        date: `${d.getMonth() + 1}-${d.getFullYear()}`,
+        capacity: parseInt(capacity)
+    };
+
+    obj[cropType] = {
+        capacity: totalCapacity
+    };
+    obj.availableSection = farmInfo.availableSection - 1
+    const updateFarm = await farmRef.set(obj, { merge: true });
+
+    res.status(201);
+    res.json({ message: 'Updated' });
+})
+
+
+app.post("/deleteFarmSection/:userID", sessionCheckerExpert, async function (req, res) {
+
+    const userID = req.params.userID
+    const { sectionID } = req.body
+
+    const farmRef = db.collection('Farm').doc(userID)
+    const farm = await farmRef.get()
+    const farmInfo = farm.data()
+
+    let { crop, capacity } = farmInfo[sectionID]
+    var key = sectionID;
+
+    //available section update  
+    var obj = {
+        availableSection: FieldValue.increment(1)
+    };
+
+    // capacity update
+    if (farmInfo[crop].capacity - capacity <= 0) {
+        obj[crop] = FieldValue.delete()
+    } else {
+        obj[crop] = {
+            capacity: farmInfo[crop].capacity - capacity
+        };
+    }
+
+    // delet section
+    obj[key] = FieldValue.delete()
+
+    const updateFarm = await farmRef.update(obj, { merge: true });
+
+    res.status(201);
+    res.json({ message: 'Updated' });
+})
 
 app.get("/abt", function (req, res) {
     res.render("about", { info: teamInfo })
