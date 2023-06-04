@@ -86,8 +86,8 @@ Once you go on the website link that is given you can use multiple features of o
 4. Soil nutrient monitoring system using ML
 
 ## Screenshots
-![1.jpg](/IMAGES/1.jpg)
-![2.jpg](/IMAGES/2.jpg)
-![3.jpg](/IMAGES/3.jpg)
-![4.jpg](/IMAGES/4.jpg)
-![5.jpg](/IMAGES/5.jpg)
+![1.jpg](/IMAGES/1.jpg?raw=true)
+![2.jpg](/IMAGES/2.jpg?raw=true)
+![3.jpg](/IMAGES/3.jpg?raw=true)
+![4.jpg](/IMAGES/4.jpg?raw=true)
+![5.jpg](/IMAGES/5.jpg?raw=true)
