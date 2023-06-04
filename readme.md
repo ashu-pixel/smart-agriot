@@ -38,7 +38,7 @@ Our project provides security from natural disasters like unconditional rain or 
 We provide a platform where farmers can consult an expert in their locality.
 
 ## Architecture
-![model.jpg](/IMAGES/SMART_AGRI-oT_Model.png)
+![model.jpg](https://i.ibb.co/gVdH9Ln/SMART-AGRI-o-T-Model.png)
 
 
 ## Links
@@ -86,8 +86,8 @@ Once you go on the website link that is given you can use multiple features of o
 4. Soil nutrient monitoring system using ML
 
 ## Screenshots
-![](/IMAGES/1.jpg)
-![2.jpg](/IMAGES/2.jpg)
-![3.jpg](/IMAGES/3.jpg)
-![4.jpg](/IMAGES/4.jpg)
-![5.jpg](/IMAGES/5.jpg)
+![1.jpg](https://i.ibb.co/2SGhnHW/1.jpg)
+![2.jpg](https://i.ibb.co/xHCmhgs/2.jpg)
+![3.jpg](https://i.ibb.co/SJ3Wk63/3.jpg)
+![4.jpg](https://i.ibb.co/BwpbHTP/4.jpg)
+![5.jpg](https://i.ibb.co/bBfnsQW/5.jpg)
