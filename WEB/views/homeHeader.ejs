@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="newStyles.css">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Smart Agr-IoT</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <a class="navbar-brand" href="/">
+            <img src="/images/Logo.png" width="30" height="30" class="d-inline-block align-top" alt=""> Smart Agr-IoT
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav w-100 d-flex justify-content-around">
+
+
+                <li class="nav-item dropdown active nav-hover">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Service
+                    </a>
+
+                    <% if(role==="farmer" ){ %>
+
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                            <a class="dropdown-item" href="/qgisPage">AgriGIS</a>
+                            <a class="dropdown-item" href="/CropPrediction">Crop Scope</a>
+                            <a class="dropdown-item" href="/PrecisionAgriculture">Crop facts</a>
+                            <a class="dropdown-item" href="/Weather">Sky Track</a>
+                            <a class="dropdown-item" href="/SmartFarming">Farm Brain</a>
+                            <a class="dropdown-item" href="/plantDoctor">Talk2Pro</a>
+
+                        </div>
+                        <% }else { %>
+
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="/appointment">Appointments</a>
+
+                            </div>
+                            <% } %>
+
+
+                </li>
+
+
+                <li class="nav-item active nav-hover">
+                    <a class="nav-link " href="/pricing">Pricing <span class="sr-only ">(current)</span></a>
+                </li>
+
+                <li class="nav-item dropdown active nav-hover">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Product
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/ourImpact">Impact</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/howToUse">How to use?</a>
+                    </div>
+                </li>
+
+                <li class="nav-item active nav-hover ">
+                    <a class="nav-link " href="/abt">About <span class="sr-only ">(current)</span></a>
+                </li>
+
+                <li class="nav-item active nav-hover">
+
+                    <% if(!isLoggedIn) { %>
+                        <a class="nav-link " href="/login">Login <span class="sr-only ">(current)</span></a>
+                        <% }else { %>
+                            <a class="nav-link " href="/logout">Logout <span class="sr-only ">(current)</span></a>
+                            <% } %>
+
+                </li>
+
+                <li class="nav-item active ">
+
+                    <div id="google_translate_element"></div>
+
+                </li>
+
+
+                <script type="text/javascript">
+                    function googleTranslateElementInit() {
+                        new google.translate.TranslateElement({
+                            pageLanguage: 'en',
+                            includedLanguages: 'sa,pa,gu,ta,te,hi,kn,kok,mr'
+                        }, 'google_translate_element');
+                    }
+                </script>
+
+                <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+
+
+            </ul>
+        </div>
+    </nav>

@@ -1,5 +1,6 @@
 import numpy as np
 import pickle
+import os
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
@@ -14,6 +15,7 @@ def hm():
 
 @app.route('/CropPred', methods=['POST'])
 def pres():
+     
     content_type = request.headers.get('Content-Type')
     
     if (content_type == 'application/json'):
@@ -21,6 +23,8 @@ def pres():
 
         cr = incomingData["marketVals"]
         data = incomingData["formVals"]
+        
+
         final_features = [np.array(data)]
 
         pred_proba = Cmodel.predict_proba(final_features)
@@ -55,11 +59,11 @@ def pres():
         for x in list(reversed(list(final_op))):
             top_classes.append(x)
 
-        response = jsonify({
-            "statusCode": 200,
-            "status": "Prediction made",
-            "result": top_classes[0]
-        })
+        # response = jsonify({
+        #     "statusCode": 200,
+        #     "status": "Prediction made",
+        #     "result": top_classes[0]
+        # })
 
         return jsonify({"res1": top_classes[0], "res2": top_classes[1], "res3": top_classes[2] })
 
@@ -69,6 +73,7 @@ def pres():
 
 @app.route('/weatherPred', methods=['POST' ])
 def predict():
+     
     content_type = request.headers.get('Content-Type')
      
     if (content_type == 'application/json'):
@@ -85,4 +90,4 @@ def predict():
         return 'bad request!', 400
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))

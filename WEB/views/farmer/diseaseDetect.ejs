@@ -1,87 +1,86 @@
 <%- include('newHeader', {current:"plantDoctor", role:"farmer"}); %>
 
 
-    <div
-        style="background-image: url('https://i.ibb.co/k65m4V5/secondbgimg.png') ;  background-repeat : no-repeat; background-size: 100% 100%; ">
+    <div class="background-img-contain">
         <div class="mt-5 pt-5">
-            <div>
+            <h1 class="text-center mb-0"><b>Consult an expert</b></h1><br>
+            <div class="w-75 mx-auto">
 
 
                 <div class="d-flex justify-content-around flex-wrap">
-                    
-                    <div class="h-100">
-                    <img class="img-thumbnail" src="https://media.istockphoto.com/id/1316735334/photo/young-indian-farmer-with-agronomist-at-banana-field.jpg?b=1&s=170667a&w=0&k=20&c=wyHxjzuVYLwXxq1fu4XLUUc0gnx2tVznDz0Wxuw7_gE=" alt="">
-                    </div>
-                
 
-                 
-                    <div class="bg-light  ">
+                    <div class="h-100">
+                        <img class="img-thumbnail" src="/images/ExpertPage.png" alt="">
+                    </div>
+
+
+                    <div class="bg-light d-flex flex-column justify-content-between align-items-center">
                         <% if (!alreadyRaised) { %>
-    
+
                             <div class="container text-center precision-title">
-                                <h1>
+                                <h3 class="text-success">
                                     <b>
-                                        Consult an expert !
+                                        You can raise a request here.
                                     </b>
-                                </h1>
-        
-                                <p>
+                                </h3>
+
+                                <h6>
                                     GET ACCURATE DISEASE AND ITS CURE WITH PRODUCTION YIELDS
-                                </p>
-        
-                                <p>
-                                    You can raise request to either to normal consultation or disease detection
-                                </p>
-        
+                                </h6>
+
+                                <h6>
+                                    Simply raise a request or along with image
+                                </h6>
+
                             </div>
-        
+
                             <div class="container precision-instru text-center">
-                                <label class=" h4 list-group-item list-group-item-danger w-50 mx-auto my-1" for="reqType">Select
-                                    request
-                                    type.</label>
+                                <label class=" h4 list-group-item list-group-item-danger w-75 mx-auto my-1"
+                                    for="reqType">
+                                    Select request type.
+                                </label>
                                 <select name="cars" id="type" class="h5">
-        
+
                                     <option value="Normal" selected>Normal</option>
                                     <option value="Disease">Disease</option>
-        
+
                                 </select>
                                 <!-- <ul class="list-group list-group-flush">
                 <li class="list-group-item list-group-item-danger w-50 mx-auto my-1">Please upload image of single leaf only.</li>
                 <li class="list-group-item list-group-item-danger w-50 mx-auto my-1">Image should not be blurred and should be clearly visible for accurate report.</li>
             </ul> -->
                             </div>
-        
-                            <div class="upload-img mt-4 mx-auto w-50 uploadBox d-none text-center">
-                                <p class=" text-center alert alert-primary h3">
-                                    Browse the file and hit the upload button
+
+                            <div class="upload-img mt-4 mx-auto w-75 uploadBox d-none text-center">
+                                <p class="text-center alert alert-primary h4 ">
+                                    Browse the file and upload it. <span class="text-danger">*</span>
                                 </p>
-                                <form method="POST" action="/upload" enctype="multipart/form-data" class="mx-auto upload-form">
-                                    <input type="file" name="myFile" class="btn btn-primary" accept="image/*"
-                                        enctype="multipart/form-data" id="fileInput"   />
+                                <form method="POST" action="/upload" enctype="multipart/form-data"
+                                    class="mx-auto upload-form">
+                                    <input type="file" name="myFile" class="btn btn-primary w-100" accept="image/*"
+                                        enctype="multipart/form-data" id="fileInput" />
                                 </form>
-        
-                                   
-        
-        
+
                             </div>
-        
+
                             <form class='storeForm text-center my-3'>
                                 <input type="text" class="d-none" name="URL">
-                                <button class="raise btn btn-success"> RAISE </button>
+                                <textarea name="remark" id="remark" class="w-100 mb-3" placeholder="Any comments..."></textarea>
+                                <button class="raise btn btn-dark"> RAISE </button>
                             </form>
-        
+
                             <% } else{ %>
-                                <div class="alert alert-danger w-50 text-center m-auto " role="alert">
-                                    Already raised a req please wait while we get back to you
+                                <div class="alert alert-danger w-75 text-center m-auto " role="alert">
+                                    <h6>You've already raised a request. Please wait while we get back to you.</h6>
                                 </div>
                                 <% } %>
                     </div>
-    
+
                 </div>
 
                 <div class="container my-4">
 
-                    <h2 class="text-center bg-info rounded p-3">
+                    <h2 class="text-center text-light bg-info rounded p-3">
                         Request history
                     </h2>
 
@@ -130,19 +129,12 @@
                                         </tr>
                                         <% } %>
 
-
-
-
                         </tbody>
                     </table>
                 </div>
 
 
             </div>
-
-
-
-
 
             <script>
                 const type = document.querySelector("#type")
@@ -163,8 +155,21 @@
 
 
                 document.querySelector("input").addEventListener("change",
-                    (e) => {
+                    async (e) => {
                         const File = e.target.files[0]
+
+
+                        const fileCheck = await Swal.fire({
+                            title: 'Are you sure to upload ?',
+                            text: "You can still send new image when expert calls.",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Yes'
+                        })
+
+                        if (!fileCheck.isConfirmed) return;
 
                         const formData = new FormData()
                         formData.append('myFile', File)
@@ -176,7 +181,6 @@
                         })
                             .then(response => response.json())
                             .then(data => {
-                                console.log(data.imageUrl)
                                 document.querySelector("input[type='text']").value = data.imageUrl
                                 document.querySelector(".raise").disabled = false
                                 document.querySelector("#fileInput").disabled = true
@@ -185,14 +189,39 @@
                                 console.error(error)
                             })
 
+                        await Swal.fire(
+                            'Image uploaded',
+                            'Click the raise button to complete the request',
+                            'success'
+                        )
+
                     })
 
             </script>
 
 
             <script>
+
+
                 document.querySelector(".storeForm").addEventListener("submit", async (e) => {
                     e.preventDefault()
+
+
+                    const decision = await Swal.fire({
+                        title: 'Sure to raise the request?',
+                        showDenyButton: true,
+                        confirmButtonText: 'Yes',
+                        denyButtonText: `No`,
+                    })
+
+                    if (decision.isConfirmed) {
+
+                        Swal.fire('Raised!', '', 'success')
+                    } else if (decision.isDenied) {
+                        Swal.fire('Request not raised', '', 'info')
+                        return;
+                    }
+
                     const rawResponse = await fetch('/raiseReq', {
                         method: 'POST',
                         headers: {
@@ -200,26 +229,29 @@
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
-                            URL: document.querySelector("input[type='text']").value
+                            URL: document.querySelector("input[type='text']").value, 
+                            comment: document.querySelector("#remark").value
                         })
                     });
 
                     const content = await rawResponse.json();
-                    if (content.status == 200) {
-                        Swal.fire(
+
+                    if (content.status === 200) {
+                        await Swal.fire(
                             'Request Raised',
-                            'Expert Will call you soon',
+                            'Expert will contact you soon!',
                             'success'
                         )
                     } else {
-                        Swal.fire({
+                        await Swal.fire({
                             icon: 'error',
                             title: 'Oops...',
-                            text: 'Something went wrong! Please try again',
+                            text: 'Something went wrong!',
                         })
+                        return
                     }
-                    window.location.reload();
 
+                    window.location.reload();
 
                 })
             </script>

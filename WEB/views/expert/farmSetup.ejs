@@ -1,13 +1,25 @@
-<%- include('expertHeader', {current:"", role:"expert"}); %>
+<%- include('expertHeader' ); %>
 
     <style>
         input {
-            width: 70%;
+            width: 100%;
+        }
+        
+        .nav-hover :hover {
+            background-color: #82fc77;
+            transition: background-color 0.2s ease;
+            border-radius: 6px;
+        }
+        
+        .background-img-cover {
+            background-image: url("https://firebasestorage.googleapis.com/v0/b/smartagriot-2.appspot.com/o/web-Images%2FbodyBG.png?alt=media&token=b86b2450-4fac-49d9-82a1-94ebf2d217d1&_gl=1*14e6i6o*_ga*MjIxNDU4NzQ0LjE2ODU1MTE1MzE.*_ga_CW55HF8NVT*MTY4NTUyMDY0NS40LjEuMTY4NTUyMDY4MC4wLjAuMA..");
+            background-repeat: repeat-y;
+            background-size: cover;
         }
     </style>
 
 
-    <div style="background-image: url('https://i.ibb.co/k65m4V5/secondbgimg.png') ;  background-repeat : no-repeat; background-size: 100% 100%; height: 100vh;">
+    <div class="background-img-cover">
 
         <div class="container text-center mt-5 pt-5">
 
@@ -114,13 +126,13 @@
                                 <th scope="row">*</th>
                                 <td>
                                     <select class="form-select newSection" aria-label="Default select example" required>
-                                    <option selected>Select type</option>
-                                    <% for(let crop of allCrops ) { %>
-                                        <option value="<%= crop %>">
-                                            <%= crop %>
-                                        </option>
-                                        <% } %>
-                                </select>
+                                        <option selected>Select type</option>
+                                        <% for(let crop of allCrops ) { %>
+                                            <option value="<%= crop %>">
+                                                <%= crop %>
+                                            </option>
+                                            <% } %>
+                                    </select>
                                 </td>
                                 <td>
                                     <input type="text" name="cropName" class="newSection" required>
@@ -158,6 +170,7 @@
 
 
     <%- include('../newFooter'); %>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         <script>
             const editHandler = async(btn) => {
@@ -236,7 +249,12 @@
                 if (response == 201) {
                     location.reload();
                 } else {
-                    alert("Insufficient space")
+                    await Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Insufficient space!',
+                        footer: 'TRY DELETING SOME SECTION'
+                    })
                 }
 
                 newValInps.forEach(ele => {
@@ -246,6 +264,18 @@
             })
 
             const deleteHandler = async(btn) => {
+
+
+
+                const allowDelete = await Swal.fire({
+                    title: 'Sure to delete this section?',
+                    showDenyButton: true,
+                    confirmButtonText: 'Yes',
+                    denyButtonText: `Cancel`,
+                })
+
+                if (!allowDelete.isConfirmed) return;
+
 
                 btn.disabled = true
                 const rawResponse = await fetch("/deleteFarmSection/<%= userID %>", {
@@ -261,7 +291,7 @@
                 const response = await rawResponse.status
 
                 if (response == 201) {
-                    alert("SUCCESS")
+                    await Swal.fire('Deleted!', '', 'success')
                     btn.removeEventListener("click", deleteHandler)
                     location.reload();
                 } else {

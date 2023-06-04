@@ -1,12 +1,10 @@
 <%- include('newHeader' ); %>
 
-
-
-    <div style="background-image: url('https://i.ibb.co/k65m4V5/secondbgimg.png') ;  background-repeat : no-repeat; background-size: 100% 100%;">
+    <div class="background-img-contain">
 
         <div class="mt-5 pt-2  ">
 
-            <h1 class="text-center mb-0"><b>Weather Wizard</b></h1><br>
+            <h1 class="text-center mb-0"><b>Sky Track</b></h1><br>
 
             <p class="h2 bg-danger w-50 m-auto p-2 text-white d-none text-center" id="errMsg"></p>
             <% if(info){%>
@@ -76,16 +74,11 @@
 
         <%- include('../newFooter'); %>
 
-
-
-
             <script>
                 let ips = document.querySelectorAll(".paramsInp")
                 document.getElementById("citySearchBtn").addEventListener("click", async function() {
 
                     let val = document.getElementById("citySearchVal").value
-                    console.log(val)
-                    console.log(ips)
                     const rawResponse = await fetch(`/currCityConditions/${val}`);
                     const data = await rawResponse.json();
 

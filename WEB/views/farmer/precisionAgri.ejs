@@ -1,7 +1,7 @@
 <%- include('newHeader' ); %>
 
 
-    <div style="background-image: url('https://i.ibb.co/k65m4V5/secondbgimg.png') ;  background-repeat : no-repeat; background-size: 100% 100%; height: 100vh;">
+    <div class="background-img-cover">
 
         <div class="container precision-title mt-5 pt-5 text-center">
             <h1>
@@ -14,7 +14,7 @@
 
         </div>
 
-        <div class="container precision-instru">
+        <div class="container precision-instru text-center">
             <ul class="list-group list-group-flush">
                 <li class="list-group-item list-group-item-danger">For selection of crop you can use our cop prediction page. After selecting crop from checkbox click on Search button.</li>
                 <li class="list-group-item list-group-item-danger">Then names of some common diseases regarding select crop will appear.</li>
@@ -27,7 +27,7 @@
                 <div class="mx-auto w-50">
                     <label for="crop">Choose a Crop:</label>
 
-                    <select name="crop" class="custom-select w-25 mt-2 ">
+                    <select name="crop" class="custom-select w-50 mt-2 ">
             <% for(fruit in data){ %>
 
                 <option value=<%= fruit %>><%= fruit %> </option>
@@ -40,7 +40,7 @@
             </form>
         </div>
 
-        <div class="container w-75">
+        <div class="container w-75 mb-5">
             <% if(Object.keys(links).length != 0) {%>
                 <p class="h3">
                     Common Diseases
@@ -53,8 +53,13 @@
                         <% } %>
                 </ul>
 
+                <% }else{ %>
 
-                <% } %>
+                    <h4 class="text-center my-2">
+                        SELECT CROP FROM DROPDOWN
+                    </h4>
+
+                    <% } %>
 
         </div>
 

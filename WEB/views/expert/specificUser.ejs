@@ -1,15 +1,32 @@
 <%- include('expertHeader' ); %>
 
+    <style>
+        input {
+            width: 70%;
+        }
 
-    <div
-        style="background-image: url('https://i.ibb.co/k65m4V5/secondbgimg.png') ;  background-repeat : no-repeat; background-size: 100% 100%;  ">
+        .nav-hover :hover {
+            background-color: #82fc77;
+            transition: background-color 0.2s ease;
+            border-radius: 6px;
+        }
 
-        <div class="container mt-5 pt-5">
+        .background-img-cover {
+            background-image: url("https://firebasestorage.googleapis.com/v0/b/smartagriot-2.appspot.com/o/web-Images%2FbodyBG.png?alt=media&token=b86b2450-4fac-49d9-82a1-94ebf2d217d1&_gl=1*14e6i6o*_ga*MjIxNDU4NzQ0LjE2ODU1MTE1MzE.*_ga_CW55HF8NVT*MTY4NTUyMDY0NS40LjEuMTY4NTUyMDY4MC4wLjAuMA..");
+            background-repeat: repeat-y;
+            background-size: cover;
+        }
+    </style>
+
+
+    <div class="background-img-cover">
+
+        <div class="table-responsive w-100 mt-5 pt-5 px-2 mx-auto">
 
             <table class="table table-bordered text-center">
+                <caption class="text-center h6">Farmer details</caption>
                 <thead class="thead-dark">
                     <tr>
-
                         <th scope="col">Name</th>
                         <th scope="col">Contact Nos</th>
                         <th scope="col">Address </th>
@@ -20,16 +37,25 @@
                     <tr>
 
                         <td>
-                            <%= user.Name %>
+                            <h5>
+                                <%= user.Name %>
+                            </h5>
                         </td>
                         <td>
-                            <%= user.Phone %>
+                            <h5>
+                                <%= user.Phone %>
+                            </h5>
                         </td>
                         <td>
-                            <%= user.Address %>
+                            <h5>
+                                <%= user.Address %>
+                            </h5>
                         </td>
                         <td>
-                            <a class="btn btn-primary" href="/farmSetup/<%= user.userID%>">View</a>
+                            <h5>
+                                <a class="btn btn-success" href="/farmSetup/<%= user.userID%>">View</a>
+                            </h5>
+
                         </td>
                     </tr>
 
@@ -42,13 +68,21 @@
         </div>
         <% if(currQuery && Object.keys(currQuery).length) { %>
 
+            <p class=" text-warning bg-danger font-weight-bold w-50 mx-auto text-center p-2 rounded"
+                style="font-size: 1.4em;">
+                Active request by user
+            </p>
+
             <div class="mb-3 alert alert-warning container">
+
                 <form action="" class=" m-auto text-center">
-                    <label class="form-label"><h3>
-                        Enter disease name and upload a image before resolving the query
-                    </h3></label>
+                    <label class="form-label">
+                        <h3>
+                            Enter disease name and upload a image before resolving the query
+                        </h3>
+                    </label>
                     <div>
-                        <input type="text" name="" id="diseaseName" placeholder="Enter disease name" required>
+                        <input type="text" name="" id="diseaseName" placeholder="Disease name" class="mb-2" required>
                         <input type="file" name="myFile" class="text-light btn btn-primary" accept="image/*"
                             enctype="multipart/form-data" id="formFile" required />
                     </div>
@@ -56,68 +90,78 @@
                 </form>
             </div>
 
-            <% if(currQuery.image ){ %>
+            <!--  <% if(currQuery.image ){ %>
                 <div class="alert alert-warning w-25 m-auto text-center my-3" role="alert">
                     Click
                     <a src="<%= currQuery.image %>" class="btn btn-success text-light">HERE</a> to see image
                 </div>
+                <% } %> -->
+
+            <div class="card m-auto w-75">
+                <div class="card-body">
+                    <h5 class="card-title">Remarks</h5>
+                    <h6 class="card-title">This remark can be seen by farmer and can be used as reference.</h6>
+                    <form action="/resolveQ/<%= currQuery.docID %>" method="post">
+
+                        <div>
+                            <textarea name="remark" id="remark" class="w-100 mb-3"></textarea>
+                        </div>
+                        <div>
+                            <button class="btn btn-primary raise">Submit and resolve</button>
+                        </div>
+
+
+                    </form>
+                </div>
+            </div>
+
+            <% }else { %>
+                <p class=" text-warning bg-danger font-weight-bold w-50 mx-auto text-center p-2 rounded"
+                    style="font-size: 1.4em;">
+                    No active request by user
+                </p>
+
                 <% } %>
 
-                    <div class="card m-auto" style="width: 18rem;">
-                        <div class="card-body">
-                            <h5 class="card-title">Remarks</h5>
-                            <form action="/resolveQ/<%= currQuery.docID %>" method="post">
-                                <input type="textbox" name="remark" id="remark" required>
-                                <button class="btn btn-primary raise">Submit and resolve</button>
-                            </form>
-                        </div>
-                    </div>
 
-                    <% }else { %>
-                        <div class="alert alert-danger w-50 text-center m-auto" role="alert">
-                            No active request
-                        </div>
-                        <% } %>
 
-                            
+                    <div class="container my-4">
+                        <h3 class="bg-info text-center p-3 rounded">Previous Requests</h3>
+                        <table class="table table-striped">
+                            <thead>
 
-                        <div class="container my-4">
-                            <h3 class="bg-info text-center p-3 rounded">Resolved Requests</h3>
-                            <table class="table table-striped">
-                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Raised on</th>
+                                    <th scope="col">Solved on</th>
+                                    <th scope="col">Remarks</th>
+                                    <!-- <th scope="col">Image</th> -->
+                                </tr>
+                            </thead>
+                            <tbody>
 
+                                <% for(let i=0 ; i < prevQuery.length ; i++){ %>
                                     <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Raised on</th>
-                                        <th scope="col">Solved on</th>
-                                        <th scope="col">Remarks</th>
-                                        <!-- <th scope="col">Image</th> -->
+                                        <td scope="row">
+                                            <%= i+1 %>
+                                        </td>
+                                        <td>
+                                            <%= prevQuery[i].date_generate %>
+                                        </td>
+                                        <td>
+                                            <%= prevQuery[i].date_solved %>
+                                        </td>
+                                        <td>
+                                            <%= prevQuery[i].remark %>
+                                        </td>
+
+
                                     </tr>
-                                </thead>
-                                <tbody>
+                                    <% } %>
 
-                                    <% for(let i=0 ; i < prevQuery.length ; i++){ %>
-                                        <tr>
-                                            <td scope="row">
-                                                <%= i+1 %>
-                                            </td>
-                                            <td>
-                                                <%= prevQuery[i].date_generate %>
-                                            </td>
-                                            <td>
-                                                <%= prevQuery[i].date_solved %>
-                                            </td>
-                                            <td>
-                                                <%= prevQuery[i].remark %>
-                                            </td>
-
-
-                                        </tr>
-                                        <% } %>
-
-                                </tbody>
-                            </table>
-                        </div>
+                            </tbody>
+                        </table>
+                    </div>
 
 
 
@@ -125,30 +169,52 @@
     <%- include('../newFooter'); %>
 
         <script>
-            document.querySelector("#formFile").disabled = true
-            document.querySelector(".raise").disabled = true
-            const type = document.querySelector("#diseaseName")
-            type.addEventListener('input', () => {
-                console.log(type.value)
-                if (type.value == "") {
-                    document.querySelector("#formFile").disabled = true
-                } else {
-                    document.querySelector("#formFile").disabled = false
-                }
-            })
+
+            const formElement = document.querySelector("#formFile")
+
+            if (formElement) {
+                formElement.disabled = true
+                document.querySelector(".raise").disabled = true
+                const diseaseType = document.querySelector("#diseaseName")
+                diseaseType.addEventListener('input', () => {
+                    if (diseaseType.value == "") {
+                        formElement.disabled = true
+                    } else {
+                        formElement.disabled = false
+                    }
+                })
+            }
         </script>
 
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script type="module">
 
-            document.querySelector("#formFile").addEventListener("change",
-                (e) => {
+            const diseaseType = document.querySelector("#diseaseName")
+            formElement && formElement.addEventListener("change",
+                async (e) => {
                     const File = e.target.files[0]
+
+
+
+                    const fileCheck = await Swal.fire({
+                        title: 'Are you sure to upload ?',
+                        text: "You won't be able to revert this!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes'
+                    })
+                    
+                    if(!fileCheck.isConfirmed) return ; 
+                    
+
+
 
                     const formData = new FormData()
                     formData.append('myFile', File)
                     formData.append('folderName', "diseaseImg")
-                    formData.append('diseaseName', `${type.value}`)
+                    formData.append('diseaseName', `${diseaseType.value}`)
 
                     fetch('/saveImage', {
                         method: 'POST',
@@ -156,7 +222,7 @@
                     })
                         .then(response => response.json())
                         .then(data => {
-                            console.log(data.imageUrl)
+                             
                             Swal.fire(
                                 'Image uploaded',
                                 'Thank You!',

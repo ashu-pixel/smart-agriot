@@ -1,20 +1,16 @@
 <%- include('newHeader' , {current:"SmartFarming", role:"farmer"}); %>
 
-
-
-    <div style="background-image: url('https://i.ibb.co/k65m4V5/secondbgimg.png') ;  background-repeat : no-repeat; background-size: 100% 100%;">
-
+    <div class="background-img-contain">
 
         <div class="d-flex  align-items-center justify-content-around mt-5 pt-5">
-            <h1 class="mx-auto">
+            <h1 class="mx-auto text-center">
                 <B> SMART FARMING IN AGRICULTURE ! </B>
             </h1>
 
         </div>
 
-
         <div class="text-center w-75 m-auto">
-            <h2 class="bg-warning ">
+            <h2 class="bg-warning rounded">
                 <B><U> Smart farming technologies :-</B>
                 </U>
             </h2>
@@ -36,28 +32,74 @@
                 <li><span style="color: red;">Inadequate water level</span>: Plant needs more water. Please switch on the the motor to continue the water supply until the blinking red message on the screen turns green to show adequate water level is reached.</li>
                 <li><span style="color: green;">Adequate water level</span>: Now you can switch OFF the motor as adequate water level has been reached.</li>
                 <li>Mode: Here you can decide the mode depending on whether you manually want to supply water(Turn <span style="color: green;">ON Manual mode</span>) or let the system do the work for you(Turn <span style="color:red">ON Automatic mode</span>).</li>
-                <li>Water supply of plant 1: In manual mode you can turn the motor <span style="color: green;">ON</span>/<span style="color: red;">OFF</span> for Plant 1 as per the need.</li>
-                <li>Water supply of plant 2: In manual mode you can turn the motor <span style="color: green;">ON</span>/<span style="color: red;">OFF</span> for Plant 2 as per the need.</li>
+                <li>Water supply of plant 1: In manual mode you can turn the motor <span style="color: green;">ON</span>/<span style="color: red;">OFF</span> for Plant 1 as per the need.
+                </li>
+                <li>Water supply of plant 2: In manual mode you can turn the motor <span style="color: green;">ON</span>/<span style="color: red;">OFF</span> for Plant 2 as per the need.
+                </li>
                 <li>Water supply of plant 3: In manual mode you can turn the motor <span style="color: green;">ON</span>/<span style="color: red;">OFF</span> for Plant 3 as per the need. </li>
             </ul>
         </div>
         </B>
 
         </p>
-        <br>
-        <h1 style="text-align: center;color: brown;">
+        <br id="jumper">
+        <h3 style="text-align: center;color: brown;">
             <U>Ensuring the Security and Health through the Smart Water Management System </U>
-        </h1>
+        </h3>
 
-        <div class="mode-switch mt-3">
+        <p style="font-size: 2.0em;" class="py-2   font-weight-bold text-center w-75 m-auto bg-dark text-warning rounded">
+            CONTROL PANEL
+        </p>
+
+        <div>
+
+            <p style="font-size: 1.3em;" class="py-1 text-light font-weight-bold text-center m-0 mt-2 w-50 mx-auto rounded bg-info">Device and Farm status</p>
+            <div class="d-flex justify-content-center mb-5 flex-wrap">
+
+                <div>
+                    <div class="led-box ">
+                        <div class=" <%= statusFlags.online ? " led-green " :" led-red-normal " %>"></div>
+                        <p>
+                            <%=statusFlags.online ? "Device online" : "Device offline" %>
+                        </p>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="led-box ">
+                        <div class=" <%= statusFlags.fire ? " led-red " :" led-green " %>"></div>
+                        <p>
+                            <%=statusFlags.fire ? "Fire in farm !" : "No fire detected" %>
+                        </p>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="led-box ">
+                        <div class=" <%= statusFlags.security ? " led-red " :" led-green " %>"></div>
+                        <p>
+                            <%=statusFlags.security ? "Intrusion detected" : "No intrusion" %>
+                        </p>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <p style="font-size: 1.3em;" class="py-1 text-light font-weight-bold text-center m-0 mt-2 w-50 mx-auto rounded bg-info">Motor Controls
+        </p>
+        <div class="mode-switch mt-3 text-center">
             <div>
                 <h3>Automatic Mode</h3>
             </div>
             <div>
                 <label class="switch mx-2">
-                <input type="checkbox" id="checkbox" <%=mode==='1' ? "checked" : "unchecked" %> >
-                <span class="slider round "></span>
-            </label>
+                    <input type="checkbox" id="checkbox" <%=mode==='1' ? "checked" : "unchecked" %> >
+                    <span class="slider round "></span>
+                </label>
             </div>
             <div>
                 <h3>Manual Mode</h3>
@@ -141,10 +183,11 @@
                                     </div>
                                     <div>
                                         <label class="switch mx-2">
-                                        <input type="checkbox" <%=mode == "0" && "disabled" %> <%= currentPlant == i && "checked" %> id="P<%= i %>"
-                                            onchange="motorHandler(this)">
-                                            <span class="slider round "></span>
-                                    </label>
+                                            <input type="checkbox" <%=mode=="0" && "disabled" %>
+                                            <%= currentPlant==i && "checked" %> id="P<%= i %>"
+                                                    onchange="motorHandler(this)">
+                                                    <span class="slider round "></span>
+                                        </label>
                                     </div>
                                     <div class="text-success">
                                         <h6>ON</h6>
@@ -167,11 +210,14 @@
         <script>
             function updateRealTime({
                 MOIST_STATUS,
-                CURR_WATER
+                CURR_WATER,
+                statusFlags
             }) {
 
                 const curr = document.querySelectorAll(".currentWatering")
                 const moist = document.querySelectorAll(".waterLevel")
+                const leds = document.querySelectorAll(".led-box div")
+                const leds_p = document.querySelectorAll(".led-box p")
 
                 for (let idx = 0; idx < curr.length; idx++) {
 
@@ -193,6 +239,15 @@
                         moist[idx].innerText = "Inadequate"
                     }
                 }
+
+                leds[0].classList = statusFlags.online ? " led-green " : " led-red-normal "
+                leds_p[0].innerText = statusFlags.online ? "Device online" : "Device offline"
+
+                leds[1].classList = statusFlags.fire ? " led-red " : " led-green "
+                leds_p[1].innerText = statusFlags.fire ? "Fire in farm !" : "No fire detected"
+
+                leds[2].classList = statusFlags.security ? " led-red " : " led-green "
+                leds_p[2].innerText = statusFlags.security ? "Intrusion detected" : "No intrusion"
             }
 
             setInterval(async() => {
@@ -208,7 +263,7 @@
                     updateRealTime(response)
                 }
 
-            }, 1500)
+            }, 5000)
 
             const allControls = document.querySelectorAll("input[type=checkbox]")
 
@@ -233,7 +288,6 @@
                     })
                 });
                 const response = await rawResponse.json()
-                console.log(response)
             }
 
             const modeControl = allControls[0];
@@ -258,5 +312,10 @@
         </script>
 
 
+        <script>
+            window.addEventListener("load", (event) => {
+                window.location.replace(`#jumper`);
+            });
+        </script>
 
         </html>

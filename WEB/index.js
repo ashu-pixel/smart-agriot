@@ -7,19 +7,10 @@ const sessions = require('express-session');
 const app = express()
 var admin = require("firebase-admin");
 const multer = require('multer')
-const fs = require("fs");
+  
+const upload = multer({ dest: 'uploads/' });
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, './tmp')
-    },
-    filename: function (req, file, cb) {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-        cb(null, file.fieldname + '-' + uniqueSuffix + '.png')
-    }
-})
-
-const upload = multer({ storage: storage })
+// const upload = multer({ storage: storage })
 const { Storage } = require('@google-cloud/storage');
 const UUID = require("uuid4")
 const path = require('path');
@@ -51,7 +42,8 @@ const FieldValue = admin.firestore.FieldValue;
 const firebaseStorage = new Storage({
     keyFilename: "config.json",
 });
-  
+
+const bucket = admin.storage().bucket();
 
 const precisionPage = require('./data/precision.json')
 const teamInfo = require('./data/info.json')
@@ -69,7 +61,7 @@ var sessionChecker = (req, res, next) => {
 var sessionCheckerFarmer = (req, res, next) => {
     if (req.session.userid) {
         if (req.session.role == 'farmer') next();
-        else res.send("UNAUTHORIZED")
+        else res.render("errorPage")
     } else {
         res.render('login', { invalid: valid });
     }
@@ -79,7 +71,7 @@ var sessionCheckerFarmer = (req, res, next) => {
 var sessionCheckerExpert = (req, res, next) => {
     if (req.session.userid) {
         if (req.session.role == 'expert') next();
-        else res.send("UNAUTHORIZED")
+        else res.render("errorPage")
     } else {
         res.render('login', { invalid: valid });
     }
@@ -87,12 +79,35 @@ var sessionCheckerExpert = (req, res, next) => {
 
 
 // routes
-app.get("/", function (req, res) {
+
+function setRoleSession(req) {
     session = req.session;
     const isLoggedIn = session.userid ? true : false
     let role = "farmer"
     if (isLoggedIn) role = session.role
-    res.render("home", {   isLoggedIn, role })
+    return [role ,isLoggedIn ]
+}
+
+app.get("/", function (req, res) {
+
+    const [role , isLoggedIn] = setRoleSession(req)
+    res.render("home", { isLoggedIn, role })
+})
+
+app.get("/pricing", function (req, res) {
+
+    const [role , isLoggedIn] = setRoleSession(req)
+    res.render("pricing", { isLoggedIn, role })
+})
+
+app.get("/ourImpact", function (req, res) {
+    const [role , isLoggedIn] = setRoleSession(req)
+    res.render("impact", { isLoggedIn, role })
+})
+
+app.get("/howToUse", function (req, res) {
+    const [role , isLoggedIn] = setRoleSession(req)
+    res.render("howToUse", { isLoggedIn, role })
 })
 
 app.get("/qgisPage", sessionCheckerFarmer, function (req, res) {
@@ -112,26 +127,31 @@ app.post("/CropPrediction", sessionCheckerFarmer, async function (req, res) {
     }
 
     for (key of params) { obj.formVals.push(parseFloat(req.body[key])) }
-
-    const marketRef = await db.collection("market requirements").doc("Dy9MV98vtc33sJbhKYHt").get()
+    obj.formVals[3] += 273
+    const marketRef = await db.collection("market requirements").doc("test").get()
     const crops = marketRef.data()
 
     for (const crop in crops) {
         obj.marketVals[crop] = parseInt(crops[crop])
     }
 
-    const rawResponse = await fetch(" http://127.0.0.1:5000/CropPred", {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(obj)
-    });
-    const content = await rawResponse.json();
-    const { res1, res2, res3 } = content
-    result = [res1, res2, res3]
-    res.render("farmer/CropPrediction", { result })
+    try {
+        const rawResponse = await fetch("https://smart-ml-api.uc.r.appspot.com/CropPred", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(obj)
+        });
+        const content = await rawResponse.json();
+        const { res1, res2, res3 } = content
+        result = [res1, res2, res3]
+        res.render("farmer/CropPrediction", { result })
+    } catch (error) {
+        result = ["ERROR", "ERROR", "ERROR"]
+        res.render("farmer/CropPrediction", { result })
+    }
 })
 
 app.get("/PrecisionAgriculture", sessionCheckerFarmer, function (req, res) {
@@ -150,7 +170,8 @@ app.get("/SmartFarming", sessionCheckerFarmer, async function (req, res) {
     const farmRef = db.collection('Farm').doc(userID);
     const farmInfo = await farmRef.get()
     if (!farmInfo.exists) {
-        res.send("Error 404 : NO USER FOUND")
+
+        res.render("errorPage")
         return
     }
     farm = farmInfo.data()
@@ -168,7 +189,13 @@ app.get("/SmartFarming", sessionCheckerFarmer, async function (req, res) {
         }
     }
 
-    res.render("farmer/smartFarm", { cropsInFarm, userID, allCrops, mode: farm.mode, currentPlant: farm.CURR_WATER })
+    const statusFlags = {
+        online: farm.deviceIsOnline,
+        fire: farm.FIRE,
+        security: farm.SECUR_PIN
+    }
+
+    res.render("farmer/smartFarm", { statusFlags, cropsInFarm, userID, allCrops, mode: farm.mode, currentPlant: farm.CURR_WATER })
 })
 
 app.get("/listenRealTime", sessionCheckerFarmer, async function (req, res) {
@@ -183,9 +210,14 @@ app.get("/listenRealTime", sessionCheckerFarmer, async function (req, res) {
     for (let i = 0; i < size; i++) {
         data[`P${i}`] && status.push(data[`P${i}`].MOIS_STATUS)
     }
+    const statusFlags = {
+        online: data.deviceIsOnline,
+        fire: data.FIRE,
+        security: data.SECUR_PIN
+    }
 
     res.status(200)
-    res.json({ MOIST_STATUS: status, CURR_WATER: data.CURR_WATER })
+    res.json({ MOIST_STATUS: status, CURR_WATER: data.CURR_WATER, statusFlags: statusFlags })
 
 })
 
@@ -271,15 +303,21 @@ app.post("/weatherPred", sessionCheckerFarmer, async function (req, res) {
         obj["formVals"].push(parseFloat(req.body[key]))
     }
 
-    const rawResponse = await fetch("http://127.0.0.1:5000/weatherPred", {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(obj)
-    });
-    const content = await rawResponse.json();
+    let content
+
+    try {
+        const rawResponse = await fetch("https://smart-ml-api.uc.r.appspot.com/weatherPred", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(obj)
+        });
+        content = await rawResponse.json();
+    } catch (error) {
+        content = { val: "ERROR" }
+    }
 
     res.render("farmer/weather", { weather: "Weather", info: content.val, url: url, api: process.env.WEATHERAPI })
 })
@@ -320,7 +358,6 @@ app.get("/plantDoctor", sessionCheckerFarmer, async function (req, res) {
     let prev = []
 
     doc.forEach(d => {
-
         if (d.data().status == 'solved') { prev.push(d.data()) }
         else { alreadyRaised = d.data() }
     })
@@ -338,9 +375,10 @@ app.post("/raiseReq", sessionCheckerFarmer, function (req, res) {
         date_generate: `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()}`,
         status: "generated",
         date_solved: "",
-        remark: ''
+        remark: req.body.comment
     }
     if (req.body.URL) data.image = req.body.URL
+
 
     db.collection("Consultation").doc().set(data)
         .then(() => res.json({ status: 200 }))
@@ -365,7 +403,13 @@ app.get("/appointment", sessionCheckerExpert, async function (req, res) {
         q.name = userinfo.data().Name
     }
 
-    res.render("expert/appointment", { query })
+    if (!query.length) {
+
+        res.render("expert/appointment", { query, userFound: false, msg: "All caught up" })
+        return
+    }
+
+    res.render("expert/appointment", { query, userFound: true })
 })
 
 app.get("/specific/:userID", sessionCheckerExpert, async function (req, res) {
@@ -376,7 +420,7 @@ app.get("/specific/:userID", sessionCheckerExpert, async function (req, res) {
     const farmInfo = await farmRef.doc(userID).get();
 
     if (!farmInfo.exists) {
-        res.send("Error 404 : NO USER FOUND")
+        res.render("expert/appointment", { userFound: false, msg: "No user found" })
         return
     }
     const userRef = db.collection('USER');
@@ -397,7 +441,7 @@ app.get("/specific/:userID", sessionCheckerExpert, async function (req, res) {
         else currQuery = document
     })
 
-    res.render("expert/specificUser", { farmData, currQuery, prevQuery, user })
+    res.render("expert/specificUser", { farmData, currQuery, prevQuery, user, userFound: true })
 })
 
 app.post("/resolveQ/:docID", sessionCheckerExpert, async function (req, res) {
@@ -412,7 +456,7 @@ app.post("/resolveQ/:docID", sessionCheckerExpert, async function (req, res) {
     const query = await queryRef.get()
     if (query.data().image) {
         const imgURL = query.data().image;
-        let startIndx = imgURL.indexOf("myFile");
+        let startIndx = imgURL.indexOf("2F") + 2;
         let endIndx = imgURL.indexOf("?");
         let imgName = imgURL.substring(startIndx, endIndx);
         await firebaseStorage.bucket(process.env.BUCKET_URL).file("userImg/" + imgName).delete();
@@ -428,39 +472,31 @@ app.post("/resolveQ/:docID", sessionCheckerExpert, async function (req, res) {
     res.redirect("/appointment")
 })
 
-
 app.post("/saveImage", upload.single('myFile'), async function (req, res) {
 
     const { folderName, diseaseName } = req.body
 
     let uuid = UUID();
-    let downLoadPath = "https://firebasestorage.googleapis.com/v0/b/smart-agriot.appspot.com/o/";
+    let downLoadPath = "https://firebasestorage.googleapis.com/v0/b/smartagriot-2.appspot.com/o/";
 
-    const profileImage = req.file;
+    const file = req.file;
+    const fileName = (folderName === 'userImg' ? file.filename : (diseaseName + ":" + Date.now())) + '.png'
+    const filePath = file.path;
 
-    const fileName = folderName === 'userImg' ? profileImage.filename : (diseaseName + ":" + Date.now() + '.png')
 
     const bucket = firebaseStorage.bucket(process.env.BUCKET_URL);
-    const imageResponse = await bucket.upload(profileImage.path, {
+
+    const imageResponse = await bucket.upload(filePath, {
         destination: `${folderName}/${fileName}`,
-        resumable: true,
+        resumable: false,
         metadata: {
             metadata: {
                 firebaseStorageDownloadTokens: uuid,
-            },
+            }
         }
     })
-    let imageUrl = downLoadPath + encodeURIComponent(imageResponse[0].name) + "?alt=media&token=" + uuid;
 
-    const directory = "./tmp";
-    fs.readdir(directory, (err, files) => {
-        if (err) throw err;
-        for (const file of files) {
-            fs.unlink(path.join(directory, file), (err) => {
-                if (err) throw err;
-            });
-        }
-    });
+    let imageUrl = downLoadPath + encodeURIComponent(imageResponse[0].name) + "?alt=media&token=" + uuid;
 
     res.json({ imageUrl })
 })
@@ -473,7 +509,8 @@ app.get("/farmSetup/:userID", sessionCheckerExpert, async function (req, res) {
     const farmRef = db.collection('Farm').doc(userID);
     const farmInfo = await farmRef.get()
     if (!farmInfo.exists) {
-        res.send("Error 404 : NO USER FOUND")
+
+        res.render("errorPage")
         return
     }
     farm = farmInfo.data()
@@ -600,9 +637,10 @@ app.post("/deleteFarmSection/:userID", sessionCheckerExpert, async function (req
 })
 
 app.get("/abt", function (req, res) {
-    res.render("about", { info: teamInfo })
+    const [role , isLoggedIn] = setRoleSession(req)
+    res.render("about", { info: teamInfo , role , isLoggedIn })
 })
 
-app.listen(process.env.PORT || 3000, function () {
-    console.log("Running on Port 3000")
+app.listen(process.env.PORT || 5000, function () {
+    console.log("Running on Port 5000")
 })
